@@ -1,9 +1,0 @@
----
-  ntp_servers:
-    - 1.1.1.1
-    - 2.2.2.2
-  syslog_server: 10.10.10.10
-  dns_servers:
-    - 8.8.8.8
-    - 8.8.4.4
-    

@@ -1,0 +1,10 @@
+[switch]
+SW1=
+SW2=
+
+[router]
+R1=
+R2=
+
+[firewall]
+FW1=
