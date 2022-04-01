@@ -1,0 +1,24 @@
+---
+
+- Name: Backup running config of Cisco device
+  gather_facts: false
+
+  tasks:
+
+#    - Name: Backup
+#      ios_config:
+#        backup: yes
+#        backup_options:
+#          filename: "{{ hostvars.localhost.DTG }}_{{ inventory_hostname }}.cfg"
+#          dir_path: "/etc/ansible/backups/{{ inventory_hostname }}/"
+
+    - Name: Show Run
+      ios_command:
+        commands: show run
+      register: output_shrun
+
+
+    - Name: Backup
+      copy:
+        content: "{{ output_shrun.stdout[0] }}"
+        dest: "/etc/ansible/backups/{{ inventory_hostname }}/{{ hostvars.localhost.DTG }}_{{ inventory_hostname }}.txt"

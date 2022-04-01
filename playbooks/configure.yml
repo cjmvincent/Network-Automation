@@ -1,0 +1,17 @@
+---
+
+- Name: Configure Hosts with defined text files
+  gather_facts: false
+
+  tasks:
+  - name: Push VLAN config file
+    ios_config:
+      src: "/etc/ansible/configs/vlan.txt"
+
+  - name: Push NTP config file
+    ios_config:
+      src: "/etc/ansible/configs/ntp.txt"
+
+  - name: Push users config file
+    ios_config:
+      src: "/etc/ansible/configs/users.txt"

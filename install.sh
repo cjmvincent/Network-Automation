@@ -30,6 +30,10 @@ sudo rm * -rf
 sudo git clone https://github.com/cjmvincent/Ansible.git .
 
 
+# install desired ansible collections
+ansible-galaxy collection isntall cisco.ios
+
+
 # install and create site (instance) of checkmk
 cd /tmp/
 wget https://download.checkmk.com/checkmk/1.6.0p27/check-mk-raw-1.6.0p27_0.focal_amd64.deb
@@ -37,6 +41,7 @@ sudo apt install -y ./check-mk-raw-1.6.0p27_0.focal_amd64.deb
 
 sudo omd create your_site_name > ~/Desktop/checkmkcreds.txt
 sudo omd start your_site_name
+
 
 # configure firewall
 sudo ufw enable

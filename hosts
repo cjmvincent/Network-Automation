@@ -1,10 +1,14 @@
-[switch]
-SW1=
-SW2=
+[switches]
+SW1 ansible_host=
+SW2 ansible_host=
 
-[router]
-R1=
-R2=
+[routers]
+R1 ansible_host=
+R2 ansible_host=
 
-[firewall]
-FW1=
+[firewalls]
+FW1 ansible_host=
+
+[ios:children]
+switches
+routers
