@@ -1,5 +1,5 @@
 # to get started simply run:
-# bash -c "$(wget -qO - https://raw.githubusercontent.com/cjmvincent/Ansible/main/install.sh)"
+# bash -c "$(wget -qO - https://raw.githubusercontent.com/cjmvincent/Network-Automation/main/install.sh)"
 
 
 sudo apt update
@@ -31,7 +31,10 @@ sudo git clone https://github.com/cjmvincent/Ansible.git .
 
 
 # install desired ansible collections
-ansible-galaxy collection isntall cisco.ios
+ansible-galaxy collection install cisco.ios
+#ansible-galaxy collection install paloaltonetworks.panos
+#ansible-galaxy collection install arubanetworks.aoscx
+#ansible-galaxy collection install arubanetworks.aos_switch
 
 
 # install and create site (instance) of checkmk
