@@ -7,7 +7,7 @@ Note: this is a setup I have running on an Ubuntu box.
 
 To get going with the files you see here run the following command in your terminal of choice:
 
-` bash -c "$(wget -qO - https://raw.github.com/cjmvincent/Network-Automation/install.sh)" `
+` bash -c "$(wget -qO - https://raw.githubusercontent.com/cjmvincent/Network-Automation/main/install.sh)" `
 
 Setup includes:
 * Installing Ansible, and cloning my repo into it's directory
