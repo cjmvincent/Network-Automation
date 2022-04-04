@@ -1,17 +1,10 @@
 ---
 
-- Name: Configure Hosts with defined text files
+- name: Configure Hosts with defined text files
+  hosts: ios
+  connection: network_cli
   gather_facts: false
-
-  tasks:
-  - name: Push VLAN config file
-    ios_config:
-      src: "/etc/ansible/configs/vlan.txt"
-
-  - name: Push NTP config file
-    ios_config:
-      src: "/etc/ansible/configs/ntp.txt"
-
-  - name: Push users config file
-    ios_config:
-      src: "/etc/ansible/configs/users.txt"
+  roles:
+    - cisco_base
+    - cisc_vlan
+    - cisco_ospf

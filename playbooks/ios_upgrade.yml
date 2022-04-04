@@ -1,0 +1,25 @@
+---
+
+- name: Upgrade IOS image
+  hosts: ios
+  connection: network_cli
+  gather_facts: false
+
+  vars:
+    creds:
+      username: "{{ username }}"
+      password: "{{ password }}"
+
+  tasks:
+    - name: Copy Image from control node to host
+      command: "scp system-image-filename.bin {{ inventory_hostname }}:/system-image-filename.bin"
+
+    - name: set boot
+      ios_config:
+        commands:
+          - "boot system flash:system-image-filename.bin"
+
+    - name: reboot host
+      ios_command:
+        commands:
+          - reload\n"

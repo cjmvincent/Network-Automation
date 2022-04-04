@@ -1,4 +1,4 @@
 ---
 
-ansible_user: "admin"
-ansible_password: "C1sco12345"
+username: "admin"
+password: "C1sco12345"

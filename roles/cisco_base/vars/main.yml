@@ -1,0 +1,14 @@
+---
+
+
+domain_name: cisco.com
+
+nameserver1: 8.8.8.8
+nameserver2: 8.8.4.4
+
+ntpserver1: 10.1.1.2
+ntpserver2: 10.1.1.3
+
+timezone: EST
+
+vtp_mode: transparent

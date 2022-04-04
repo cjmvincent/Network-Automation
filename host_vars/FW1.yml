@@ -1,5 +1,4 @@
 ---
 
-ansible_network_os: paloalto
-ansible_user: "admin"
-ansible_password: "Palo12345"
+username: "admin"
+password: "Palo12345"

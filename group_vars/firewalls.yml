@@ -1,0 +1,5 @@
+---
+
+ansible_connection: paloalto.panos
+ansible_become: yes
+ansible_become_method: enable

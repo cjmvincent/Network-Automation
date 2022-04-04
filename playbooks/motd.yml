@@ -1,20 +1,18 @@
 ---
 
 - name: Configure Banner MOTD
-  hosts: Routers
+  hosts: ios
+  connection: network_cli
   gather_facts: false
 
   vars:
-    cli:
-      username: charles
-      password: cisco123
-      timeout: 100
+    creds:
+      username: "{{ username }}"
+      password: "{{ password }}"
 
   tasks:
     - name: Configure Banner MOTD
       ios_config:
-        provider: "{{ cli }}"
+        provider: "{{ creds }}"
         lines:
-          - banner motd # Keep Out#
-
-      register: print_output
+          - banner motd $ Keep Out $
