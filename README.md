@@ -11,5 +11,6 @@ To get going with the files you see here run the following command in your termi
 
 Setup includes:
 * Installing Ansible, and cloning my repo into it's directory
-* Installing Check_MK so I can monitor network devices
+* Installing a few of my personally desired Ansible collections
 * Installing tools such Python, Git, Netmiko, Paramiko, Napalm, Net-Tools
+* Installing Check_MK so I can monitor network devices
