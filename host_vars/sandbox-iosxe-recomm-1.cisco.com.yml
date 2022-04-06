@@ -1,0 +1,6 @@
+---
+
+ansible_user: "developer"
+ansible_password: "C1sco12345"
+ansible_network_os: iosxe
+ansible_connection: network_cli

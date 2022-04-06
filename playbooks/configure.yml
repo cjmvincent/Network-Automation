@@ -4,6 +4,7 @@
   hosts: ios
   connection: network_cli
   gather_facts: false
+  
   roles:
     - cisco_base
     - cisc_vlan

@@ -16,6 +16,7 @@
 
     - name: set boot
       ios_config:
+        provider: "{{ creds }}"
         commands:
           - "boot system flash:system-image-filename.bin"
 

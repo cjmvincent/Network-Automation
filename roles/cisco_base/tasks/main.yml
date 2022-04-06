@@ -1,0 +1,37 @@
+---
+
+vars:
+  creds:
+    username: "{{ username }}"
+    password: "{{ password }}"
+
+- name: configure timezone
+  ios_config:
+    provider: "{{ creds }}"
+    lines:
+      - clock timezone EST -5
+
+- name: configure ntp servers
+  ios_ntp:
+    provider: "{{ creds }}"
+    server: {{ ntpserver1 }}
+    state: present
+
+- name: configure login banner
+  ios_banner:
+    provider: "{{ creds }}"
+    banner: login
+    text: |
+          ==========================================================================================
+                          UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
+          You must have explicit, authorized permission to access or configure this device.
+          Unauthorized attempts and actions to access or use this system may result in civil and/or
+          criminal penalties.            All activities performed on this device are logged and monitored.
+          ==========================================================================================
+    state: present
+
+
+- name: save running config to memory
+  ios_commmand:
+    provider: "{{ creds }}"
+    commands: write

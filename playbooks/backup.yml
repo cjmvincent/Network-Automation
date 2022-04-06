@@ -1,19 +1,13 @@
 ---
 
 - Name: Backup running config of Cisco device
-  hosts: ios
+  hosts: routers
   connection: network_cli
   gather_facts: false
-
-  vars:
-    creds:
-      username: "{{ username }}"
-      password: "{{ password }}"
 
   tasks:
     - Name: Show Run
       ios_command:
-        provider: "{{ creds }}"
         commands: show run
       register: show_run
 

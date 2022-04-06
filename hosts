@@ -5,6 +5,7 @@ SW2 ansible_host=
 [routers]
 R1 ansible_host=
 R2 ansible_host=
+sandbox-iosxe-latest-1.cisco.com
 
 [firewalls]
 FW1 ansible_host=
