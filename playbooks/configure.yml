@@ -1,10 +1,9 @@
 ---
 
-- name: Configure Hosts with defined text files
+- name: Configure hosts with seperated roles
   hosts: ios
-  connection: network_cli
   gather_facts: false
-  
+
   roles:
     - cisco_base
     - cisc_vlan
