@@ -27,7 +27,7 @@ pip install paramiko netmiko napalm pywinrm
 # clone repo to ansible directory
 cd /etc/ansible
 sudo rm * -rf
-sudo git clone https://github.com/cjmvincent/Ansible.git .
+sudo git clone https://github.com/cjmvincent/Network-Automation.git .
 
 
 # install desired ansible collections
