@@ -1,17 +1,17 @@
 ---
 
-- Name: Backup running config of Cisco device
-  hosts: routers
-  connection: network_cli
-  gather_facts: false
+  - Name: Backup running config of Cisco device
+    hosts: routers
+    connection: network_cli
+    gather_facts: false
 
-  tasks:
-    - Name: Show Run
-      ios_command:
-        commands: show run
-      register: show_run
+    tasks:
+      - Name: Show Run
+        ios_command:
+          commands: show run
+        register: show_run
 
-    - Name: Backup to server
-      copy:
-        content: "{{ show_run.stdout[0] }}"
-        dest: "/etc/ansible/backups/{{ hostvars.localhost.DTG }}/{{ inventory_hostname }}.txt"
+      - Name: Backup to server
+        copy:
+          content: "{{ show_run.stdout[0] }}"
+          dest: "/etc/ansible/backups/{{ hostvars.localhost.DTG }}/{{ inventory_hostname }}.txt"
