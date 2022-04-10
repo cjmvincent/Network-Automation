@@ -1,25 +1,17 @@
 ---
 
-vars:
-  creds:
-    username: "{{ username }}"
-    password: "{{ password }}"
-
 - name: configure timezone
   ios_config:
-    provider: "{{ creds }}"
     lines:
       - clock timezone EST -5
 
 - name: configure ntp servers
   ios_ntp:
-    provider: "{{ creds }}"
     server: {{ ntpserver1 }}
     state: present
 
 - name: configure login banner
   ios_banner:
-    provider: "{{ creds }}"
     banner: login
     text: |
           ==========================================================================================
@@ -33,5 +25,4 @@ vars:
 
 - name: save running config to memory
   ios_commmand:
-    provider: "{{ creds }}"
     commands: write
