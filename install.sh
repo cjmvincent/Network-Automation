@@ -21,7 +21,7 @@ sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-
 sudo apt update
 sudo apt upgrade -y
 
-pip install paramiko netmiko napalm pywinrm
+pip install paramiko netmiko napalm pywinrm ansible-pylibssh
 
 
 # clone repo to ansible directory
