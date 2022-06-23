@@ -1,10 +1,13 @@
 [switches]
-SW1 ansible_host=
-SW2 ansible_host=
+dist-sw01 ansible_host=10.10.20.177
+dist-sw02 ansible_host=10.10.20.178
 
 [routers]
-R1 ansible_host=
-R2 ansible_host=
+dist-rtr01 ansible_host=10.10.20.175
+dist-rtr02 ansible_host=10.10.20.176
+
+[servers]
+inside-host01 ansible_host=10.10.20.179
 
 [alwayson]
 sandbox-iosxe-latest-1.cisco.com
