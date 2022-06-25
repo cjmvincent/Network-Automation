@@ -1,8 +1,10 @@
 ---
 
 - name: Backup running config of Cisco device
-  hosts: routers
+  hosts: alwayson
   gather_facts: false
+  vars:
+    date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
 
   tasks:
     - name: Show running configuration of device
@@ -10,7 +12,12 @@
         commands: show run
       register: show_run
 
+    - name: Create backup directory using today's date
+      file:
+        path: "/etc/ansible/backups/{{ date }}"
+        state: directory
+
     - name: Copy configuration to /etc/ansible/backups/
       copy:
         content: "{{ show_run.stdout[0] }}"
-        dest: "/etc/ansible/backups/{{ inventory_hostname }}.txt"
+        dest: "/etc/ansible/backups/{{ date }}/{{ inventory_hostname }}.txt"
