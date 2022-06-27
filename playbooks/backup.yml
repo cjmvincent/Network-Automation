@@ -7,17 +7,16 @@
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
 
   tasks:
-    - name: Show running configuration of device
-      ios_command:
-        commands: show run
-      register: show_run
 
     - name: Create backup directory using today's date
       file:
         path: "/etc/ansible/backups/{{ date }}"
         state: directory
 
-    - name: Copy configuration to /etc/ansible/backups/
-      copy:
-        content: "{{ show_run.stdout[0] }}"
-        dest: "/etc/ansible/backups/{{ date }}/{{ inventory_hostname }}.txt"
+
+    - name: Backup configuration to /etc/ansible/backups/
+      ios_config:
+        backup: yes
+        backup_options:
+          filename:  "{{ inventory_hostname }}.txt"
+          dir_path: "/etc/ansible/backups/{{ date }}/"
