@@ -8,6 +8,7 @@ dist-rtr02 ansible_host=10.10.20.176
 
 [servers]
 inside-host01 ansible_host=10.10.20.179
+checkmk ansible_host=10.10.20.180
 
 [alwayson]
 sandbox-iosxe-latest-1.cisco.com
@@ -19,3 +20,6 @@ FW1 ansible_host=
 switches
 routers
 alwayson
+
+[linux]
+checkmk

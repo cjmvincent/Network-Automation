@@ -1,0 +1,43 @@
+---
+
+- name: Upgrade Linux servers
+  hosts: linux
+  vars:
+    reboot_connect_timeout: 5
+    reboot_post_reboot_delay: 15
+    reboot_timeout: 600
+
+  tasks:
+
+    - name: Upgrade CentOS
+      yum:
+        name: '*'
+        state: latest
+      when: ansible_os_family == "RedHat"
+
+
+    - name: Update repositories cache
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Update all packages to their latest version
+      apt:
+        name: "*"
+        state: latest
+      when: ansible_os_family == "Debian"
+
+    - name: Upgrade the OS (apt-get dist-upgrade)
+      apt:
+        upgrade: dist
+        force_apt_get: yes
+      when: ansible_os_family == "Debian"
+
+
+    - name: Reboot hosts
+      reboot:
+        msg: "Rebooting via Ansible to apply updates."
+        connect_timeout: "{{ reboot_connect_timeout }}"
+        post_reboot_delay: "{{ reboot_post_reboot_delay }}"
+        reboot_timeout: "{{ reboot_timeout }}"
