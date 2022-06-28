@@ -23,6 +23,6 @@
     state: present
 
 
-- name: save running config to memory
-  ios_commmand:
-    commands: write
+- name: Save running config first
+  ios_config:
+    save_when: always
