@@ -34,3 +34,7 @@ centos
 
 [servers:children]
 linux
+
+[network:children]
+switches
+routers
