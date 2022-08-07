@@ -6,9 +6,17 @@
       - clock timezone EST -5
 
 - name: configure ntp servers
-  ios_ntp:
-    server: {{ ntpserver1 }}
+  ios_ntp_global:
+    servers:
+      - server: {{ ntpserver1 }}
+      - server: {{ ntpserver2 }}
     state: present
+
+- name: configure dns
+  ios_config:
+    lines:
+      - ip domain-lookup
+      - ip name-server {{ nameserver1 }}
 
 - name: configure login banner
   ios_banner:
@@ -21,7 +29,6 @@
           criminal penalties.            All activities performed on this device are logged and monitored.
           ==========================================================================================
     state: present
-
 
 - name: Save running config first
   ios_config:
