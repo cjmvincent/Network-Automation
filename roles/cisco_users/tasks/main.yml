@@ -1,21 +1,15 @@
 ---
 
-- name: Add Charles' SSH User
+- name: Loop adding users
   ios_user:
-    name: cvincent
-    configured_password: 'cisco12345'
+    name: {{ username }}
+    configured_password: {{ password }}
     provider:
-      username: cvincent
-      password: 'cisco12345'
-    privilege: 15
+      username: {{ username }}
+      password: {{ password }}
+    privilege: {{ privilege}}
     state: present
-
-- name: Add Josh's SSH User
-  ios_user:
-    name: jmorse
-    configured_password: 'cisco12345'
-    provider:
-      username: jmorse
-      password: 'cisco12345'
-    privilege: 15
-    state: present
+  loop:
+    - Charles
+    - Josh
+    - Bob
