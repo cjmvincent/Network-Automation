@@ -27,4 +27,4 @@
         backup_options:
           filename:  "{{ inventory_hostname }}-{{ date }}.txt"
           dir_path: "/etc/ansible/backups/"
-      when: ansible_network_os == "aruba_os"
+      when: ansible_network_os == "arubaoss"
