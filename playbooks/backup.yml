@@ -1,7 +1,7 @@
 ---
 
 - name: Backup running config of Cisco device
-  hosts: alwayson
+  hosts: network
   gather_facts: false
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
