@@ -16,13 +16,23 @@ sudo apt upgrade -y
 
 
 # install libs, dependencies, and apps
-sudo apt install build-essential net-tools python3.8 ansible oftware-properties-common git-core ansible gufw -y
+sudo apt install build-essential net-tools software-properties-common \
+    gufw synaptic curl \
+    git-core python3-pip zsh \
+    docker.io ansible-core ipcalc -y
+
 
 sudo apt update
 sudo apt upgrade -y
 
+# install some network management tools
+python3 -m pip3 install paramiko[gssapi] netmiko napalm pywinrm ansible-pylibssh --user
 
-pip install paramiko netmiko napalm pywinrm ansible-pylibssh
+# install ohmyzsh
+#sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# install vscode
+sudo snap install code --classic postman vlc icloud-for-linux
 
 
 # clone ansilbe repo to ansible directory
@@ -51,3 +61,6 @@ sudo ufw enable
 
 sudo ufw allow ssh
 sudo ufw allow apache
+
+# start docker
+sudo systemctl enable --now docker
