@@ -19,7 +19,7 @@ sudo apt upgrade -y
 sudo apt install build-essential net-tools software-properties-common \
     gufw synaptic curl \
     git-core python3-pip zsh \
-    docker.io ansible-core ipcalc -y
+    docker.io docker-compose ansible-core ipcalc -y
 
 
 sudo apt update
