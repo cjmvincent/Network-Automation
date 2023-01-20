@@ -17,8 +17,8 @@ sudo apt upgrade -y
 
 # install libs, dependencies, and apps
 sudo apt install build-essential net-tools software-properties-common \
-    gufw synaptic curl \
-    git-core python3-pip zsh \
+    synaptic curl zsh \
+    git-core python3-pip \
     docker.io docker-compose ansible-core ipcalc -y
 
 
