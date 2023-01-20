@@ -26,11 +26,12 @@ sudo apt update
 sudo apt upgrade -y
 
 # install some network management tools
-pip3 install paramiko[gssapi] netmiko napalm pywinrm ansible-pylibssh --user
+pip3 install paramiko netmiko napalm pywinrm ansible-pylibssh --user
 
 
 # install vscode
-sudo snap install code --classic postman vlc
+sudo snap install code --classic
+sudo snap install postman vlc
 
 
 # clone ansilbe repo to ansible directory
