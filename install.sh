@@ -26,7 +26,7 @@ sudo apt update
 sudo apt upgrade -y
 
 # install some network management tools
-pip3 install paramiko netmiko napalm pywinrm ansible-pylibssh --user
+pip3 install paramiko netmiko napalm pywinrm ansible-pylibssh mackup --user
 
 
 # install vscode
