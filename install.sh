@@ -28,8 +28,6 @@ sudo apt upgrade -y
 # install some network management tools
 pip3 install paramiko[gssapi] netmiko napalm pywinrm ansible-pylibssh --user
 
-# install ohmyzsh
-#sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # install vscode
 sudo snap install code --classic postman vlc
@@ -65,3 +63,7 @@ sudo ufw allow apache
 
 # start docker
 sudo systemctl enable --now docker
+
+
+# install ohmyzsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
