@@ -32,7 +32,7 @@ python3 -m pip3 install paramiko[gssapi] netmiko napalm pywinrm ansible-pylibssh
 #sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # install vscode
-sudo snap install code --classic postman vlc icloud-for-linux
+sudo snap install code --classic postman vlc
 
 
 # clone ansilbe repo to ansible directory
