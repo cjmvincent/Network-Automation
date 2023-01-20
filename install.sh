@@ -36,6 +36,7 @@ sudo snap install code --classic postman vlc
 
 
 # clone ansilbe repo to ansible directory
+sudo mkdir /etc/ansible
 cd /etc/ansible
 sudo rm * -rf
 sudo git clone https://github.com/cjmvincent/Network-Automation.git .
