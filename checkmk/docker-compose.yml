@@ -1,4 +1,5 @@
 # docker-compose.yml
+# use "docker-compose up -d && docker-compose logs -f" to start checkmk with an output to see login creds
 
 version: '3.6'
 
