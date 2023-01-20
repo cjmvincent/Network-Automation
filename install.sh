@@ -26,7 +26,7 @@ sudo apt update
 sudo apt upgrade -y
 
 # install some network management tools
-python3 -m pip3 install paramiko[gssapi] netmiko napalm pywinrm ansible-pylibssh --user
+pip3 install paramiko[gssapi] netmiko napalm pywinrm ansible-pylibssh --user
 
 # install ohmyzsh
 #sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
