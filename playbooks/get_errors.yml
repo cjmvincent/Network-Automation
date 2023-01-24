@@ -1,0 +1,23 @@
+---
+
+- name: Retrieve port errors on device
+  hosts: alwayson
+  gather_facts: false
+
+  tasks:
+
+    - name: Get int status
+      cisco.ios.ios_command:
+        commands:
+          - sh int cou err
+        register: errors
+    
+    - name: Export errors to logs
+      ansible.builtin.copy:
+        content: "{{ errors.stdout[0] }}"
+        dest: "/etc/ansible/logs/{{ inventory_hostname }}_errors.txt"
+
+
+
+
+
