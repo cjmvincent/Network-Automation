@@ -1,6 +1,6 @@
 ---
 
-- name: Backup running config of Cisco device
+- name: Backup running config of network devices
   hosts: network
   gather_facts: false
   vars:
