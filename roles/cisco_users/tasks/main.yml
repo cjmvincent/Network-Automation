@@ -3,10 +3,6 @@
 - name: Loop adding users
   ios_user:
     name: {{ username }}
-    configured_password: {{ password }}
-    provider:
-      username: {{ username }}
-      password: {{ password }}
     privilege: {{ privilege}}
     state: present
   loop:
