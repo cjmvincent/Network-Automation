@@ -21,7 +21,7 @@
           dir_path: "/etc/ansible/backups/{{ date  }}"
       when: ansible_network_os == "ios"
 
-    - name: Backup Ansible configuration to /etc/ansible/backups/
+    - name: Backup Aruba configuration to /etc/ansible/backups/
       aruba_config:
         backup: yes
         backup_options:
