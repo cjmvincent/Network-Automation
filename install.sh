@@ -19,7 +19,8 @@ sudo apt upgrade -y
 sudo apt install build-essential net-tools software-properties-common \
     synaptic curl zsh \
     git-core python3-pip \
-    docker.io docker-compose ansible-core ipcalc -y
+    docker.io docker-ce docker-ce-cli docker-compose-plugin containerd.io \
+    ansible-core ipcalc -y
 
 
 sudo apt update
