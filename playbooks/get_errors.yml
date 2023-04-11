@@ -1,7 +1,7 @@
 ---
 
 - name: Retrieve port errors on device
-  hosts: alwayson
+  hosts: sandbox-iosxe-latest-1.cisco.com
   gather_facts: false
 
   tasks:
@@ -10,7 +10,7 @@
       cisco.ios.ios_command:
         commands:
           - sh int cou err
-        register: errors
+      register: errors
     
     - name: Export errors to logs
       ansible.builtin.copy:
