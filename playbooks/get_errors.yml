@@ -3,8 +3,16 @@
 - name: Retrieve port errors on device
   hosts: sandbox-iosxe-latest-1.cisco.com
   gather_facts: false
-
+  vars:
+    date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
+    
   tasks:
+
+    - name: Create backup directory using today's date
+      file:
+        path: "/etc/ansible/logs/{{ date }}"
+        state: directory
+
 
     - name: Get int status
       cisco.ios.ios_command:
@@ -15,7 +23,7 @@
     - name: Export errors to logs
       ansible.builtin.copy:
         content: "{{ errors.stdout[0] }}"
-        dest: "/etc/ansible/logs/{{ inventory_hostname }}_errors.txt"
+        dest: "/etc/ansible/logs/{{ date }}/{{ inventory_hostname }}_errors.txt"
 
 
 
