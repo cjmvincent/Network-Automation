@@ -16,23 +16,20 @@ sandbox-iosxe-latest-1.cisco.com
 [firewalls]
 pafw01 ansible_host=
 
-
-
-
-[switches:children]
+[switches]
 ios
 arubaoss
 
-[routers:children]
+[routers]
 alwayson
 
-[linux:children]
+[linux
 ubuntu
 centos
 
-[servers:children]
+[servers]
 linux
 
-[network:children]
+[network]
 switches
 routers
