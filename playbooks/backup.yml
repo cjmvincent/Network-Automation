@@ -1,7 +1,7 @@
 ---
 
 - name: Backup running config of network devices
-  hosts: network
+  hosts: sandbox-iosxe-latest-1.cisco.com
   gather_facts: false
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
