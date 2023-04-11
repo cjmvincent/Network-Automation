@@ -23,7 +23,7 @@ arubaoss
 [routers]
 alwayson
 
-[linux
+[linux]
 ubuntu
 centos
 
