@@ -1,16 +1,24 @@
-version: '3.0'
+# docker-compose.yml
+# use "docker-compose up -d && docker-compose logs -f" to start checkmk with an output to see login creds
+
+version: '3.6'
+
 services:
-  controll:
-    image: checkmk/check-mk-raw:2.0.0-latest
+  checkmk:
+    container_name: checkmk
+    image: checkmk/check-mk-raw:1.6.0-latest
     tmpfs:
-     - /opt/omd/sites/cmk/tmp:uid=1000,gid=1000
+      - /opt/omd/sites/cmk/tmp:uid=1000,gid=1000
     ulimits:
       nofile: 1024
-    container_name: checkmk
-    restart: always
     volumes:
-      - '/etc/localtime:/etc/localtime:ro'
-      - './odm-sites:/omd/sites'
+      - ./monitoring:/omd/sites
+      - /etc/localtime:/etc/localtime:ro
     ports:
-      - '8095:5000'
-      - '6557:6557'
+      - "8080:5000"
+    restart: unless-stopped
+    networks:
+      checkmk_network:
+
+networks:
+    checkmk_network:
