@@ -14,6 +14,7 @@ services:
     ports:
       - ${DOCKER_INFLUXDB_INIT_PORT}:8086
 
+
   telegraf:
     image: telegraf:1.19
     volumes:
@@ -22,6 +23,12 @@ services:
       - .env
     depends_on:
       - influxdb
+    ports:
+      - 8125:8125
+      - 8092:8092
+      - 8094:8094
+    command: bash -c "
+      apt-get install --y snmp-mibs-downloader"
 
   grafana:
     image: grafana/grafana-oss:8.4.3
