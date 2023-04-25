@@ -2,8 +2,8 @@
 ---
 
 ansible_connection: network_cli
-ansible_ssh_user: developer
-ansible_ssh_password: C1sco12345
+ansible_user: developer
+ansible_password: C1sco12345
 host_key_checking: false
 ansible_port: 22
 ansibe_become: yes

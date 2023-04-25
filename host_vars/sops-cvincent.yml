@@ -2,6 +2,7 @@
 
 ansible_connection: winrm
 ansible_user: cvincent
+ansible_password: password123
 host_key_checking: false
 ansible_port: 5986
 ansible_winrm_scheme: https
