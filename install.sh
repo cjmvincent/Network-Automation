@@ -54,6 +54,7 @@ sudo git clone https://github.com/cjmvincent/Network-Automation.git .
 #ansible-galaxy collection install paloaltonetworks.panos
 #ansible-galaxy collection install arubanetworks.aoscx
 #ansible-galaxy collection install arubanetworks.aos_switch
+#ansible-galaxy collection install ansible.windows
 
 
 # install and create site (instance) of checkmk

@@ -1,0 +1,7 @@
+---
+
+ansible_connection: winrm
+ansible_user: developer
+ansible_password: C1sco12345
+host_key_checking: false
+ansible_port: 22
