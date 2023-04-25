@@ -1,0 +1,16 @@
+---
+
+- name: Upgrade Windows Servers
+  hosts: sops-test
+  vars:
+
+  tasks:
+
+    - name: Check for updates
+      win_updates:
+        category_names:
+          - SecuirtyUpdates
+          - CriticalUpdates
+          - UpdateRollups
+        state: searched
+        log_path: /Temp/update.txt
