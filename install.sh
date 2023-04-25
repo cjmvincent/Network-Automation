@@ -18,7 +18,7 @@ sudo apt upgrade -y
 # install libs, dependencies, and apps
 sudo apt install build-essential net-tools software-properties-common \
     synaptic curl zsh \
-    git-core python3-pip \
+    git-core python-pip \
     docker.io docker-ce docker-ce-cli docker-compose-plugin containerd.io \
     ansible-core ipcalc -y
 
@@ -26,8 +26,12 @@ sudo apt install build-essential net-tools software-properties-common \
 sudo apt update
 sudo apt upgrade -y
 
+#update pip
+sudo pip install --upgrade pip
+sudo pip install --upgrade virtualenv
+
 # install some network management tools
-pip3 install paramiko netmiko napalm pywinrm ansible-pylibssh awxkit mackup --user
+pip install paramiko netmiko napalm pywinrm ansible ansible-pylibssh awxkit mackup --user
 
 
 # install vscode
