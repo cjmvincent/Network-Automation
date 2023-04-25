@@ -4,5 +4,5 @@ ansible_connection: winrm
 ansible_user: cvincent
 host_key_checking: false
 ansible_port: 5986
-ansbile_winrm_scheme: https
+ansible_winrm_scheme: https
 ansible_winrm_server_cert_validation: ignore
