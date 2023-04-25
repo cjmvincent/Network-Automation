@@ -1,7 +1,8 @@
 ---
 
 ansible_connection: winrm
-ansible_user: developer
-ansible_password: C1sco12345
+ansible_user: cvincent
 host_key_checking: false
-ansible_port: 22
+ansible_port: 5986
+ansbile_winrm_scheme: https
+ansible_winrm_server_cert_validation: ignore
