@@ -1,0 +1,15 @@
+---
+
+
+- name: Copy file
+  hosts: sops-test
+  vars:
+
+  tasks:
+
+    - name: Copy file from server to remote host
+      win_copy:
+        src: C:\temp\test.txt
+        dest: C:\temp\
+        remote_src: yes
+        
