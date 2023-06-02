@@ -10,6 +10,8 @@ dist-rtr02 ansible_host=10.10.20.176
 dist-sw01 ansible_host=10.10.20.177
 dist-sw02 ansible_host=10.10.20.178
 
+[arubaoss]
+
 [windows]
 sops-cvincent
 
