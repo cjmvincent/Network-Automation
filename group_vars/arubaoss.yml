@@ -1,6 +1,7 @@
 ---
 
-ansible_user: "admin"
-ansible_password: "password"
+ansible_user: admin
+ansible_password: password
 ansible_connection: local  # REST API connection method
-ansible_network_os: arubaoss
+ansible_network_os: aruba
+ansible_port: 22
