@@ -55,7 +55,7 @@ sudo git clone https://github.com/cjmvincent/Network-Automation.git .
 #ansible-galaxy collection install arubanetworks.aoscx
 #ansible-galaxy collection install arubanetworks.aos_switch
 #ansible-galaxy collection install ansible.windows
-
+#ansible-galaxy install arubanetworks.aruba_central_role
 
 # install and create site (instance) of checkmk
 #cd /tmp/
