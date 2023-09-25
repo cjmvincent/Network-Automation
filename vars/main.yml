@@ -1,9 +1,0 @@
-
-
-ntp_server: "1.1.1.1"
-
-dhcp_server: "2.2.2.2"
-
-dns_server: "3.3.3.3"
-
-domain_name: "cisco.com"
