@@ -18,54 +18,54 @@ vlan 1
    ipv6 enable
    ipv6 address dhcp full
    exit
-vlan {{ secure }}
+vlan {{ secure_vlan }}
    name "SECURE"
    tagged 43-48,51-52
    no ip address
    exit
-vlan {{ guest }}
+vlan {{ guest_vlan }}
    name "GUEST"
    tagged 43-48,51-52
    no ip address
    exit
-vlan {{ sw_mgmt }}
+vlan {{ sw_mgmt_vlan }}
    name "SW_MGMT"
    tagged 51
    ip address {{ mgmt_ip }} 255.255.255.0
    exit
-vlan {{ ap_mgmt}}
+vlan {{ ap_mgmt_vlan }}
    name "AP_MGMT"
    untagged 43-48
    tagged 51-52
    no ip address
    exit
-vlan {{ voip }}
+vlan {{ voip_vlan }}
    name "VOIP"
    tagged 51-52
    no ip address
    voice
    exit
-vlan {{ ext_ap_mgmt }}
+vlan {{ ext_ap_mgmt_vlan }}
    name "Eternal_AP_MGMT"
    tagged 51-52
    no ip address
    exit
-vlan {{ secuirty }}
+vlan {{ secuirty_vlan }}
    name "SECURITY"
    tagged 51-52
    no ip address
    exit
-vlan {{iot }}
+vlan {{iot_vlan }}
    name "IOT"
    tagged 51-52
    no ip address
    exit
-vlan {{ video }}
+vlan {{ video_vlan }}
    name "VIDEO"
    tagged 51-52
    no ip address
    exit
-vlan {{ idf_data }}
+vlan {{ idf_data_vlan }}
    name "IDF_DATA"
    untagged 1-42
    tagged 51-52
@@ -84,8 +84,8 @@ device-identity name "VOIP-Phone"
    lldp sys-name "Polycom"
    exit
 device-profile name "Phone-Profile"
-   untagged-vlan 431
-   tagged-vlan 404
+   untagged-vlan {{ idf_data_vlan }}
+   tagged-vlan {{ voip_vlan }}
    exit
 device-profile device-type "VOIP-Phone"
    associate "Phone-Profile"
