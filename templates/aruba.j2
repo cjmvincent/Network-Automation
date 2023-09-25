@@ -1,14 +1,14 @@
-hostname "RHCEC-IDF1"
+hostname {{ hostname }}
 
 timesync ntp
 ntp unicast
-ntp server 10.101.0.10 iburst
-ntp server 10.101.0.11 iburst
+ntp server {{ ntp_server }} iburst
+ntp server {{ ntp_server }} iburst
 ntp enable
 time daylight-time-rule continental-us-and-canada
 time timezone -300
-ip default-gateway 10.57.2.1
-ip dns server-address priority 1 10.101.0.10
+ip default-gateway {{ gateway }}
+ip dns server-address priority 1 {{ dns_server }}
 snmp-server community "public" unrestricted
 vlan 1
    name "DEFAULT_VLAN"
@@ -18,58 +18,57 @@ vlan 1
    ipv6 enable
    ipv6 address dhcp full
    exit
-vlan 128
+vlan {{ secure }}
    name "SECURE"
-   tagged 1,43-48,51-52
+   tagged 43-48,51-52
    no ip address
    exit
-vlan 192
+vlan {{ guest }}
    name "GUEST"
-   tagged 1,43-48,51-52
+   tagged 43-48,51-52
    no ip address
    exit
-vlan 402
+vlan {{ sw_mgmt }}
    name "SW_MGMT"
    tagged 51
-   ip address 10.57.2.11 255.255.255.0
+   ip address {{ mgmt_ip }} 255.255.255.0
    exit
-vlan 403
+vlan {{ ap_mgmt}}
    name "AP_MGMT"
    untagged 43-48
    tagged 51-52
    no ip address
    exit
-vlan 404
+vlan {{ voip }}
    name "VOIP"
    tagged 51-52
    no ip address
    voice
    exit
-vlan 405
+vlan {{ ext_ap_mgmt }}
    name "Eternal_AP_MGMT"
-   untagged 1
    tagged 51-52
    no ip address
    exit
-vlan 406
+vlan {{ secuirty }}
    name "SECURITY"
    tagged 51-52
    no ip address
    exit
-vlan 407
+vlan {{iot }}
    name "IOT"
    tagged 51-52
    no ip address
    exit
-vlan 412
+vlan {{ video }}
    name "VIDEO"
-   tagged 51
+   tagged 51-52
    no ip address
    exit
-vlan 431
+vlan {{ idf_data }}
    name "IDF_DATA"
-   untagged 2-42
-   tagged 51
+   untagged 1-42
+   tagged 51-52
    no ip address
    exit
 spanning-tree
