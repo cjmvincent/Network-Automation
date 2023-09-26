@@ -1,7 +1,7 @@
 ---
 
 - name: Backup running config of network devices
-  hosts: sandbox-iosxe-latest-1.cisco.com
+  hosts: localhost
   gather_facts: false
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
@@ -12,6 +12,14 @@
       file:
         path: "/etc/ansible/backups/{{ date }}"
         state: directory
+
+
+- name: Backup running config of network devices
+  hosts: aruba
+  gather_facts: false
+
+
+  tasks:
 
     - name: Backup Cisco configuration to /etc/ansible/backups/
       ios_config:
