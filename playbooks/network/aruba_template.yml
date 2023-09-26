@@ -12,6 +12,6 @@
     tasks:
       - name: Generate Aruba Basic Config
         template:
-          src: "templates/aruba.j2"
-          dest: "configs/{{inventory_hostname}}.cfg"
+          src: "./templates/aruba.j2"
+          dest: "./configs/{{inventory_hostname}}.cfg"
         delegate_to: localhost
