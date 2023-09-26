@@ -1,8 +1,8 @@
 ---
 
 dns_servers:
-  - dns-server-1: 1.1.1.1
-  - dns-server-2: 2.2.2.2
+  - 1.1.1.1
+  - 2.2.2.2
 
 ntp_server: 10.10.10.3
 
