@@ -5,8 +5,15 @@
 sudo apt update
 sudo apt upgrade -y
 
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
 
 # add required repositories for the packages and utilities I want to install
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+apt-cache policy docker-ce
+sudo usermod -aG docker ${USER}
+su - ${USER}
+
 sudo add-apt-repository --yes universe
 sudo add-apt-repository --yes ppa:ansible/ansible
 sudo add-apt-repository --yes ppa:deadsnakes/ppa
@@ -18,9 +25,9 @@ sudo apt upgrade -y
 # install libs, dependencies, and apps
 sudo apt install build-essential net-tools software-properties-common \
     synaptic curl zsh \
-    git-core python-pip \
-    docker.io docker-ce docker-ce-cli docker-compose-plugin containerd.io \
-    ansible-core ipcalc -y
+    git python3-pip \
+    docker-ce docker-ce-cli docker-compose-plugin containerd.io docker-buildx-plugin \
+    ansible ipcalc -y
 
 
 sudo apt update
