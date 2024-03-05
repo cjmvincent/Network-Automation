@@ -5,7 +5,6 @@
 sudo apt update
 sudo apt upgrade --yes
 
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
 
 # add required repositories for the packages and utilities I want to install
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
