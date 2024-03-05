@@ -7,6 +7,7 @@ sudo apt upgrade --yes
 
 
 # add required repositories for the packages and utilities I want to install
+echo "deb [trusted=yes] https://ppa.ipinfo.net/ /" | sudo tee  "/etc/apt/sources.list.d/ipinfo.ppa.list"
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
 apt-cache policy docker-ce
@@ -24,7 +25,7 @@ sudo apt upgrade --yes
 # install libs, dependencies, and apps
 sudo apt install build-essential net-tools software-properties-common \
     synaptic curl zsh git \
-    docker.io ansible ipcalc --yes
+    docker.io ansible ipcalc ipinfo-cli --yes
 
 sudo apt update
 sudo apt upgrade --yes
@@ -36,10 +37,6 @@ sudo pip install --upgrade virtualenv
 # install some network management tools
 #pip install paramiko netmiko napalm pywinrm ansible ansible-pylibssh awxkit --user
 
-# install ipinfo cli tool
-echo "deb [trusted=yes] https://ppa.ipinfo.net/ /" | sudo tee  "/etc/apt/sources.list.d/ipinfo.ppa.list"
-sudo apt update
-sudo apt install ipinfo
 
 # install vscode
 sudo snap install code --classic
