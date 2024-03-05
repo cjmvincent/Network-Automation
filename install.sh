@@ -1,7 +1,7 @@
 # to get started simply run:
 # bash -c "$(wget -qO - https://raw.githubusercontent.com/cjmvincent/Network-Automation/main/install.sh)"
 
-# just to make sure all packages and such are fresh
+# just to make sure all packages  are so fresh and so clean
 sudo apt update
 sudo apt upgrade --yes
 
