@@ -24,19 +24,8 @@ sudo apt upgrade --yes
 
 # install libs, dependencies, and apps
 sudo apt install build-essential net-tools software-properties-common \
-<<<<<<< HEAD
     synaptic curl zsh git \
     docker.io ansible ipcalc --yes
-=======
-    synaptic curl zsh \
-    git python3-pip \
-    docker-ce docker-ce-cli docker-compose-plugin containerd.io docker-buildx-plugin \
-    ansible ipcalc -y
-<<<<<<< Updated upstream
-=======
->>>>>>> 871ffc6e473fb00d90a743d374680846c497c2ba
->>>>>>> Stashed changes
-
 
 sudo apt update
 sudo apt upgrade --yes
@@ -48,10 +37,18 @@ sudo pip install --upgrade virtualenv
 # install some network management tools
 #pip install paramiko netmiko napalm pywinrm ansible ansible-pylibssh awxkit --user
 
+# install ipinfo cli tool
+echo "deb [trusted=yes] https://ppa.ipinfo.net/ /" | sudo tee  "/etc/apt/sources.list.d/ipinfo.ppa.list"
+sudo apt update
+sudo apt install ipinfo
 
 # install vscode
 sudo snap install code --classic
 sudo snap install postman vlc
+
+# install and configure Ansible-Semaphore
+sudo snap install semaphore
+sudo semaphore user add --admin --name "Your Name" --login ${USER} --email your-email@examaple.com --password your_password
 
 
 # clone ansilbe repo to ansible directory
