@@ -3,7 +3,7 @@
 
 # just to make sure all packages and such are fresh
 sudo apt update
-sudo apt upgrade -y
+sudo apt upgrade --yes
 
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
 
@@ -19,26 +19,34 @@ sudo add-apt-repository --yes ppa:ansible/ansible
 sudo add-apt-repository --yes ppa:deadsnakes/ppa
 
 sudo apt update
-sudo apt upgrade -y
+sudo apt upgrade --yes
 
 
 # install libs, dependencies, and apps
 sudo apt install build-essential net-tools software-properties-common \
+<<<<<<< HEAD
+    synaptic curl zsh git \
+    docker.io ansible ipcalc --yes
+=======
     synaptic curl zsh \
     git python3-pip \
     docker-ce docker-ce-cli docker-compose-plugin containerd.io docker-buildx-plugin \
     ansible ipcalc -y
+<<<<<<< Updated upstream
+=======
+>>>>>>> 871ffc6e473fb00d90a743d374680846c497c2ba
+>>>>>>> Stashed changes
 
 
 sudo apt update
-sudo apt upgrade -y
+sudo apt upgrade --yes
 
 #update pip
 sudo pip install --upgrade pip
 sudo pip install --upgrade virtualenv
 
 # install some network management tools
-pip install paramiko netmiko napalm pywinrm ansible ansible-pylibssh awxkit mackup --user
+#pip install paramiko netmiko napalm pywinrm ansible ansible-pylibssh awxkit --user
 
 
 # install vscode
@@ -47,11 +55,11 @@ sudo snap install postman vlc
 
 
 # clone ansilbe repo to ansible directory
-if [! -d "/etc/ansible"] then
-    sudo mkdir /etc/ansible
+if [! -d "~/.ansible"] then
+    sudo mkdir ~/.ansible
 fi
 
-cd /etc/ansible
+cd ~/.ansible
 sudo rm * -rf
 sudo git clone https://github.com/cjmvincent/Network-Automation.git .
 
@@ -62,8 +70,7 @@ sudo git clone https://github.com/cjmvincent/Network-Automation.git .
 #ansible-galaxy collection install arubanetworks.aoscx
 #ansible-galaxy collection install arubanetworks.aos_switch
 #ansible-galaxy collection install ansible.windows
-#ansible-galaxy install arubanetworks.aruba_central_role
-#ansible-galaxy collection install community.network
+
 
 # install and create site (instance) of checkmk
 #cd /tmp/
@@ -77,11 +84,27 @@ sudo git clone https://github.com/cjmvincent/Network-Automation.git .
 sudo ufw enable
 
 sudo ufw allow ssh
-sudo ufw allow apache
 
 # start docker
-sudo systemctl enable --now docker
+#sudo systemctl enable --now docker
 
 
-# install ohmyzsh
-#sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# # install homebrew if using mac
+# if test ! $(which brew); then
+#   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+#   echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
+#   eval "$(/opt/homebrew/bin/brew shellenv)"
+# fi
+
+# brew update
+
+
+# # install ohmyzsh
+# if test ! $(which omz); then
+#   /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)"
+# fi
+
+# # Removes .zshrc from $HOME (if it exists) and symlinks the .zshrc file from the .dotfiles
+# rm -rf $HOME/.zshrc
+# ln -s .zshrc $HOME/.zshrc%          
