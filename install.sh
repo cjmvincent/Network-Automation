@@ -83,17 +83,6 @@ sudo ufw allow ssh
 #sudo systemctl enable --now docker
 
 
-# # install homebrew if using mac
-# if test ! $(which brew); then
-#   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-#   echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
-#   eval "$(/opt/homebrew/bin/brew shellenv)"
-# fi
-
-# brew update
-
-
 # # install ohmyzsh
 # if test ! $(which omz); then
 #   /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)"
