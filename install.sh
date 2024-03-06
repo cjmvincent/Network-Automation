@@ -91,3 +91,12 @@ sudo ufw allow ssh
 # # Removes .zshrc from $HOME (if it exists) and symlinks the .zshrc file from the .dotfiles
 # rm -rf $HOME/.zshrc
 # ln -s .zshrc $HOME/.zshrc%          
+
+
+# create links for OS host file and OS resolv file
+sudo ln -f ./hosts_OS /etc/hosts
+sudo ln -f ./resolv.conf /etc/resolv.conf
+
+# create links for ansible config and host file in the /etc/ansible directory
+sudo ln -f ./hosts /etc/ansible/hosts
+sudo ln -f ./ansible.cfg /etc/ansible/ansible.cfg
