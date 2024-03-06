@@ -24,8 +24,9 @@ sudo apt upgrade --yes
 
 # install libs, dependencies, and apps
 sudo apt install build-essential net-tools software-properties-common \
-    synaptic curl zsh git \
-    docker.io ansible ipcalc ipinfo-cli --yes
+    curl zsh git \
+    synaptic docker.io ansible \
+    ipcalc ipinfo --yes
 
 sudo apt update
 sudo apt upgrade --yes
