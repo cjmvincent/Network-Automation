@@ -8,11 +8,11 @@ sudo apt upgrade --yes
 
 # add required repositories for the packages and utilities I want to install
 echo "deb [trusted=yes] https://ppa.ipinfo.net/ /" | sudo tee  "/etc/apt/sources.list.d/ipinfo.ppa.list"
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-apt-cache policy docker-ce
-sudo usermod -aG docker ${USER}
-su - ${USER}
+#curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+#sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+#apt-cache policy docker-ce
+#sudo usermod -aG docker ${USER}
+#su - ${USER}
 
 sudo add-apt-repository --yes universe
 sudo add-apt-repository --yes ppa:ansible/ansible
@@ -33,7 +33,7 @@ sudo apt upgrade --yes
 
 #update pip
 sudo pip install --upgrade pip
-sudo pip install --upgrade virtualenv
+#sudo pip install --upgrade virtualenv
 
 # install some network management tools
 #pip install paramiko netmiko napalm pywinrm ansible ansible-pylibssh awxkit --user
@@ -41,11 +41,10 @@ sudo pip install --upgrade virtualenv
 
 # install vscode
 sudo snap install code --classic
-sudo snap install postman vlc
+sudo snap install postman vlc semaphore
 
-# install and configure Ansible-Semaphore
-sudo snap install semaphore
-sudo semaphore user add --admin --name "Your Name" --login ${USER} --email your-email@examaple.com --password your_password
+# configure Ansible-Semaphore
+#sudo semaphore user add --admin --name "Your Name" --login ${USER} --email your-email@examaple.com --password your_password
 
 
 # clone ansilbe repo to ansible directory
