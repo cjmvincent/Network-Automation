@@ -1,0 +1,49 @@
+---
+
+- name: Upgrade Linux servers
+  hosts: 
+  become: true
+  # vars:
+  #   reboot_connect_timeout: 5
+  #   reboot_post_reboot_delay: 15
+  #   reboot_timeout: 600
+
+  tasks:
+
+    - name: Upgrade CentOS
+      yum:
+        name: '*'
+        state: latest
+      when: ansible_os_family == "RedHat"
+
+
+    - name: Update repositories cache
+      apt:
+        update_cache: yes
+        upgrade: yes
+      when: ansible_os_family == "Debian"
+
+
+    - name: Check if reboot is required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required
+
+
+    - name: Send Teams message when reboot is required
+      uri:
+        url: "{{ teams_webhook_url }}"
+        method:  POST
+        body_format: json
+        body:
+          title: "Ansible Alert"
+          text: "Reboot required for {{inventory_hostname }} now that updates have finished."
+      when: reboot_required.stat.exists
+
+
+    # - name: Reboot hosts
+    #   reboot:
+    #     msg: "Rebooting via Ansible to apply updates."
+    #     connect_timeout: "{{ reboot_connect_timeout }}"
+    #     post_reboot_delay: "{{ reboot_post_reboot_delay }}"
+    #     reboot_timeout: "{{ reboot_timeout }}"

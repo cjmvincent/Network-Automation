@@ -1,7 +1,7 @@
 ---
 
 - name: Upgrade Windows Servers
-  hosts: sops-test
+  hosts: 
   vars:
 
   tasks:

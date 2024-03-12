@@ -1,0 +1,59 @@
+---
+
+- name: Upgrade OS firmware
+  hosts: ios
+  vars:
+    system_upgrade_version: "ios-123"
+
+  tasks:
+
+    - name: Check current version
+      ios_facts:
+
+    - debug: 
+        msg:
+        - "Current version is {{ ansible_net_version }}"
+        - "Upgrade version is {{ system_upgrade_version }}"
+
+    - debug: 
+        msg:
+        - "Version is not compliant, and will attempted to be ugpraded."
+      when: ansible_net_version != system_upgrade_version
+
+##Backup targeted devices.
+- name: Copy image and perform reboot
+  hosts: ios
+  gather_facts: false
+  vars:
+    system_image_filename: "ios-123.bin"
+    tftp_server: "10.5.41.10"
+
+  tasks:
+
+    - name: Copy image with tftp
+      ios_command:
+       commands:
+        - command: 'copy tftp://{{ tftp_server }}/{{ system_image_filename }} flash:{{ system_image_filename }}'
+          prompt: "Destination filename [test.txt]?"
+          answer: "\r"
+        
+    - name: Set boot file
+      ios_config:
+        commands:
+          - "boot system flash:{{ system_image_filename }}"
+        save_when: always
+
+    - name: Reboot host
+      ios_command:
+        command: reload
+        prompt:
+          - confirm
+        answer:
+          - 'y'
+
+    - name: Wait for device to come back up.
+      wait_for:
+        host: {{ inventory_hostname }}
+        port: 22
+        delay: 90
+      delegate_to: localhost

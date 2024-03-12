@@ -1,0 +1,32 @@
+---
+
+- name: Install AD Roles and Features
+  hosts: 
+  vars:
+
+  tasks:
+
+    - name: Install RSAT-ADDS
+      win_feature:
+        name:  RSAT-ADDS
+        state: present
+        include_management_tools: true
+        include_sub_features: true
+
+    - name: Install RSAT-DHCP
+      win_feature:
+        name:  RSAT-DHCP
+        state: present
+        include_management_tools: true
+        include_sub_features: true
+
+    - name: Install RSAT-DNS-Server
+      win_feature:
+        name:  RSAT-DNS-Server
+        state: present
+        include_management_tools: true
+        include_sub_features: true
+
+    # - name: Reboot when Feature and Roles requires it
+    #   win_reboot:
+    #   when: dhcp_install.reboot_required

@@ -13,11 +13,11 @@
         path: "/etc/ansible/backups/{{ date }}"
         state: directory
 
-
 - name: Backup running config of network devices
-  hosts: aruba
+  hosts: 
   gather_facts: false
-
+  vars:
+    date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
 
   tasks:
 
@@ -35,4 +35,4 @@
         backup_options:
           filename:  "{{ inventory_hostname }}-{{ date }}.txt"
           dir_path: "/etc/ansible/backups/{{ date }}"
-      when: ansible_network_os == "arubaoss"
+      when: ansible_network_os == "aruba"

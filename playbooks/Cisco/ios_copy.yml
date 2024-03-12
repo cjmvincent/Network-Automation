@@ -1,0 +1,22 @@
+---
+
+- name: Upgrade IOS image
+  hosts: 
+  gather_facts: false
+
+  tasks:
+
+#    - name: Copy image from control node to host
+#      net_put:
+#        src: //10.5.41.10/c$/TFTP-Root/test.txt
+#        protocol: tftp
+#        dest: flash:/test.txt
+#      vars:
+#        ansible_command_timeout: 100
+
+    - name: Copy with tftp
+      ios_command:
+       commands:
+        - command: 'copy tftp://10.5.41.10/test.txt flash:test.txt'
+          prompt: "Destination filename [test.txt]?"
+          answer: "\r"

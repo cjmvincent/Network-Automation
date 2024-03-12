@@ -1,0 +1,23 @@
+---
+
+- name: Reboot windows devices
+  hosts: 
+  vars:
+
+  tasks:
+
+    - name: Reboot devices like a psycho
+      win_reboot:
+
+
+    # - name: Send Teams message when reboot is required
+    #   uri:
+    #     url: "{{ teams_webhook_url }}"
+    #     method:  POST
+    #     body_format: json
+    #     body:
+    #       title: "Ansible Alert"
+    #       text: "Reboot required for {{inventory_hostname }} now that updates have finished."
+    #   when: update_result.reboot_required
+
+

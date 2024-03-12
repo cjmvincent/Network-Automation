@@ -1,0 +1,12 @@
+---
+
+- name: Enrolling Aruba Switches into Central
+  hosts: 
+  gather_facts: false
+
+  tasks:
+
+    - name: Force switches to check in
+      aruba_config:
+        lines:
+          - activate provision disable          

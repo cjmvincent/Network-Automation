@@ -1,0 +1,22 @@
+---
+
+- name: Enable syslogging
+  hosts: 
+  gather_facts: false
+  tasks:
+
+    - name: Enable logging ArubaOSS
+      aruba_config:
+        lines:
+          - logging 10.8.0.12 udp 1415
+          - logging severity warning
+      when: ansible_network_os == "arubaoss"
+
+    - name: Enable logging iOS
+      ios_config:
+        lines:
+          - logging on
+          - logging host 10.8.0.12 transport udp port 1415
+          - logging trap 4
+          - logging buffered informational
+      when: ansible_network_os == "ios"

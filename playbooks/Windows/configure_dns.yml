@@ -1,0 +1,19 @@
+---
+
+- name: Install AD Roles and Features
+  hosts: 
+  vars:
+
+  tasks:
+
+    - name: Install DNS
+      win_feature:
+        name: DNS
+        state: present
+        include_management_tools: true
+        include_sub_features: true
+      register: dns_install
+
+    - name: Reboot when Feature and Roles requires it
+      win_reboot:
+      when: dns_install.reboot_required

@@ -1,7 +1,7 @@
 ---
 
 - name: Retrieve port errors on device
-  hosts: sandbox-iosxe-latest-1.cisco.com
+  hosts: 
   gather_facts: false
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
@@ -13,19 +13,21 @@
         path: "/etc/ansible/logs/{{ date }}"
         state: directory
 
-
-    - name: Get int status
-      cisco.ios.ios_command:
+    - name: iOS
+      ios_command:
         commands:
           - sh int cou err
+      when: ansible_network_os == "ios"
       register: errors
     
+    - name: ArubaOSS
+      aruba_command:
+        commands:
+          - sh int
+      when: ansible_network_os == "aruba"
+      register: errors
+
     - name: Export errors to logs
-      ansible.builtin.copy:
+      copy:
         content: "{{ errors.stdout[0] }}"
         dest: "/etc/ansible/logs/{{ date }}/{{ inventory_hostname }}_errors.txt"
-
-
-
-
-

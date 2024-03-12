@@ -1,0 +1,13 @@
+---
+
+- name: Add a user
+  hosts: 
+  gather_facts: false
+  
+  tasks:
+  
+    - name: Add User
+      win_user:
+        name: test
+        password: "T3ST"
+        state: present
