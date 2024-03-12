@@ -94,7 +94,6 @@ sudo ufw allow ssh
 
 # create links for OS host file and OS resolv file
 sudo ln -f ./hosts_OS /etc/hosts
-sudo ln -f ./resolv.conf /etc/resolv.conf
 
 # create links for ansible config and host file in the /etc/ansible directory
 sudo ln -f ./hosts /etc/ansible/hosts
