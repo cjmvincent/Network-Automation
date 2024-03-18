@@ -41,7 +41,7 @@ device-identity name "VOIP-Phone"
    lldp sys-name "Polycom"
    exit
 device-profile name "Phone-Profile"
-   untagged-vlan {{ vlans[vlan].data.id }}
+   untagged-vlan {{ vlans[vlan].idf_data.id }}
    tagged-vlan {{ vlans[vlan].voip.id }}
    exit
 device-profile device-type "VOIP-Phone"
