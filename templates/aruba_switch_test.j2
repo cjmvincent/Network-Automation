@@ -3,28 +3,51 @@ logging {{ logging_server }} {{ logging_protocol}} {{ logging_port }}
 logging severity {{ logging_severity }}
 timesync ntp
 ntp unicast
-ntp server {{ ntp_servers }} iburst
+{% for server in ntp_servers %}
+ntp server {{ ntp_servers[server].ip_addr }} iburst
+{% endfor %}
 ntp enable
 time daylight-time-rule continental-us-and-canada
 time timezone -300
 ip default-gateway {{ gateway_ip }}
-ip dns server-address priority 1 {{ dns_servers }}
+{% for server in dns_servers %}
+ip dns server-address priority 1 {{ dns_servers[server].ip_addr }}
+{% endfor %}
 snmp-server community "public" unrestricted
 {% for vlan in vlans %}
-vlan {{ vlans[vlan].name }}
+vlan {{ vlans[vlan].id }}
    name "{{ vlans[vlan].name }}"
 {% if 'ip_addr' in vlans[vlan] %}
    ip address {{ vlans[vlan].ip_addr }}
 {% else %}
    no ip address
 {% endif %}
+{% if 'tagged' in vlans[vlan] %}
+   tagged {{ vlans[vlan].tagged }}
+{% else %}
+{% endif %}
+{% if 'untagged' in vlans[vlan] %}
+   untagged {{ vlans[vlan].untagged }}
+{% else %}
+{% endif %}
+   exit
 {% endfor %}
 spanning-tree
-spanning-tree 51 priority 4
-spanning-tree 52 priority 4
+spanning-tree {{ vlans.sw_mgmt.tagged }} priority 4
 spanning-tree force-version rstp-operation
 no tftp server
 no autorun
 no dhcp config-file-update
 no dhcp image-file-update
 no dhcp tr69-acs-url
+device-identity name "VOIP-Phone"
+   lldp sys-name "Polycom"
+   exit
+device-profile name "Phone-Profile"
+   untagged-vlan {{ vlans.idf_data.id }}
+   tagged-vlan {{ vlans.voip.id }}
+   exit
+device-profile device-type "VOIP-Phone"
+   associate "Phone-Profile"
+   enable
+   exit
