@@ -13,16 +13,16 @@ snmp-server community "public" unrestricted
 {% for vlan in vlans %}
 vlan {{ vlan }}
    name "{{ vlans[vlan].name }}"
-{% if 'vlans[vlan].ip_addr' in vlans %}
+{% if 'ip_addr' in vlans[vlan] %}
    ip address {{ vlans[vlan].ip_addr }}
 {% else %}
-   whoops
+   no ip address
 {% endif %}
-{% if 'tagged' in vlans %}
+{% if 'tagged' in vlans[vlan] %}
    tagged {{ vlans[vlan].tagged }}
 {% else %}
 {% endif %}
-{% if 'untagged' in vlans %}
+{% if 'untagged' in vlans[vlan] %}
    untagged {{ vlans[vlan].untagged }}
 {% else %}
 {% endif %}
@@ -41,8 +41,8 @@ device-identity name "VOIP-Phone"
    lldp sys-name "Polycom"
    exit
 device-profile name "Phone-Profile"
-   untagged-vlan {{ idf_data_vlan }}
-   tagged-vlan {{ voip_vlan }}
+   untagged-vlan {{ vlans[vlan].data.id }}
+   tagged-vlan {{ vlans[vlan].voip.id }}
    exit
 device-profile device-type "VOIP-Phone"
    associate "Phone-Profile"
