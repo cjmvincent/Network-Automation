@@ -52,8 +52,8 @@ device-profile device-type "VOIP-Phone"
    enable
    exit
 device-profile name "ArubaAP"
-   untagged-vlan {{ vlans.secure.id }},{{ vlans.guest.id }}
-   tagged-vlan {{ vlans.ap_mgmt.id }}
+   untagged-vlan {{ vlans.ap_mgmt.id }}
+   tagged-vlan {{ vlans.secure.id }},{{ vlans.guest.id }}
    exit
 device-profile device-type aruba-ap
    associate "ArubaAP"
