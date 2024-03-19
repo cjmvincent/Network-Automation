@@ -59,3 +59,13 @@ device-profile device-type aruba-ap
    associate "ArubaAP"
    enable
    exit
+   device-identity name "IP-Camera"
+   lldp sys-name "Avigilon"
+   exit
+device-profile name "IP-Camera"
+   untagged-vlan {{ vlans.security.id }}
+   exit
+device-profile device-type "IP-Camera"
+   associate "IP-Camera"
+   enable
+   exit
