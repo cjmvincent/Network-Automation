@@ -51,3 +51,11 @@ device-profile device-type "VOIP-Phone"
    associate "Phone-Profile"
    enable
    exit
+device-profile name "ArubaAP"
+   untagged-vlan {{  }}
+   tagged-vlan {{  }}
+   exit
+device-profile device-type aruba-ap
+   associate "ArubaAP"
+   enable
+   exit
