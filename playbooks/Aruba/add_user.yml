@@ -1,0 +1,10 @@
+---
+
+- name: add james as an operator
+  hosts: arubaoss
+  gather_facts: false
+  
+  tasks:
+  - name: add james
+    aruba_config:
+      lines: password operator user-name jduhart plaintext BCS@cl1!
