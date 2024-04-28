@@ -1,5 +1,6 @@
 hostname {{ inventory_hostname }}
-
+logging {{ logging_server }} {{ logging_protocol}} {{ logging_port }}
+logging severity {{ logging_severity }}
 timesync ntp
 ntp unicast
 ntp server {{ ntp_servers }} iburst
@@ -9,67 +10,24 @@ time timezone -300
 ip default-gateway {{ gateway_ip }}
 ip dns server-address priority 1 {{ dns_servers }}
 snmp-server community "public" unrestricted
-vlan 1
-   name "DEFAULT_VLAN"
-   no untagged 1-48
-   untagged 49-52
-   ip address dhcp-bootp
-   ipv6 enable
-   ipv6 address dhcp full
-   exit
-vlan {{ secure_vlan }}
-   name "SECURE"
-   tagged 43-48,51-52
+{% for vlan in vlans %}
+vlan {{ vlan }}
+   name "{{ vlans[vlan].name }}"
+{% if 'ip_addr' in vlans[vlan] %}
+   ip address {{ vlans[vlan].ip_addr }}
+{% else %}
    no ip address
+{% endif %}
+{% if 'tagged' in vlans[vlan] %}
+   tagged {{ vlans[vlan].tagged }}
+{% else %}
+{% endif %}
+{% if 'untagged' in vlans[vlan] %}
+   untagged {{ vlans[vlan].untagged }}
+{% else %}
+{% endif %}
    exit
-vlan {{ guest_vlan }}
-   name "GUEST"
-   tagged 43-48,51-52
-   no ip address
-   exit
-vlan {{ sw_mgmt_vlan }}
-   name "SW_MGMT"
-   tagged 51
-   ip address {{ mgmt_ip }} 255.255.255.0
-   exit
-vlan {{ ap_mgmt_vlan }}
-   name "AP_MGMT"
-   untagged 43-48
-   tagged 51-52
-   no ip address
-   exit
-vlan {{ voip_vlan }}
-   name "VOIP"
-   tagged 51-52
-   no ip address
-   voice
-   exit
-vlan {{ ext_ap_mgmt_vlan }}
-   name "Eternal_AP_MGMT"
-   tagged 51-52
-   no ip address
-   exit
-vlan {{ security_vlan }}
-   name "SECURITY"
-   tagged 51-52
-   no ip address
-   exit
-vlan {{iot_vlan }}
-   name "IOT"
-   tagged 51-52
-   no ip address
-   exit
-vlan {{ video_vlan }}
-   name "VIDEO"
-   tagged 51-52
-   no ip address
-   exit
-vlan {{ idf_data_vlan }}
-   name "IDF_DATA"
-   untagged 1-42
-   tagged 51-52
-   no ip address
-   exit
+{% endfor %}
 spanning-tree
 spanning-tree 51 priority 4
 spanning-tree 52 priority 4
@@ -83,8 +41,8 @@ device-identity name "VOIP-Phone"
    lldp sys-name "Polycom"
    exit
 device-profile name "Phone-Profile"
-   untagged-vlan {{ idf_data_vlan }}
-   tagged-vlan {{ voip_vlan }}
+   untagged-vlan {{ vlans[vlan].idf_data.id }}
+   tagged-vlan {{ vlans[vlan].voip.id }}
    exit
 device-profile device-type "VOIP-Phone"
    associate "Phone-Profile"

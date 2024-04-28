@@ -1,7 +1,7 @@
 ---
 
 - name: Upgrade Windows Servers
-  hosts: 
+  hosts: test
   vars:
 
   tasks:

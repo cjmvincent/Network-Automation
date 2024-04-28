@@ -1,15 +1,10 @@
 ---
 
 - name: Upgrade Windows Servers
-  hosts: 
+  hosts: test
   vars:
 
   tasks:
-
-    - name: Create directory for update.txt file
-      win_file:
-        path: C:\Temp
-        state: directory
 
     - name: Upgrade
       win_updates:
@@ -21,6 +16,9 @@
         log_path: /Temp/update.txt
       register: update_result
 
+    - name: Reboot host if required
+      win_reboot:
+      when: update_result.reboot_required
 
     - name: Send Teams message when reboot is required
       uri:
@@ -29,10 +27,5 @@
         body_format: json
         body:
           title: "Ansible Alert"
-          text: "Reboot required for {{inventory_hostname }} now that updates have finished."
-      when: update_result.reboot_required
-
-
-        # - name: Reboot host if required
-    #   win_reboot:
-    #   when: update_result.reboot_required
+          text: "{{ inventory_hostname }} has been updated and will now reboot."
+      delegate_to: 127.0.0.1

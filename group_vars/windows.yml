@@ -1,9 +1,10 @@
 ---
 
 ansible_connection: winrm
-ansible_user: cvincent
-ansible_password: password123
+ansible_user: test
+ansible_password: test
 host_key_checking: false
 ansible_port: 5986
-ansible_winrm_scheme: https
+ansible_winrm_cheme: https
 ansible_winrm_server_cert_validation: ignore
+ansible_winrm_transport: ntlm

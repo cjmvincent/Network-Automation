@@ -1,7 +1,7 @@
 ---
 
 - name: Upgrade Linux servers
-  hosts: 
+  hosts: GRAYLOG
   become: true
   # vars:
   #   reboot_connect_timeout: 5

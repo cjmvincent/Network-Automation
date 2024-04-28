@@ -1,12 +1,4 @@
 ---
 
-dns_servers:
-  - 1.1.1.1
-  - 2.2.2.2
-
-ntp_server: 10.10.10.3
-
-log_server: 10.10.10.4
-
-snmp_server: 10.10.10.5
+teams_webhook_url: "url"
 
