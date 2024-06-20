@@ -1,0 +1,10 @@
+---
+
+- hosts: RHHS-EAST-TRAILER-903 
+
+  tasks:
+    - name: Add config from generated template
+      aruba_config:
+        src: "/etc/ansible/configs/{{ inventory_hostname }}.cfg"
+        match: none
+        save_when: always

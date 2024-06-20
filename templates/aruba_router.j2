@@ -1,0 +1,86 @@
+hostname {{ inventory_hostname }}
+logging {{ logging_server }} {{ logging_protocol}} {{ logging_port }}
+logging severity {{ logging_severity }}
+timesync ntp
+ntp unicast
+ntp server {{ ntp_servers }} iburst
+ntp enable
+time daylight-time-rule continental-us-and-canada
+time timezone -300
+ip dns server-address priority 1 {{ dns_servers }}
+ip route 0.0.0.0 0.0.0.0 {{ default_route }}
+ip routing
+interface A1
+   name "MDF-TRK1"
+   exit
+interface A2
+   name "IDF2-TRK2"
+   exit
+interface A3
+   name "IDF3-TRK3"
+   exit
+interface A4
+   name "IDF4-TRK4"
+   exit
+interface A5
+   name "IDF5-TRK5"
+   exit
+interface A6
+   name "IDF6-TRK6"
+   exit
+interface C1
+   name "MDF-TRK1"
+   exit
+interface C2
+   name "IDF2-TRK2"
+   exit
+interface C3
+   disable
+   name "IDF3-TRK3"
+   exit
+interface C4
+   name "IDF4-TRK4"
+   exit
+interface C5
+   name "IDF5-TRK5"
+   exit
+interface C6
+   name "IDF6-TRK6"
+   exit
+snmp-server community "public" unrestricted
+snmpv3 engineid "00:00:00:0b:00:00:44:5b:ed:8d:47:00"
+oobm
+   ip address dhcp-bootp
+   ipv6 enable
+   ipv6 address dhcp full
+   exit
+{% for vlan in vlans %}
+vlan {{ vlan }}
+   name "{{ vlans[vlan].name }}"
+{% if 'ip_addr' in vlans[vlan] %}
+   ip address {{ vlans[vlan].ip_addr }}
+   ip address-helper {{ dhcp_server }}
+{% else %}
+   no ip address
+{% endif %}
+{% if 'tagged' in vlans[vlan] %}
+   tagged {{ vlans[vlan].tagged }}
+{% else %}
+{% endif %}
+{% if 'untagged' in vlans[vlan] %}
+   untagged {{ vlans[vlan].untagged }}
+{% else %}
+{% endif %}
+   exit
+{% endfor %}
+spanning-tree Trk1 priority 4
+spanning-tree Trk2 priority 4
+spanning-tree Trk3 priority 4
+spanning-tree Trk4 priority 4
+spanning-tree Trk5 priority 4
+spanning-tree Trk6 priority 4
+spanning-tree priority 1 force-version rstp-operation
+no tftp server
+no autorun
+no dhcp config-file-update
+no dhcp image-file-update

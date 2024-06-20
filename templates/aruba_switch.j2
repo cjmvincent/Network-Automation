@@ -15,6 +15,7 @@ vlan {{ vlan }}
    name "{{ vlans[vlan].name }}"
 {% if 'ip_addr' in vlans[vlan] %}
    ip address {{ vlans[vlan].ip_addr }}
+   ip address-helper {{ dhcp_server }}
 {% else %}
    no ip address
 {% endif %}

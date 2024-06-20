@@ -1,0 +1,43 @@
+---
+
+- name: Create directory for ARP table export
+  hosts: localhost
+  gather_facts: false
+  vars:
+    date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
+
+  tasks:
+
+    - name: Create backup directory using today's date
+      file:
+        path: "/etc/ansible/logs/{{ date }}"
+        state: directory
+
+- name: Export ARP table like a psycho
+  hosts: routers
+  gather_facts: false
+  vars:
+    date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
+
+  tasks:
+
+    - name: iOS
+      ios_command:
+        commands: sh arp
+      when: ansible_network_os == "ios"
+      register: results
+    
+    - name: ArubaOSS
+      aruba_command:
+        commands: sh arp
+      when: ansible_network_os == "aruba"
+      register: results
+
+    - name: output
+      debug:
+        var: results
+
+    - name: Export ARP table
+      copy:
+        content: "{{ results | replace('\\n', '\n') }}"
+        dest: "/etc/ansible/logs/{{ date }}/{{ inventory_hostname }}_arp.csv"
