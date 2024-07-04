@@ -1,6 +1,6 @@
 ---
 
-- name: Find mac address in sec-switches
+- name: Find mac address on switchports
   hosts: fmes
   gather_facts: false
   connection: local
@@ -29,12 +29,6 @@
           {{printout.stdout_lines[0] |
             map('regex_replace','^(?:[^ ]*\ ){6}([^ ]*) | (\w+$)') |
             list }}
-
-#    - name: show int desc
-#      aruba_command:
-#        commands:
-#          - "sh interfaces | inc {{ intf[0].strip() }}"
-#      register: printout2
 
     - name: View output
       debug:

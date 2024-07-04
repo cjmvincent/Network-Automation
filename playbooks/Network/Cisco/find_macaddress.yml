@@ -1,6 +1,6 @@
 ---
 
-- name: Find mac address in sec-switches
+- name: Find mac address on switchports
   hosts: llc
   gather_facts: false
   connection: local
