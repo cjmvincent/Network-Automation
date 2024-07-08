@@ -21,9 +21,6 @@
           - "show mac-address | include {{ mac }}"
       register: printout
 
-### NOT WORKING FROM HERE BELOW, TOO LAZY RN TO TROUBLESHOOT
-
-
     - set_fact:
         intf: |
           {{printout.stdout_lines[0] |
