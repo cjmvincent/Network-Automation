@@ -1,0 +1,33 @@
+---
+
+- name: Backup running config of esxi host
+  hosts: localhost
+  vars:
+    date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
+    folder: /path/to/directory
+
+  tasks:
+    - name: Create backup directory
+      file:
+        path: "{{ folder }}{{ date }}"
+        state: directory
+
+- name: Backup config
+  hosts: vcenter
+  vars:
+    date: "{{lookup('pipe','date +%Y-%m-%d') }}"
+    user: admin
+    password: password
+    folder: /path/to/directory
+
+  tasks:
+  
+    - name: do the thing
+      vmware_cfg_backup:
+        hostname: "{{ inventory_hostname }}"
+        username: "{{ user }}"
+        password: "{{ password }}"
+        state: saved
+        dest: "{{ folder }}/{{ date }}"
+        validate_certs: false
+      delegate_to: localhost
