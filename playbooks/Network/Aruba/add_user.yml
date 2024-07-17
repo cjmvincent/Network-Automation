@@ -1,10 +1,14 @@
 ---
 
-- name: add james as an operator
-  hosts: arubaoss
+- name: Add user with specified privligies
+  hosts: aruba
   gather_facts: false
+  vars:
+    user: ""
+    privlege: ""
+    password: ""
   
   tasks:
   - name: add james
     aruba_config:
-      lines: password operator user-name jduhart plaintext BCS@cl1!
+      lines: password {{ privlege }} user-name {{ user }} plaintext {{ password }}

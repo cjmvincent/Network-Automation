@@ -1,0 +1,29 @@
+---
+
+- name: Backup running config of esxi host
+  hosts: localhost
+  vars:
+    date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
+
+  tasks:
+    - name: Create backup directory
+      file:
+        path: "/etc/ansible/backups/{{ date }}"
+        state: directory
+
+- name: Backup config
+  hosts: esxi
+  vars:
+    date: "{{lookup('pipe','date +%Y-%m-%d') }}"
+
+  tasks:
+  
+    - name: Do the backing ups
+      vmware_cfg_backup:
+        hostname: "{{ inventory_hostname }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        state: saved
+        dest: "{{ backup_path }}/{{ date }}"
+        validate_certs: false
+      delegate_to: localhost

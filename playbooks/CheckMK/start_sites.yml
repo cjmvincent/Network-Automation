@@ -1,0 +1,21 @@
+---
+
+- name: Start Checkmk Sites
+  hosts: localhost
+  vars:
+    url: http://bcscheckmk/
+    user: ansible
+    secret: ADJFOWLDKDOCMAZ
+    site: network 
+  collections:
+    - checkmk.general
+
+  tasks:
+
+  - name: Start All Sites
+    activation:
+        server_url: "{{ url }}"
+        site: "{{ site }}"
+        automation_user: "{{ user }}"
+        automation_secret: "{{ secret }}"
+    run_once: 'true'

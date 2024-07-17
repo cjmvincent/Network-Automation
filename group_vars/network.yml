@@ -1,0 +1,6 @@
+---
+
+logging_server: 10.1.1.1
+logging_port: 1415
+logging_protocol: udp
+logging_severity: warning

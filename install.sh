@@ -65,7 +65,7 @@ sudo git clone https://github.com/cjmvincent/Network-Automation.git .
 #ansible-galaxy collection install ansible.windows
 #ansible-galaxy colleciton install community.windows
 #ansible-galaxy collection install microsoft.ad
-
+#ansible-galaxy collection install checkmk.general
 
 # install and create site (instance) of checkmk
 #cd /tmp/

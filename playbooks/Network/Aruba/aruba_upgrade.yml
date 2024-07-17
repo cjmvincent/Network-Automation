@@ -1,7 +1,7 @@
 ---
 
 - name: Upgrade ArubaOS image
-  hosts: arubaoss
+  hosts: aruba
 
   vars:
     system_image_filename: "ios-123-123.bin"

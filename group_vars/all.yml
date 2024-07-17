@@ -2,3 +2,10 @@
 
 teams_webhook_url: "url"
 
+backup_path: /etc/ansible/backups
+config_path: /etc/ansible/configs
+log_path: /etc/ansible/logs
+template_path: /etc/ansible/templates
+
+tftp_server: 1.1.1.1
+logging_server: 1.2.3.4
