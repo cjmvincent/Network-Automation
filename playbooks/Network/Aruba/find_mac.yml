@@ -1,0 +1,32 @@
+---
+
+- name: Find mac address on switchports
+  hosts: fmes
+  gather_facts: false
+  connection: local
+
+  vars_prompt:
+     - name: mac
+       prompt: What is the mac address?
+       private: no
+
+  tasks:
+    - name: debugging
+      ansible.builtin.debug:
+        msg: 'Searching for {{ mac }}'
+
+    - name: search
+      aruba_command:
+        commands:
+          - "show mac-address | include {{ mac }}"
+      register: printout
+
+    - set_fact:
+        intf: |
+          {{printout.stdout_lines[0] |
+            map('regex_replace','^(?:[^ ]*\ ){6}([^ ]*) | (\w+$)') |
+            list }}
+
+    - name: View output
+      debug:
+        msg: " {{ inventory_hostname}}  {{ intf[0].strip() }} "

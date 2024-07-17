@@ -1,0 +1,38 @@
+---
+
+- name: Find mac address on switchports
+  hosts: llc
+  gather_facts: false
+  connection: local
+
+  vars_prompt:
+     - name: mac
+       prompt: What is the mac address?
+       private: no
+
+  tasks:
+    - name: debugging
+      ansible.builtin.debug:
+        msg: 'Searching for {{ mac }}'
+
+    - name: search
+      ios_command:
+        commands:
+          - "show mac address-table | include {{ mac }}"
+      register: printout
+
+    - set_fact:
+        intf: |
+          {{printout.stdout_lines[0] |
+            map('regex_replace','^(?:[^ ]*\ ){12}([^ ]*)') |
+            list }}
+
+    - name: show int desc
+      ios_command:
+        commands:
+          - "sh interfaces description | inc {{ intf[0].strip() }}"
+      register: printout2
+
+    - name: View output
+      debug:
+        var: printout2

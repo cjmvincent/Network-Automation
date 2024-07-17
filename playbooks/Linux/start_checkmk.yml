@@ -1,0 +1,20 @@
+---
+
+  hosts: localhost
+  vars:
+    url: http://checkmk/
+    user: ansible
+    secret: qweruiopzxcvmqweuio
+    site: mysite
+  collections:
+    - checkmk.general
+
+  tasks:
+
+  - name: Start CheckMK Site
+    activation:
+        server_url: "{{ url }}"
+        site: "{{ site }}"
+        automation_user: "{{ user }}"
+        automation_secret: "{{ secret }}"
+    run_once: 'true'
