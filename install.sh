@@ -5,11 +5,11 @@
 # General Updates & Maintenance                                               #
 ###############################################################################
 
-# just to make sure all packages  are so fresh and so clean
+# just to make sure all packages are so fresh and so clean
 sudo apt update && sudo apt upgrade --yes
 
 
-# add required repositories for the packages and utilities I want to install
+# add required repositories for the packages and utilities I want to install for this project
 echo "deb [trusted=yes] https://ppa.ipinfo.net/ /" | sudo tee  "/etc/apt/sources.list.d/ipinfo.ppa.list"
 #curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 #sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
@@ -27,7 +27,7 @@ sudo apt update && sudo apt upgrade --yes
 
 # install libs, dependencies, and apps
 sudo apt install build-essential net-tools software-properties-common openjdk-11-jre-headless \
-    curl zsh git \
+    curl zsh git gh \
     synaptic ansible tftpd-hpa \
     ipcalc ipinfo --yes
 
@@ -78,7 +78,7 @@ sudo dpkg -i /path/to/file/rundeck.deb
 sudo systemctl daemon-reload
 sudo service rundeckd start
 
-# backup oriignal config file 
+# backup oriignal config file, ande mak e afew edits 
 sudo cp /etc/default/tftpd-hpa /etc/default/tftpd-hpa.backup
 sudo sed -i 's/TFTP_OPTIONS="--secure"/TFTP_OPTIONS="--secure --create"/' /etc/default/tftpd-hpa
 #sudo sed -i 's/TFTP_DIRECTORY="/srv/tftp"/TFTP_DIRECTORY="srv/tftp"/' /etc/default/tftpd-hpa
