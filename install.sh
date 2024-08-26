@@ -2,8 +2,7 @@
 # bash -c "$(wget -qO - https://raw.githubusercontent.com/cjmvincent/Network-Automation/main/install.sh)"
 
 # just to make sure all packages  are so fresh and so clean
-sudo apt update
-sudo apt upgrade --yes
+sudo apt update && sudo apt upgrade --yes
 
 
 # add required repositories for the packages and utilities I want to install
@@ -18,18 +17,16 @@ sudo add-apt-repository --yes universe
 sudo add-apt-repository --yes ppa:ansible/ansible
 sudo add-apt-repository --yes ppa:deadsnakes/ppa
 
-sudo apt update
-sudo apt upgrade --yes
+sudo apt update && sudo apt upgrade --yes
 
 
 # install libs, dependencies, and apps
-sudo apt install build-essential net-tools software-properties-common \
+sudo apt install build-essential net-tools software-properties-common openjdk-11-jre-headless \
     curl zsh git \
     synaptic docker.io ansible \
     ipcalc ipinfo --yes
 
-sudo apt update
-sudo apt upgrade --yes
+sudo apt update && sudo apt upgrade --yes
 
 #update pip
 sudo pip install --upgrade pip
@@ -41,7 +38,7 @@ sudo pip install --upgrade pip
 
 # install vscode
 sudo snap install code --classic
-sudo snap install postman vlc semaphore
+sudo snap install postman
 
 # configure Ansible-Semaphore
 #sudo semaphore user add --admin --name "Your Name" --login ${USER} --email your-email@examaple.com --password your_password
@@ -100,3 +97,31 @@ sudo ln -f ./hosts_OS /etc/hosts
 # create links for ansible config and host file in the /etc/ansible directory
 sudo ln -f ./hosts /etc/ansible/hosts
 sudo ln -f ./ansible.cfg /etc/ansible/ansible.cfg
+
+# install tftp server for hosting switch images
+sudo apt install tftpd-hpa -y
+
+# backup oriignal config file 
+sudo cp /etc/default/tftpd-hpa /etc/default/tftpd-hpa.backup
+sudo sed -i 's/TFTP_OPTIONS="--secure"/TFTP_OPTIONS="--secure --create"/' /etc/default/tftpd-hpa
+#sudo sed -i 's/TFTP_DIRECTORY="/srv/tftp"/TFTP_DIRECTORY="srv/tftp"/' /etc/default/tftpd-hpa
+
+# change permissions on the tftp directory so you can upload files to the directory
+sudo chwown -R tftp /srv/tftp
+
+# restart tftp service
+sudo service tftpd-hpa restart
+
+# allow tftp port in firewall
+sudo ufw allow 69/tcp
+
+# install rundeck
+wget /url/to/file/rundeck.deb
+sudo dpkg -i /path/to/file/rundeck.deb
+
+# start rundeck
+sudo systemctl daemon-reload
+sudo service rundeckd start
+
+# allow rundeck port in firewall
+sudo ufw allow 4440/tcp
