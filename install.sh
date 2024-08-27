@@ -84,7 +84,7 @@ sudo sed -i 's/TFTP_OPTIONS="--secure"/TFTP_OPTIONS="--secure --create"/' /etc/d
 #sudo sed -i 's/TFTP_DIRECTORY="/srv/tftp"/TFTP_DIRECTORY="srv/tftp"/' /etc/default/tftpd-hpa
 
 # change permissions on the tftp directory so you can upload files to the directory
-sudo chwown -R tftp /srv/tftp
+sudo chown -R tftp /srv/tftp
 
 # restart tftp service
 sudo service tftpd-hpa restart
