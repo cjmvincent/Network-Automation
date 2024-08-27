@@ -5,6 +5,8 @@
 # General Updates & Maintenance                                               #
 ###############################################################################
 
+echo "Updating packages, and adding a few repositories..."
+
 # just to make sure all packages are so fresh and so clean
 sudo apt update && sudo apt upgrade --yes
 
@@ -24,6 +26,8 @@ sudo apt update && sudo apt upgrade --yes
 ###############################################################################
 # Dependencies & General Packages                                             #
 ###############################################################################
+
+echo "Installing a handful of packages needed for my particular set up..."
 
 # install libs, dependencies, and apps
 sudo apt install build-essential net-tools software-properties-common openjdk-11-jre-headless \
@@ -50,6 +54,8 @@ sudo snap install postman
 # Net & DevOps                                                                     #
 ###############################################################################
 
+echo "Cloning my network automation repo into my designed path..."
+
 # clone ansilbe repo to ansible directory
 if [ ! -d "$HOME/ansible"]; then
     mkdir $HOME/ansible
@@ -70,6 +76,8 @@ sudo git clone https://github.com/cjmvincent/Network-Automation.git .
 #ansible-galaxy collection install microsoft.ad
 #ansible-galaxy collection install checkmk.general
 
+#echo "Installing RunDeck..."
+
 # install rundeck
 #wget /url/to/file/rundeck.deb
 #sudo dpkg -i /path/to/file/rundeck.deb
@@ -77,6 +85,8 @@ sudo git clone https://github.com/cjmvincent/Network-Automation.git .
 # start rundeck
 #sudo systemctl daemon-reload
 #sudo service rundeckd start
+
+echo "Configuring tftp..."
 
 # backup oriignal config file, ande mak e afew edits 
 sudo cp /etc/default/tftpd-hpa /etc/default/tftpd-hpa.backup
@@ -94,6 +104,8 @@ sudo service tftpd-hpa restart
 # Terminal                                                                    #
 ###############################################################################
 
+echo "Installing ohmyzsh and my .zshrc file..."
+
 # # install ohmyzsh
 # if test ! $(which omz); then
 #   /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)"
@@ -107,6 +119,8 @@ sudo service tftpd-hpa restart
 ###############################################################################
 # Firewall                                                                    #
 ###############################################################################
+
+echo "Configuring firewall to allow some ports for the services this node will run..."
 
 # configure firewall
 sudo ufw enable
