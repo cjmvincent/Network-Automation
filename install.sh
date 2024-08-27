@@ -14,9 +14,9 @@ echo "deb [trusted=yes] https://ppa.ipinfo.net/ /" | sudo tee  "/etc/apt/sources
 #curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 #sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
 
-sudo add-apt-repository --yes universe
-sudo add-apt-repository --yes ppa:ansible/ansible
-sudo add-apt-repository --yes ppa:deadsnakes/ppa
+#sudo add-apt-repository --yes universe
+#sudo add-apt-repository --yes ppa:ansible/ansible
+#sudo add-apt-repository --yes ppa:deadsnakes/ppa
 
 sudo apt update && sudo apt upgrade --yes
 
@@ -71,12 +71,12 @@ sudo git clone https://github.com/cjmvincent/Network-Automation.git .
 #ansible-galaxy collection install checkmk.general
 
 # install rundeck
-wget /url/to/file/rundeck.deb
-sudo dpkg -i /path/to/file/rundeck.deb
+#wget /url/to/file/rundeck.deb
+#sudo dpkg -i /path/to/file/rundeck.deb
 
 # start rundeck
-sudo systemctl daemon-reload
-sudo service rundeckd start
+#sudo systemctl daemon-reload
+#sudo service rundeckd start
 
 # backup oriignal config file, ande mak e afew edits 
 sudo cp /etc/default/tftpd-hpa /etc/default/tftpd-hpa.backup
