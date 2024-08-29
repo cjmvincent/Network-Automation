@@ -104,12 +104,14 @@ sudo service tftpd-hpa restart
 # Terminal                                                                    #
 ###############################################################################
 
-echo "Installing ohmyzsh and my .zshrc file..."
+echo "Configuring terminal..."
 
-# # install ohmyzsh
-# if test ! $(which omz); then
-#   /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)"
-# fi
+chsh -s $(which zsh)
+
+# install ohmyzsh
+if test ! $(which omz); then
+  /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)"
+fi
 
 # # Removes .zshrc from $HOME (if it exists) and symlinks the .zshrc file from the .dotfiles
 # rm -rf $HOME/.zshrc
