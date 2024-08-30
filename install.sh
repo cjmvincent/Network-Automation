@@ -14,10 +14,7 @@ sudo apt update && sudo apt upgrade --yes
 # add required repositories for the packages and utilities I want to install for this project
 echo "deb [trusted=yes] https://ppa.ipinfo.net/ /" | sudo tee  "/etc/apt/sources.list.d/ipinfo.ppa.list"
 #curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-#sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-
 #sudo add-apt-repository --yes universe
-#sudo add-apt-repository --yes ppa:ansible/ansible
 #sudo add-apt-repository --yes ppa:deadsnakes/ppa
 
 sudo apt update && sudo apt upgrade --yes
