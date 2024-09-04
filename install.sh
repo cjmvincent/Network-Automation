@@ -53,13 +53,13 @@ sudo snap install postman
 echo "Cloning my network automation repo into my designed path..."
 
 # clone ansilbe repo to ansible directory
-if [ ! -d "$HOME/ansible"]; then
+if [ ! -d "$HOME/ansible" ]; then
     mkdir $HOME/ansible
 fi
 
 cd $HOME/ansible
 sudo rm * -rf
-sudo git clone https://github.com/cjmvincent/Network-Automation.git .
+git clone https://github.com/cjmvincent/Network-Automation.git .
 
 
 # install desired ansible collections
