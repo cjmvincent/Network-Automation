@@ -30,8 +30,9 @@ echo ""
 # install libs, dependencies, and apps
 sudo apt install build-essential net-tools software-properties-common openjdk-11-jre-headless \
     curl zsh git gh \
+    lsd bat \
     synaptic ansible tftpd-hpa \
-    ipcalc ipinfo --yes
+    ipcalc ipinfo speedtest-cli --yes
 
 sudo apt update && sudo apt upgrade --yes
 
@@ -118,7 +119,7 @@ fi
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 # change ohmyzsh theme to powerlevel10k
-sudo sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' $HOME/.zshrc
+#sudo sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' $HOME/.zshrc
 
 # # Removes .zshrc from $HOME (if it exists) and symlinks the .zshrc file from the .dotfiles
 # rm -rf $HOME/.zshrc
@@ -143,3 +144,13 @@ sudo ufw allow 69/tcp
 
 # allow rundeck port in firewall
 sudo ufw allow 4440/tcp
+
+
+###############################################################################
+# Dotbot                                                                      #
+###############################################################################
+
+git clone https://github.com/cjmvincent/dotfiles.git "~/.dotfiles"
+cd "~/.dotfiles"
+chmod +x install
+./install
