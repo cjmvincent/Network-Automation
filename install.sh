@@ -53,17 +53,19 @@ sudo snap install postman
 # Net & DevOps                                                                     #
 ###############################################################################
 
-echo "Cloning my network automation repo into my designed path..."
+echo "Cloning my network automation repo into my desired path..."
 echo ""
 
-# clone ansilbe repo to ansible directory
-if [ ! -d "$HOME/ansible" ]; then
-    mkdir $HOME/ansible
+# clone ansible repo to ansible directory
+if [ -d "etc/ansible" ]; then
+    sudo rm -rf /etc/ansible
 fi
 
-cd $HOME/ansible
-sudo rm * -rf
-git clone https://github.com/cjmvincent/Network-Automation.git .
+git clone https://github.com/cjmvincent/Network-Automation.git $HOME/ansible
+sudo ln -s $HOME/ansible /etc/ansible
+
+sudo rm /etc/hosts
+sudo cp $HOME/ansible/dns_hosts /etc/hosts
 
 
 # install desired ansible collections
@@ -150,6 +152,6 @@ sudo ufw allow 4440/tcp
 # Dotbot                                                                      #
 ###############################################################################
 
-git clone https://github.com/cjmvincent/dotfiles.git "~/.dotfiles"
-cd "~/.dotfiles"
+git clone https://github.com/cjmvincent/dotfiles.git $HOME/.dotfiles
+cd $HOME/.dotfiles
 ./install
