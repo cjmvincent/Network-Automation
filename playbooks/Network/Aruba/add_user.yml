@@ -9,6 +9,6 @@
     password: ""
   
   tasks:
-  - name: add james
+  - name: add user
     aruba_config:
       lines: password {{ privlege }} user-name {{ user }} plaintext {{ password }}
