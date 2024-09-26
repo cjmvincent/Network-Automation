@@ -31,7 +31,7 @@ echo ""
 sudo apt install build-essential net-tools software-properties-common openjdk-11-jre-headless \
     curl zsh git gh \
     lsd bat \
-    synaptic ansible tftpd-hpa \
+    synaptic tftpd-hpa \
     ipcalc ipinfo speedtest-cli --yes
 
 sudo apt update && sudo apt upgrade --yes
@@ -53,6 +53,18 @@ sudo snap install postman
 # Net & DevOps                                                                     #
 ###############################################################################
 
+echo "Configuring python virtual enviroment for Ansible"
+echo 
+
+mkdir $HOME/.venv
+python3 -m venv $HOME/.venv
+source $HOME/.venv/bin/activate
+
+python3 -m pip install --upgrade pip
+python3 -m pip install --upgrade virtualenv
+
+python3 -m pip install -r ./requirements.txt
+
 echo "Cloning my network automation repo into my desired path..."
 echo ""
 
@@ -67,16 +79,16 @@ sudo ln -s $HOME/ansible /etc/ansible
 sudo rm /etc/hosts
 sudo cp $HOME/ansible/dns_hosts /etc/hosts
 
-
 # install desired ansible collections
-#ansible-galaxy collection install cisco.ios
-#ansible-galaxy collection install paloaltonetworks.panos
-#ansible-galaxy collection install arubanetworks.aoscx
-#ansible-galaxy collection install arubanetworks.aos_switch
-#ansible-galaxy collection install ansible.windows
-#ansible-galaxy colleciton install community.windows
-#ansible-galaxy collection install microsoft.ad
-#ansible-galaxy collection install checkmk.general
+ansible-galaxy collection install cisco.ios
+ansible-galaxy collection install paloaltonetworks.panos
+ansible-galaxy collection install arubanetworks.aoscx
+ansible-galaxy collection install arubanetworks.aos_switch
+ansible-galaxy collection install ansible.windows
+ansible-galaxy colleciton install community.windows
+ansible-galaxy colleciton install community.vmware
+ansible-galaxy collection install microsoft.ad
+ansible-galaxy collection install checkmk.general
 
 #echo "Installing RunDeck..."
 
