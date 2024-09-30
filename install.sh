@@ -58,7 +58,7 @@ echo
 
 mkdir $HOME/.venv
 python3 -m venv $HOME/.venv
-source $HOME/.venv/bin/activate
+source ~/.venv/bin/activate
 
 python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade virtualenv
@@ -74,10 +74,10 @@ if [ -d "etc/ansible" ]; then
 fi
 
 git clone https://github.com/cjmvincent/Network-Automation.git $HOME/ansible
-sudo ln -s $HOME/ansible /etc/ansible
+sudo ln -s ~/ansible /etc/ansible
 
 sudo rm /etc/hosts
-sudo cp $HOME/ansible/dns_hosts /etc/hosts
+sudo cp ~/ansible/dns_hosts /etc/hosts
 
 # install desired ansible collections
 ansible-galaxy collection install cisco.ios
@@ -165,5 +165,5 @@ sudo ufw allow 4440/tcp
 ###############################################################################
 
 git clone https://github.com/cjmvincent/dotfiles.git $HOME/.dotfiles
-cd $HOME/.dotfiles
+cd ~/.dotfiles
 ./install
