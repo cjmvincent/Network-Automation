@@ -18,6 +18,7 @@ packaging==24.1
 pan-os-python==1.12.1
 pan-python==0.17.0
 pan-sdk-python==1.0.1
+panos-upgrade-assurance==0.3.0
 paramiko==3.5.0
 pbr==6.1.0
 platformdirs==4.3.6
