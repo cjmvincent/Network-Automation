@@ -17,11 +17,15 @@ echo ""
 # install libs, dependencies, and apps
 cat ./requirements/linux/requirements.txt | xargs sudo apt install -y
 
+pipx ensurepath
+
 sudo apt update && sudo apt upgrade --yes
 
 # install vscode
 sudo snap install code --classic
 sudo snap install postman
+
+pipx install -r ./requirements/python/requirements.txt
 
 
 ###############################################################################
