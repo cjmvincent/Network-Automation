@@ -11,11 +11,7 @@ echo ""
 # just to make sure all packages are so fresh and so clean
 sudo apt update && sudo apt upgrade --yes
 
-
 # add required repositories for the packages and utilities I want to install for this project
-echo "deb [trusted=yes] https://ppa.ipinfo.net/ /" | sudo tee  "/etc/apt/sources.list.d/ipinfo.ppa.list"
-#sudo add-apt-repository --yes universe
-#sudo add-apt-repository --yes ppa:deadsnakes/ppa
 
 sudo apt update && sudo apt upgrade --yes
 
