@@ -28,21 +28,9 @@ echo "Installing a handful of packages needed for my particular set up..."
 echo ""
 
 # install libs, dependencies, and apps
-sudo apt install build-essential net-tools software-properties-common openjdk-11-jre-headless \
-    curl zsh git gh \
-    lsd bat \
-    synaptic tftpd-hpa \
-    ipcalc ipinfo speedtest-cli --yes
+cat ./requirements/linux/requirements.txt | xargs sudo apt install -y
 
 sudo apt update && sudo apt upgrade --yes
-
-#update pip
-#sudo pip install --upgrade pip
-#sudo pip install --upgrade virtualenv
-
-# install some network management tools
-#pip install paramiko netmiko napalm pywinrm ansible ansible-pylibssh awxkit --user
-
 
 # install vscode
 sudo snap install code --classic
@@ -63,7 +51,7 @@ source ~/.venv/bin/activate
 python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade virtualenv
 
-python3 -m pip install -r ./py_requirements.txt
+python3 -m pip install -r ./requirements/python/requirements.txt
 
 echo "Cloning my network automation repo into my desired path..."
 echo ""
@@ -80,7 +68,7 @@ sudo rm /etc/hosts
 sudo ls -s ~/ansible/dns_hosts /etc/hosts
 
 # install desired ansible collections
-ansible-galaxy install -r ansible_requirements.yml
+ansible-galaxy install -r ./requirements/ansible/requirements.yml
 
 #echo "Installing RunDeck..."
 
