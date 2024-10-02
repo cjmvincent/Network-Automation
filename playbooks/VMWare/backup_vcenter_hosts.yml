@@ -4,21 +4,18 @@
   hosts: localhost
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
-    folder: /path/to/directory
 
   tasks:
+
     - name: Create backup directory
       file:
-        path: "{{ folder }}{{ date }}"
+        path: "{{ backup_path }}{{ date }}"
         state: directory
 
 - name: Backup config
   hosts: vcenter
   vars:
     date: "{{lookup('pipe','date +%Y-%m-%d') }}"
-    user: admin
-    password: password
-    folder: /path/to/directory
 
   tasks:
   

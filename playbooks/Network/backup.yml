@@ -10,7 +10,7 @@
 
     - name: Create backup directory using today's date
       file:
-        path: "/etc/ansible/backups/{{ date }}"
+        path: "{{ backup_directory }}/{{ date }}"
         state: directory
 
 - name: Backup running config of network devices
@@ -26,7 +26,7 @@
         backup: yes
         backup_options:
           filename:  "{{ inventory_hostname }}-{{ date }}.txt"
-          dir_path: "/etc/ansible/backups/{{ date  }}"
+          dir_path: "{{ backup_directory }}/{{ date  }}"
       when: ansible_network_os == "ios"
 
     - name: Backup Aruba configuration to /etc/ansible/backups/
@@ -34,5 +34,5 @@
         backup: yes
         backup_options:
           filename:  "{{ inventory_hostname }}-{{ date }}.txt"
-          dir_path: "/etc/ansible/backups/{{ date }}"
+          dir_path: "{{ backup_directory }}/{{ date }}"
       when: ansible_network_os == "aruba"

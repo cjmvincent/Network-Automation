@@ -31,3 +31,4 @@
       provider: "{{ provider }}"
       category: "configuration"
       filename: "{{ backup_path }}/{{ date }}/{{ inventory_hostname }}-running-config.xml"
+      create_directory: true
