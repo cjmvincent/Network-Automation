@@ -2,23 +2,14 @@
 # bash -c "$(wget -qO - https://raw.githubusercontent.com/cjmvincent/Network-Automation/main/install.sh)"
 
 ###############################################################################
-# General Updates & Maintenance                                               #
+# Packages                                                                    #
 ###############################################################################
 
-echo "Updating packages, and adding a few repositories..."
+echo "Making preperations..."
 echo ""
 
 # just to make sure all packages are so fresh and so clean
 sudo apt update && sudo apt upgrade --yes
-
-# add required repositories for the packages and utilities I want to install for this project
-
-sudo apt update && sudo apt upgrade --yes
-
-
-###############################################################################
-# Dependencies & General Packages                                             #
-###############################################################################
 
 echo "Installing a handful of packages needed for my particular set up..."
 echo ""
@@ -34,7 +25,7 @@ sudo snap install postman
 
 
 ###############################################################################
-# Net & DevOps                                                                     #
+# Net & DevOps                                                                #
 ###############################################################################
 
 echo "Configuring python virtual enviroment for Ansible"
