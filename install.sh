@@ -63,7 +63,7 @@ source ~/.venv/bin/activate
 python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade virtualenv
 
-python3 -m pip install -r ./requirements.txt
+python3 -m pip install -r ./py_requirements.txt
 
 echo "Cloning my network automation repo into my desired path..."
 echo ""
@@ -77,18 +77,10 @@ git clone https://github.com/cjmvincent/Network-Automation.git $HOME/ansible
 sudo ln -s ~/ansible /etc/ansible
 
 sudo rm /etc/hosts
-sudo cp ~/ansible/dns_hosts /etc/hosts
+sudo ls -s ~/ansible/dns_hosts /etc/hosts
 
 # install desired ansible collections
-ansible-galaxy collection install cisco.ios
-ansible-galaxy collection install paloaltonetworks.panos
-ansible-galaxy collection install arubanetworks.aoscx
-ansible-galaxy collection install arubanetworks.aos_switch
-ansible-galaxy collection install ansible.windows
-ansible-galaxy colleciton install community.windows
-ansible-galaxy colleciton install community.vmware
-ansible-galaxy collection install microsoft.ad
-ansible-galaxy collection install checkmk.general
+ansible-galaxy install -r ansible_requirements.yml
 
 #echo "Installing RunDeck..."
 

@@ -1,0 +1,41 @@
+---
+
+# Install with ansible-galaxy install -r ansible_requirements.yml
+
+# # Format examples from different sources
+
+# # Install a role from the Ansible Galaxy
+# - src: dfarrell07.opendaylight
+
+# # Install a role from GitHub
+# - name: opendaylight
+#   src: https://github.com/dfarrell07/ansible-opendaylight
+
+# # Install a role from a specific git branch
+# - name: opendaylight
+#   src: https://github.com/dfarrell07/ansible-opendaylight
+#   version: origin/master
+
+# # Install a role at a specific tag from GitHub
+# - name: opendaylight
+#   src: https://github.com/dfarrell07/ansible-opendaylight
+#   version: 1.0.0
+
+# # Install a role at a specific commit from GitHub
+# - name: opendaylight
+#   src: https://github.com/dfarrell07/ansible-opendaylight
+#   version: <commit hash>
+
+# Install a role from the Ansible Galaxy
+- src: ansible.netcommon
+- src: ansible.windows
+- src: arubanetworks.aos_switch
+- src: arubanetworks.aoscx
+- src: cisco.ios
+- src: community.general
+- src: community.vmware
+- src: community.windows
+- src: microsoft.ad
+- src: paloaltonetworks.panos
+- src: vmware.vmware
+- src: vmware.vmware_rest
