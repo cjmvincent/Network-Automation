@@ -11,6 +11,7 @@ ipinfo
 net-tools
 lsd
 openjdk-11-jre-headless
+pipx
 software-properties-common
 speedtest-cli
 synaptic
