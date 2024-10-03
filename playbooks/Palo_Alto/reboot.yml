@@ -1,0 +1,17 @@
+---
+
+- name: Reboot devices
+  hosts: firewalls
+  connection: local
+  vars:
+    provider:
+      username: "{{ username }}"
+      password: "{{ password }}"
+#      api_key: ""
+      ip_address: "{{ ip_address }}"
+
+  tasks:
+
+  - name: Restart device
+    paloaltonetworks.panos.panos_restart:
+      provider: "{{ provider }}"
