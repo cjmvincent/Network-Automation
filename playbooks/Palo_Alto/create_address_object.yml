@@ -1,0 +1,27 @@
+---
+
+- name: Create address object
+  hosts: firewalls
+  connection: local
+  vars:
+    provider:
+      username: "{{ username }}"
+      password: "{{ password }}"
+#      api_key: ""
+      ip_address: "{{ ip_address }}"
+
+  tasks:
+
+  - name: Create address object
+    paloaltonetworks.panos.panos_address_object:
+      provider: '{{ provider }}'
+      name: 'AnsibleTest'
+      address_type: ip-netmask
+      value: '10.10.100.100'
+      state: 'present'
+
+  - name: Commit changes
+    paloaltonetworks.panos.panos_commit_firewall:
+      provider: '{{ provider }}'
+      admins: ['cvincent']
+      description: 'ansible test -cv'
