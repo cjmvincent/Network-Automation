@@ -1,0 +1,21 @@
+---
+
+- name: Import List and loop over it
+  hosts: localhost
+
+  tasks:
+
+  - name: Import listr
+    read_csv:
+      path: users.csv
+    register: user_list
+    delegate_to: localhost
+
+  - name: Display the users
+    debug:
+      var: user_list.list
+
+  - name: Loop over just usernames
+    debug:
+      msg: "{{ item.username }}"
+    loop: "{{ user_list.list }}"
