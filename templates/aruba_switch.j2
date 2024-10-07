@@ -3,12 +3,16 @@ logging {{ logging_server }} {{ logging_protocol}} {{ logging_port }}
 logging severity {{ logging_severity }}
 timesync ntp
 ntp unicast
-ntp server {{ ntp_servers[0] }}, {{ ntp_servers[1] }} iburst
+{% for ntp_server in ntp_servers %}
+ntp server {{ ntp_server }}
+{% endfor %}
 ntp enable
 time daylight-time-rule continental-us-and-canada
 time timezone -300
 ip default-gateway {{ gateway_ip }}
-ip dns server-address priority 1 {{ dns_servers[0] }}, {{ dns_servers[1] }}
+{% for dns_server in dns_servers %}
+ip dns server-address {{ dns_servers }}
+{% endfor %}
 snmp-server community "public" unrestricted
 {% for vlan in vlans %}
 vlan {{ vlan }}
