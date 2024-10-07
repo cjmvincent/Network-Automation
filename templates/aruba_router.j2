@@ -3,11 +3,15 @@ logging {{ logging_server }} {{ logging_protocol}} {{ logging_port }}
 logging severity {{ logging_severity }}
 timesync ntp
 ntp unicast
-ntp server {{ ntp_servers }} iburst
+{% for ntp_server in ntp_servers %}
+ntp server {{ ntp_server }}
+{% endfor %}
 ntp enable
 time daylight-time-rule continental-us-and-canada
 time timezone -300
-ip dns server-address priority 1 {{ dns_servers }}
+{% for dns_server in dns_servers %}
+ip dns server-address {{ dns_server }}
+{% endfor %}
 ip route 0.0.0.0 0.0.0.0 {{ default_route }}
 ip routing
 interface A1
