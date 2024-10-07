@@ -11,7 +11,7 @@ time daylight-time-rule continental-us-and-canada
 time timezone -300
 ip default-gateway {{ gateway_ip }}
 {% for dns_server in dns_servers %}
-ip dns server-address {{ dns_servers }}
+ip dns server-address {{ dns_server }}
 {% endfor %}
 snmp-server community "public" unrestricted
 {% for vlan in vlans %}
