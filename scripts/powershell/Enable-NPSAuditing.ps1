@@ -1,1 +1,0 @@
-auditpol.exe /set /subcategory:"Network Policy Server"

@@ -6,6 +6,8 @@ backup_path: /etc/ansible/backups
 config_path: /etc/ansible/configs
 log_path: /etc/ansible/logs
 template_path: /etc/ansible/templates
+device_image_path: /etc/ansible/images
+source_file_path: /etc/ansible/source_files
 
 tftp_server: 1.1.1.1
 logging_server: 1.2.3.4

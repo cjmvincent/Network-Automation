@@ -3,22 +3,19 @@ logging {{ logging_server }} {{ logging_protocol}} {{ logging_port }}
 logging severity {{ logging_severity }}
 timesync ntp
 ntp unicast
-{% for server in ntp_servers %}
-ntp server {{ ntp_servers[server].ip_addr }} iburst
-{% endfor %}
+ntp server {{ ntp_servers[0] }}, {{ ntp_servers[1] }} iburst
 ntp enable
 time daylight-time-rule continental-us-and-canada
 time timezone -300
 ip default-gateway {{ gateway_ip }}
-{% for server in dns_servers %}
-ip dns server-address priority 1 {{ dns_servers[server].ip_addr }}
-{% endfor %}
+ip dns server-address priority 1 {{ dns_servers[0] }}, {{ dns_servers[1] }}
 snmp-server community "public" unrestricted
 {% for vlan in vlans %}
-vlan {{ vlans[vlan].id }}
+vlan {{ vlan }}
    name "{{ vlans[vlan].name }}"
 {% if 'ip_addr' in vlans[vlan] %}
    ip address {{ vlans[vlan].ip_addr }}
+   ip address-helper {{ dhcp_server }}
 {% else %}
    no ip address
 {% endif %}
@@ -33,7 +30,8 @@ vlan {{ vlans[vlan].id }}
    exit
 {% endfor %}
 spanning-tree
-spanning-tree {{ vlans.sw_mgmt.tagged }} priority 4
+spanning-tree 51 priority 4
+spanning-tree 52 priority 4
 spanning-tree force-version rstp-operation
 no tftp server
 no autorun
@@ -55,17 +53,17 @@ device-profile name "ArubaAP"
    untagged-vlan {{ vlans.ap_mgmt.id }}
    tagged-vlan {{ vlans.secure.id }},{{ vlans.guest.id }}
    exit
-device-profile type aruba-ap
+device-profile type "aruba-ap"
    associate "ArubaAP"
    enable
    exit
-##device-identity name "IP-Camera"
-##   lldp sys-name "Avigilon"
-##   exit
-##device-profile name "IP-Camera"
-##   untagged-vlan {{ vlans.camera.id }}
-##   exit
-##device-profile device-type "IP-Camera"
-##   associate "IP-Camera"
-##   enable
-##   exit
+device-identity name "IP-Camera"
+  lldp sys-name "Avigilon"
+  exit
+device-profile name "Security"
+  untagged-vlan {{ vlans.video.id }}
+  exit
+device-profile device-type "IP-Camera"
+  associate "Security"
+  enable
+  exit
