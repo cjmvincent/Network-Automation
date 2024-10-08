@@ -1,0 +1,17 @@
+---
+
+- hosts: CENTRAL
+  collections:
+    - arubanetworks.aruba_central
+
+  tasks:
+
+  - name: Get all groups
+    central_groups:
+      action: get_groups
+      limit: 20
+      offset: 0
+    register: central_groups
+
+  - debug:
+      var: central_groups

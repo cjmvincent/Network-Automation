@@ -1,0 +1,16 @@
+---
+
+- hosts: CENTRAL
+  collections:
+    - arubanetworks.aruba_central
+
+  tasks:
+
+  - name: Get device config
+    arubanetworks.aruba_central.central_devices:
+      action: get_running_config
+      device_serial: PHNMKD586R
+    register: device_config
+
+  - debug:
+      var: device_config

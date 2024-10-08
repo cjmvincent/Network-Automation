@@ -1,0 +1,17 @@
+---
+
+- hosts: CENTRAL
+  collections:
+    - arubanetworks.aruba_central
+
+  tasks:
+
+  - name: Get all groups
+    arubanetworks.aruba_central.central_groups:
+      action: get_group_mode
+      group_list:
+        - RHES-APs
+    register: central_groups
+
+  - debug:
+      var: central_groups
