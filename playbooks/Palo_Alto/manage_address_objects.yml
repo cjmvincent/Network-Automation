@@ -1,0 +1,28 @@
+---
+
+- name: Create address objects
+  hosts: PA-NORTH
+  connection: local
+
+  tasks:
+
+  - name: Import list
+    read_csv:
+      path: "{{ source_files }}/address_list.csv"
+    register: address_list
+    delegate_to: localhost
+
+  - name: Create address objects
+    paloaltonetworks.panos.panos_address_object:
+      provider: '{{ provider }}'
+      name: '{{ item.name }}'
+      address_type: "{{ item.type }}"
+      value: '{{ item.address }}'
+      state: "{{ item.state }}"
+    loop: "{{ address_list.list }}"
+
+  - name: Commit changes
+    paloaltonetworks.panos.panos_commit_firewall:
+      provider: '{{ provider }}'
+      admins: ['cvincent']
+      description: 'ansible test -cv'
