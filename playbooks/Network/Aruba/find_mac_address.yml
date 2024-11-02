@@ -1,7 +1,7 @@
 ---
 
-- name: Find mac address in sec-switches
-  hosts: rhhs
+- name: Find mac address in switches
+  hosts: RHCEC-IDF1
   gather_facts: false
   connection: local
 
@@ -11,7 +11,12 @@
        private: no
 
   tasks:
-    - name: debugging
+
+    - name: remove extraneous characters, and place a dash in the necessary position
+      set_fact:
+        mac: "{{ mac | regex_replace('[^A-Fa-f0-9]','') | regex_replace('(.{6})', '\\1-') | regex_replace('-$', '') }}"
+
+    - name: print
       ansible.builtin.debug:
         msg: 'Searching for {{ mac }}'
 
@@ -29,4 +34,4 @@
 
     - name: View output
       debug:
-        msg: " {{ inventory_hostname}}  {{ intf[0].strip() }} "
+        msg: "{{ inventory_hostname}} Port: {{ intf[0].strip() }}"

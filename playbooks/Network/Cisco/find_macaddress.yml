@@ -1,7 +1,7 @@
 ---
 
 - name: Find mac address on switchports
-  hosts: llc
+  hosts: RHPK-C3750X-DC
   gather_facts: false
   connection: local
 
@@ -11,6 +11,11 @@
        private: no
 
   tasks:
+
+    - name: remove extraneous characters, and place a dash in the necessary position
+      set_fact:
+        mac: "{{ mac | regex_replace('[^A-Fa-f0-9]','') | regex_replace('(.{4})', '\\1.') | regex_replace('.$', '') }}"
+
     - name: debugging
       ansible.builtin.debug:
         msg: 'Searching for {{ mac }}'
@@ -35,4 +40,4 @@
 
     - name: View output
       debug:
-        var: printout2
+        var: printout2.stdout
