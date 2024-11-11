@@ -1,7 +1,7 @@
 ---
 
-- name: Find mac address in switches
-  hosts: arubaoss
+- name: Find mac address on switchports
+  hosts: ios
   gather_facts: false
   connection: local
 
@@ -14,23 +14,26 @@
 
     - name: remove extraneous characters, and place a dash in the necessary position
       set_fact:
-        mac: "{{ mac | regex_replace('[^A-Fa-f0-9]','') | regex_replace('(.{6})', '\\1-') | regex_replace('-$', '') }}"
+        mac: "{{ mac |
+                 regex_replace('[^A-Fa-f0-9]','') |
+                 regex_replace('(.{4})', '\\1.') |
+                 regex_replace('.$', '') }}"
 
     - name: search
-      aruba_command:
+      ios_command:
         commands:
-          - "show mac-address | include {{ mac }}"
+          - "show mac address-table | include {{ mac }}"
       register: printout
 
     - set_fact:
         intf: |
           {{printout.stdout_lines[0] |
-            map('regex_replace','^(?:[^ ]*\ ){6}([^ ]*) | (\w+$)') |
+            map('regex_replace','^(?:[^ ]*\ ){12}([^ ]*)') |
             list }}
       when: printout.stdout != ['']
 
     - name: View output
       debug:
         msg:
-          - "Host: {{ inventory_hostname}} MAC: {{ mac }} Port: {{ intf[0].strip() }} "
+          - "Host: {{ inventory_hostname}} MAC: {{ mac }} Port: {{ intf[0] }} "
       when: printout.stdout != ['']
