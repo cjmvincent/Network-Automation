@@ -1,0 +1,173 @@
+---
+
+- name: Throw South campuses to the South pipe
+  hosts: SOPS-6880
+  gather_facts: false
+
+  tasks:
+
+    - name: Throw South campuses to the South pipe
+      ios_config:
+        lines:
+          - int t1/2
+          - no ip policy route-map NorthInet
+          - int t1/13                       
+          - no ip policy route-map NorthInet
+          - int t1/15                       
+          - no ip policy route-map NorthInet
+          - int t1/16                       
+          - no ip policy route-map NorthInet
+          - int t5/1                        
+          - no ip policy route-map NorthInet
+          - int t5/14                       
+          - no ip policy route-map NorthInet
+          - int t5/15                       
+          - no ip policy route-map NorthInet
+          - int t5/16                       
+          - no ip policy route-map NorthInet
+          - int vlan 154                    
+          - no ip policy route-map NorthInet
+          - int vlan 203                    
+          - no ip policy route-map NorthInet
+          - int vlan 7                      
+          - no ip policy route-map NorthInet
+          - int vlan 103                    
+          - no ip policy route-map NorthInet
+          - int vlan 114                    
+          - no ip policy route-map NorthInet
+          - no access-list 2
+          - access-list 2 permit 10.16.31.5
+          - access-list 2 permit 10.16.31.4
+          - access-list 2 permit 10.16.30.6
+          - access-list 2 permit 10.16.31.6
+          - access-list 2 permit 10.15.34.33
+          - access-list 2 permit 10.14.34.32
+          - access-list 2 permit 10.16.30.12
+          - access-list 2 permit 10.2.31.29
+          - access-list 2 permit 10.16.30.8
+          - access-list 2 permit 10.4.11.11
+          - access-list 2 permit 10.13.30.22
+          - access-list 2 permit 10.9.4.8
+          - access-list 2 permit 10.4.30.1
+          - access-list 2 permit 10.154.20.149
+          - access-list 2 permit 10.9.30.14
+          - access-list 2 permit 10.2.41.50
+          - access-list 2 permit 10.14.35.48
+          - access-list 2 permit 10.4.30.7
+          - access-list 2 permit 10.2.31.12
+          - access-list 2 permit 10.3.30.11
+          - access-list 2 permit 10.4.30.13
+          - access-list 2 permit 10.9.4.26
+          - access-list 2 permit 10.4.30.14
+          - access-list 2 permit 10.9.4.25
+          - access-list 2 permit 10.4.30.51
+          - access-list 2 permit 10.2.34.14
+          - access-list 2 permit 10.2.34.15
+          - access-list 2 permit 10.2.34.12
+          - access-list 2 permit 10.15.34.15
+          - access-list 2 permit 10.16.30.44
+          - access-list 2 permit 10.16.30.45
+          - access-list 2 remark MUNIS users-printers
+          - access-list 2 permit 10.14.35.13
+          - access-list 2 permit 10.16.30.46
+          - access-list 2 permit 10.16.30.47
+          - access-list 2 permit 10.2.31.59
+          - access-list 2 permit 10.16.30.43
+          - access-list 2 permit 10.14.35.21
+          - access-list 2 permit 10.14.34.21
+          - access-list 2 permit 10.16.30.48
+          - access-list 2 permit 10.10.35.21
+          - access-list 2 permit 10.2.31.46
+          - access-list 2 permit 10.3.33.20
+          - access-list 2 permit 10.16.35.4
+          - access-list 2 permit 10.3.30.42
+          - access-list 2 permit 10.3.32.23
+          - access-list 2 permit 10.9.30.35
+          - access-list 2 permit 10.2.31.40
+          - access-list 2 permit 10.4.11.70
+          - access-list 2 permit 10.112.20.43
+          - access-list 2 permit 10.9.30.88
+          - access-list 2 permit 10.13.30.85
+          - access-list 2 permit 10.4.30.112
+          - access-list 2 permit 10.4.11.101
+          - access-list 2 permit 10.16.30.100
+          - access-list 2 permit 10.2.34.74
+          - access-list 2 permit 10.30.30.106
+          - access-list 2 permit 10.3.30.119
+          - access-list 2 permit 192.168.3.10
+          - access-list 2 permit 10.16.30.101
+          - access-list 2 permit 10.2.34.75
+          - access-list 2 permit 10.30.30.107
+          - access-list 2 permit 10.3.30.118
+          - access-list 2 permit 10.3.32.75
+          - access-list 2 permit 10.16.30.102
+          - access-list 2 permit 10.2.34.72
+          - access-list 2 permit 10.30.30.104
+          - access-list 2 permit 10.3.30.117
+          - access-list 2 permit 10.4.11.102
+          - access-list 2 permit 10.2.34.73
+          - access-list 2 permit 10.30.30.105
+          - access-list 2 permit 10.3.30.116
+          - access-list 2 permit 192.168.7.11
+          - access-list 2 permit 10.2.34.78
+          - access-list 2 permit 10.30.30.110
+          - access-list 2 permit 10.3.30.115
+          - access-list 2 permit 192.168.7.10
+          - access-list 2 permit 10.2.34.79
+          - access-list 2 permit 10.30.30.111
+          - access-list 2 permit 10.3.30.114
+          - access-list 2 permit 10.2.34.76
+          - access-list 2 permit 10.30.30.108
+          - access-list 2 permit 10.3.30.113
+          - access-list 2 permit 10.2.34.77
+          - access-list 2 permit 10.30.30.109
+          - access-list 2 permit 10.3.30.112
+          - access-list 2 permit 10.3.30.125
+          - access-list 2 permit 10.4.3.102
+          - access-list 2 permit 10.3.30.124
+          - access-list 2 permit 10.2.34.70
+          - access-list 2 permit 10.30.30.102
+          - access-list 2 permit 10.3.30.123
+          - access-list 2 permit 10.4.30.125
+          - access-list 2 permit 10.101.0.2
+          - access-list 2 permit 10.2.34.71
+          - access-list 2 permit 10.30.30.103
+          - access-list 2 permit 10.3.30.122
+          - access-list 2 permit 10.30.30.100
+          - access-list 2 permit 10.3.30.121
+          - access-list 2 permit 10.30.30.101
+          - access-list 2 permit 10.3.30.120
+          - access-list 2 permit 10.3.30.103
+          - access-list 2 permit 10.3.30.102
+          - access-list 2 permit 10.3.30.101
+          - access-list 2 permit 10.3.30.100
+          - access-list 2 permit 10.2.31.99
+          - access-list 2 permit 10.4.30.102
+          - access-list 2 permit 10.4.30.103
+          - access-list 2 permit 10.30.30.114
+          - access-list 2 permit 10.3.30.111
+          - access-list 2 permit 10.30.30.115
+          - access-list 2 permit 10.3.30.110
+          - access-list 2 permit 10.114.20.22
+          - access-list 2 permit 10.30.30.112
+          - access-list 2 permit 10.3.30.109
+          - access-list 2 permit 10.2.34.80
+          - access-list 2 permit 10.30.30.113
+          - access-list 2 permit 10.3.30.108
+          - access-list 2 permit 10.2.34.81
+          - access-list 2 permit 10.30.30.118
+          - access-list 2 permit 10.3.30.107
+          - access-list 2 permit 10.3.30.106
+          - access-list 2 permit 10.30.30.116
+          - access-list 2 permit 10.3.30.105
+          - access-list 2 permit 10.30.30.117
+          - access-list 2 permit 10.3.30.104
+          - access-list 2 permit 10.3.32.138
+          - access-list 2 permit 10.114.20.197
+          - access-list 2 permit 10.114.20.194
+          - access-list 2 permit 10.4.30.161
+          - access-list 2 permit 10.9.30.215
+          - access-list 2 permit 10.9.30.200
+          - access-list 2 permit 10.3.32.245
+          - access-list 2 permit 10.3.32.194
+        save_when: always

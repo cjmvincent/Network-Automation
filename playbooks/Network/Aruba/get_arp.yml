@@ -10,11 +10,12 @@
 
     - name: Create logging directory using today's date
       file:
-        path: "/etc/ansible/logs/{{ date }}"
+        path: "{{ log_path }}/{{ date }}"
         state: directory
 
+
 - name: Export ARP table for ArubaOS
-  hosts: aruba
+  hosts: 
   gather_facts: false
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
@@ -34,4 +35,4 @@
     - name: Export ARP table
       copy:
         content: "{{ results.stdout | replace('\\n', '\n') }}"
-        dest: "/etc/ansible/logs/{{ date }}/{{ inventory_hostname }}_arp.csv"
+        dest: "{{ log_path }}/{{ date }}/{{ inventory_hostname }}_arp.csv"

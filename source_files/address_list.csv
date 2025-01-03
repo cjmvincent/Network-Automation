@@ -1,0 +1,2 @@
+name,scopeid,ip_address,mac,description,type,state,group_name,group_state
+ansible1,10.2.34.0,10.2.34.200,004e019a8eb3,macbook,netmask-ip,present,ansibletest,merged

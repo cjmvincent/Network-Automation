@@ -1,0 +1,19 @@
+---
+
+- name: Get system info of firewall
+  hosts: FIREWALL1
+  connection: local
+
+  tasks:
+
+  - name: Show info
+    paloaltonetworks.panos.panos_op:
+      provider: "{{ provider }}"
+      cmd: "show system info"
+    register: sysinfo
+
+  - set_fact:
+      sysinfo: "{{ sysinfo.stdout | from_json }}"
+
+  - debug:
+      var: sysinfo.response.result.system.model

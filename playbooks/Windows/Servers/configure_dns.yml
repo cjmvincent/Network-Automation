@@ -1,7 +1,7 @@
 ---
 
 - name: Install AD Roles and Features
-  hosts: 
+  hosts: bcboe-ts-n-105
   vars:
 
   tasks:

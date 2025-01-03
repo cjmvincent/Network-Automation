@@ -5,7 +5,7 @@
 
   tasks:
 
-  - name: Import listr
+  - name: Import list
     read_csv:
       path: users.csv
     register: user_list

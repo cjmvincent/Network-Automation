@@ -10,29 +10,29 @@
 
     - name: Create backup directory using today's date
       file:
-        path: "{{ backup_directory }}/{{ date }}"
+        path: "{{ backup_path }}/{{ date }}"
         state: directory
 
 - name: Backup running config of network devices
-  hosts: 
+  hosts: network
   gather_facts: false
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
 
   tasks:
 
-    - name: Backup Cisco configuration to /etc/ansible/backups/
+    - name: Backup Cisco configuration to backup directory
       ios_config:
         backup: yes
         backup_options:
           filename:  "{{ inventory_hostname }}-{{ date }}.txt"
-          dir_path: "{{ backup_directory }}/{{ date  }}"
+          dir_path: "{{ backup_path }}/{{ date  }}"
       when: ansible_network_os == "ios"
 
-    - name: Backup Aruba configuration to /etc/ansible/backups/
-      aruba_config:
+
+    - aruba_config:
         backup: yes
         backup_options:
           filename:  "{{ inventory_hostname }}-{{ date }}.txt"
-          dir_path: "{{ backup_directory }}/{{ date }}"
+          dir_path: "{{ backup_path }}/{{ date }}"
       when: ansible_network_os == "aruba"

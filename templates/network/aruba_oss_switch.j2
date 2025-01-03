@@ -9,7 +9,7 @@ ntp server {{ ntp_server }}
 ntp enable
 time daylight-time-rule continental-us-and-canada
 time timezone -300
-ip default-gateway {{ gateway_ip }}
+ip default-gateway {{ sw_gateway_ip }}
 {% for dns_server in dns_servers %}
 ip dns server-address {{ dns_server }}
 {% endfor %}
@@ -34,14 +34,7 @@ vlan {{ vlan }}
    exit
 {% endfor %}
 spanning-tree
-spanning-tree 51 priority 4
-spanning-tree 52 priority 4
 spanning-tree force-version rstp-operation
-no tftp server
-no autorun
-no dhcp config-file-update
-no dhcp image-file-update
-no dhcp tr69-acs-url
 device-identity name "VOIP-Phone"
    lldp sys-name "Polycom"
    exit

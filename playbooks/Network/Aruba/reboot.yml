@@ -1,0 +1,11 @@
+---
+
+- hosts: 
+
+  tasks:
+
+    - name: Save running config and reboot
+      aruba_command:
+        commands:
+          - "boot system"
+        save_when: awlays

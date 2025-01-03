@@ -1,7 +1,7 @@
 ---
 
 - name: Create address objects
-  hosts: PA-NORTH
+  hosts: FIREWALL
   connection: local
 
   tasks:
@@ -17,7 +17,7 @@
       provider: '{{ provider }}'
       name: '{{ item.name }}'
       address_type: "{{ item.type }}"
-      value: '{{ item.address }}'
+      value: '{{ item.ip_address }}'
       state: "{{ item.state }}"
     loop: "{{ address_list.list }}"
 

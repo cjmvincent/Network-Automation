@@ -1,0 +1,11 @@
+---
+
+- hosts: ios
+  gather_facts: false
+
+  tasks:
+
+    - name: Clear mac address tables
+      ios_config:
+        lines:
+          - clear mac address-table dynamic

@@ -26,7 +26,6 @@
   gather_facts: false
   vars:
     system_image_filename: "ios-123.bin"
-    tftp_server: "10.5.41.10"
 
   tasks:
 

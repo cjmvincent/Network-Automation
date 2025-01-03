@@ -1,12 +1,12 @@
 ---
 
 - name: Upgrade Linux servers
-  hosts: GRAYLOG
+  hosts: linux
   become: true
-  # vars:
-  #   reboot_connect_timeout: 5
-  #   reboot_post_reboot_delay: 15
-  #   reboot_timeout: 600
+  vars:
+    reboot_connect_timeout: 5
+    reboot_post_reboot_delay: 15
+    reboot_timeout: 600
 
   tasks:
 
@@ -24,7 +24,7 @@
       when: ansible_os_family == "Debian"
 
 
-    - name: Check if reboot is required
+    - name: Check if reboot is required, if so, send a MS Teams alert
       stat:
         path: /var/run/reboot-required
       register: reboot_required
@@ -41,9 +41,10 @@
       when: reboot_required.stat.exists
 
 
-    # - name: Reboot hosts
-    #   reboot:
-    #     msg: "Rebooting via Ansible to apply updates."
-    #     connect_timeout: "{{ reboot_connect_timeout }}"
-    #     post_reboot_delay: "{{ reboot_post_reboot_delay }}"
-    #     reboot_timeout: "{{ reboot_timeout }}"
+    - name: Reboot hosts
+      reboot:
+        msg: "Rebooting via Ansible to apply updates."
+        connect_timeout: "{{ reboot_connect_timeout }}"
+        post_reboot_delay: "{{ reboot_post_reboot_delay }}"
+        reboot_timeout: "{{ reboot_timeout }}"
+      when: reboot_required.stat.exists

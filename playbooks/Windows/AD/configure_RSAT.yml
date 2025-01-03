@@ -26,7 +26,3 @@
         state: present
         include_management_tools: true
         include_sub_features: true
-
-    # - name: Reboot when Feature and Roles requires it
-    #   win_reboot:
-    #   when: dhcp_install.reboot_required

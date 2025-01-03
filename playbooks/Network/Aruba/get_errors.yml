@@ -1,7 +1,7 @@
 ---
 
 - name: Retrieve port errors on device
-  hosts: 
+  hosts: bchms
   gather_facts: false
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
@@ -10,16 +10,9 @@
 
     - name: Create backup directory using today's date
       file:
-        path: "/etc/ansible/logs/{{ date }}"
+        path: "{{ log_path }}/{{ date }}"
         state: directory
 
-    - name: iOS
-      ios_command:
-        commands:
-          - sh int cou err
-      when: ansible_network_os == "ios"
-      register: errors
-    
     - name: ArubaOSS
       aruba_command:
         commands:
@@ -30,4 +23,4 @@
     - name: Export errors to logs
       copy:
         content: "{{ errors.stdout[0] }}"
-        dest: "/etc/ansible/logs/{{ date }}/{{ inventory_hostname }}_errors.txt"
+        dest: "{{ log_path }}/{{ date }}/{{ inventory_hostname }}_errors.txt"

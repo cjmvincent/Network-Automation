@@ -1,0 +1,23 @@
+---
+
+- name: Create DHCP reservations using a list of address
+  hosts: DHCPSERVER
+
+  tasks:
+
+  - name: Import list
+    read_csv:
+      path: "{{ source_files }}/address_list.csv"
+    register: address_list
+    delegate_to: localhost
+
+  - name: Create reservation
+    community.windows.win_dhcp_lease:
+      type: reservation
+      ip: "{{ item.ip_address }}"
+      scope_id: "{{ item.scopeid }}"
+      mac: "{{ item.mac }}"
+      dns_hostname: "{{ item.name }}"
+      description: "{{ item.description }}"
+      state: "{{ item.state }}"
+    loop: "{{ address_list.list }}"

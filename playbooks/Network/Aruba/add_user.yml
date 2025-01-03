@@ -1,14 +1,15 @@
 ---
 
-- name: Add user with specified privligies
+- name: Add user with specified priviliges
   hosts: aruba
   gather_facts: false
   vars:
-    user: ""
-    privlege: ""
-    password: ""
-  
+    user: "charlestest"
+    privilege: "operator"
+    password: "aruba123"
+
   tasks:
-  - name: add user
-    aruba_config:
-      lines: password {{ privlege }} user-name {{ user }} plaintext {{ password }}
+
+  - aruba_config:
+      lines: password {{ privilege }} user-name {{ user }} plaintext {{ password }}
+      save_when: always

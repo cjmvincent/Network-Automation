@@ -14,7 +14,7 @@
         state: directory
 
 - name: Export ARP table for iOS
-  hosts: cisco_routers
+  hosts: 
   gather_facts: false
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"

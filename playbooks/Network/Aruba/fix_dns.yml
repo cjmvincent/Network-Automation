@@ -1,0 +1,51 @@
+---
+
+- name: Fix DNS settings from doofus
+  hosts: arubaoss
+  gather_facts: false
+
+  tasks:
+
+    - name: Remove stale and incorrect DNS servers
+      aruba_config:
+        lines:
+          - no ip dns server-address priority 1 8.8.8.8
+          - no ip dns server-address priority 1 10.101.0.8
+          - no ip dns server-address priority 1 10.101.0.9
+        save_when: always
+
+
+- name: Correct NTP servers
+  hosts: north
+  gather_facts: false
+
+  tasks:
+
+    - name: Add appropriate NTP servers depending on side of district
+      aruba_config:
+        lines:
+          - ip dns server-address {{ dns_servers[0] }}
+          - ip dns server-address {{ dns_servers[1] }}
+        save_when: always
+
+
+- name: Correct NTP servers
+  hosts: south
+  gather_facts: false
+
+  tasks:
+
+    - name: Add appropriate NTP servers depending on side of district
+      aruba_config:
+        lines:
+          - ip dns server-address {{ dns_servers[0] }}
+          - ip dns server-address {{ dns_servers[1] }}
+        save_when: always
+
+
+
+
+
+
+
+

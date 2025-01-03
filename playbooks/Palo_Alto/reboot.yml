@@ -1,14 +1,8 @@
 ---
 
 - name: Reboot devices
-  hosts: firewalls
+  hosts: FIREWALL
   connection: local
-  vars:
-    provider:
-      username: "{{ username }}"
-      password: "{{ password }}"
-#      api_key: ""
-      ip_address: "{{ ip_address }}"
 
   tasks:
 

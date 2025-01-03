@@ -12,7 +12,7 @@ time timezone -300
 {% for dns_server in dns_servers %}
 ip dns server-address {{ dns_server }}
 {% endfor %}
-ip route 0.0.0.0 0.0.0.0 {{ default_route }}
+ip route 0.0.0.0 0.0.0.0 {{ default_gateway_ip }}
 ip routing
 interface A1
    name "MDF-TRK1"
