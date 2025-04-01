@@ -9,3 +9,4 @@
         src: "{{ config_path }}/{{ inventory_hostname }}.cfg"
         match: none
         save_when: always
+      when: ansible_network_os == "ios"

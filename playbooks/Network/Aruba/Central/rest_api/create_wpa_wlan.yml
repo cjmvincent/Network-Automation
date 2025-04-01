@@ -1,0 +1,41 @@
+---
+
+- name: Create Aruba Central WLAN SSID
+  hosts: localhost
+  vars:
+    aruba_central_api_url: "https://apigw-prod2.central.arubanetworks.com"  # Replace with your Aruba Central API URL
+    api_token: "testtoken"  # Replace with your API token
+    group_list:
+      - "test"  # Replace with the Aruba Central group name
+    wlan:
+      type: "employee" # Needed to make the REST request
+      essid: "RESTTEST" # Needed to make the REST request
+      ssid: "RESTTEST" # Needed to make the REST request
+      vlan: "192"
+
+- tasks:
+
+    - name: Update SSID configuration
+      uri:
+        url: "{{ aruba_central_api_url }}/configuration/v2/wlan/{{ group_name }}/{{ wlan.ssid }}"
+        method: POST
+        timeout: 60
+        headers:
+          Authorization: "Bearer {{ api_token }}"
+          Content-Type: "application/json"
+        body_format: json
+        body:
+          wlan:
+            type: "{{ wlan.type }}"
+            essid: "{{ wlan.essid }}"
+            vlan: "{{ wlan.vlan }}"
+            wpa_passphrase: "test"
+            wpa_passphrase_changed: true
+        status_code: 200
+      register: update_response
+
+    - name: Output update status
+      debug:
+        msg: "SSID {{ wlan.ssid }} created successfully. Response: {{ update_response.json }}"
+
+

@@ -1,0 +1,88 @@
+---
+
+- name: Update Aruba Central WLAN SSID
+  hosts: localhost
+  vars:
+    aruba_central_api_url: "https://apigw-prod2.central.arubanetworks.com"  # Replace with your Aruba Central API URL
+    api_token: "sometoken"  # Replace with your API token
+    group_list:
+      - "someaps"  # Replace with the Aruba Central group name
+    wlan:
+      type: "employee" # Needed to make the REST request
+      essid: "E911" # Needed to make the REST request
+      ssid: "E911"
+      # vlan: "127"
+      access_rules:
+        - action: "allow"
+          service_type: "network"
+          eport: "53"
+          sport: "53"
+          protocol: "dns"
+          match: "match"
+          ipaddr: "10.8.0.0"
+          netmask: "255.255.0.0"
+        - action: "allow"
+          service_type: "network"
+          eport: "123"
+          sport: "123"
+          protocol: "ntp"
+          match: "match"
+          ipaddr: "10.8.0.0"
+          netmask: "255.255.0.0"
+        - action: "allow"
+          service_type: "network"
+          eport: "68"
+          sport: "67"
+          protocol: "dhcp"
+          match: "match"
+          ipaddr: "10.8.0.0"
+          netmask: "255.255.0.0"
+        - action: "allow"
+          service_type: "network"
+          eport: "53"
+          sport: "53"
+          protocol: "dns"
+          match: "match"
+          ipaddr: "10.101.0.0"
+          netmask: "255.255.0.0"
+        - action: "allow"
+          service_type: "network"
+          eport: "123"
+          sport: "123"
+          protocol: "ntp"
+          match: "match"
+          ipaddr: "10.101.0.0"
+          netmask: "255.255.0.0"
+        - action: "allow"
+          service_type: "network"
+          eport: "68"
+          sport: "67"
+          protocol: "dhcp"
+          match: "match"
+          ipaddr: "10.101.0.0"
+          netmask: "255.255.0.0"
+        - action: "allow"
+          service_type: "network"
+          eport: "any"
+          sport: "any"
+          protocol: "any"
+          match: "match"
+          ipaddr: "any"
+          netmask: "any"
+
+  tasks:
+
+    - name: Update SSID configuration
+      uri:
+        url: "{{ aruba_central_api_url }}/configuration/v2/wlan/{{ item }}/{{ wlan.ssid }}"
+        method: PATCH
+        timeout: 60
+        headers:
+          Authorization: "Bearer {{ api_token }}"
+          Content-Type: "application/json"
+        body_format: json
+        body: 
+          wlan: "{{ wlan }}"
+        status_code: 200
+      register: update_response
+      loop: "{{ group_list }}"

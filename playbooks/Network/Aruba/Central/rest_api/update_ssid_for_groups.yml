@@ -1,0 +1,79 @@
+---
+
+- name: Update Aruba Central WLAN SSID
+  hosts: localhost
+  vars:
+    aruba_central_api_url: "https://apigw-prod2.central.arubanetworks.com"  # Replace with your Aruba Central API URL
+    api_token: "sometoken"  # Replace with your API token
+    group_list:
+      - "some-aps"  # Replace with the Aruba Central group name
+    wlan:
+      type: "employee" # Needed to make the REST request
+      essid: "BCBOE" # Needed to make the REST request
+      ssid: "BCBOE"
+      vlan: "192"
+      wpa_passphrase: ""
+      wpa_passphrase_changed: false
+
+  tasks:
+
+    # - name: Fetch group details
+    #   uri:
+    #     url: "{{ aruba_central_api_url }}/configuration/v2/groups?limit=20&offset=0"
+    #     method: GET
+    #     timeout: 60
+    #     headers:
+    #       Authorization: "Bearer {{ api_token }}"
+    #     return_content: yes
+    #   register: group_response
+
+    # - set_fact:
+    #     central_groups: "{{ group_response.json.data | flatten(1) | list }}"
+
+    # - name: Verify group exists
+    #   fail:
+    #     msg: "Group {{ item }} not found in {{ central_groups }}"
+    #   when: item not in central_groups
+    #   loop: "{{ group_list }}"
+
+    # - name: Fetch SSID details
+    #   uri:
+    #     url: "{{ aruba_central_api_url }}/configuration/full_wlan/{{ group_name }}"
+    #     method: GET
+    #     timeout: 60
+    #     headers:
+    #       Authorization: "Bearer {{ api_token }}"
+    #     return_content: yes
+    #   register: ssid_response
+
+    # - name: Verify SSID exists
+    #   fail:
+    #     msg: "SSID {{ ssid_name }} not found in group {{ group_name }}"
+    #   when: ssid_name not in group_ssids
+
+    - name: debug
+      debug:
+        msg: "{{ wlan }}"
+    - name: Update SSID configuration
+      uri:
+        #url: "{{ aruba_central_api_url }}/configuration/v2/wlan/{{ item }}/{{ wlan.ssid }}"
+        url: "{{ aruba_central_api_url }}/configuration/full_wlan/{{ item }}/{{ wlan.ssid }}"
+        method: PATCH
+        timeout: 60
+        headers:
+          Authorization: "Bearer {{ api_token }}"
+          Content-Type: "application/json"
+        body_format: json
+        body:
+          wlan:
+            type: "{{ wlan.type }}"
+            essid: "{{ wlan.essid }}"
+            vlan: "{{ wlan.vlan }}"
+            wpa_passphrase: "{{ wlan.wpa_passphrase }}"
+        status_code: 200
+      register: update_response
+      loop: "{{ group_list }}"
+
+    # - name: Output update status
+    #   debug:
+    #     msg: "SSID {{ wlan.ssid }} updated successfully. Response: {{ update_response.json }}"

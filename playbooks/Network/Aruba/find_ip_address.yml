@@ -1,0 +1,29 @@
+---
+
+- name: Find mac address in switches
+  hosts: 
+  gather_facts: false
+  connection: local
+
+  vars_prompt:
+     - name: ip
+       prompt: What is the ip address?
+       private: no
+
+  tasks:
+
+    - name: search
+      aruba_command:
+        commands:
+          - "show arp | include {{ ip }}"
+      register: printout
+
+    - set_fact:
+        mac: |
+          {{printout.stdout_lines[0] | regex_replace('.*([0-9a-f]{6}-[0-9a-f]{6}).*', '\1') | replace('\n', '') | trim }}
+      when: printout.stdout != ['']
+
+    - name: View output
+      debug:
+        msg:
+          - "IP: {{ ip }} MAC: {{ mac }} "

@@ -1,0 +1,26 @@
+---
+
+- name: Find Telnet shit
+  hosts: ios
+  gather_facts: false
+  tasks:
+
+    - name: Find telnet iOS
+      ios_command:
+        commands:
+          - sh run | i transport input
+      when: ansible_network_os == "ios"
+      register: transport
+    
+    - name: Show transport
+      debug:
+        msg: "{{ transport }}"
+
+    - name: destroy
+      ios_config:
+        lines:
+          - line vty 0 4
+          - transport input ssh
+          - line vty 5 15
+          - transport input ssh
+      when: transport.stdout[0] != 'transport input ssh'

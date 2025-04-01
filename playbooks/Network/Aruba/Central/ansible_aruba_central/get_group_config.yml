@@ -10,7 +10,7 @@
     arubanetworks.aruba_central.central_groups:
       action: get_group_mode
       group_list:
-        - RHES-APs
+        - some-aps
     register: central_groups
 
   - debug:

@@ -1,0 +1,25 @@
+---
+
+- name: Get WLAN information from Aruba Central
+  hosts: localhost
+  vars:
+    aruba_central_api_url: "https://apigw-prod2.central.arubanetworks.com"  # Replace with your Aruba Central API URL
+    api_token: "apitoken"  # Replace with your API token
+    group_name: "some-aps"  # Replace with the Aruba Central group name
+    ssid_name: "bcboe_secure"  # Replace with the SSID name to be updated
+
+  tasks:
+
+    - name: Fetch SSID details
+      uri:
+        url: "{{ aruba_central_api_url }}/configuration/full_wlan/{{ group_name }}/{{ ssid_name }}"
+        method: GET
+        timeout: 60
+        headers:
+          Content-Type: "application/json"
+          Authorization: "Bearer {{ api_token }}"
+        return_content: yes
+      register: ssid_response
+
+    - debug:
+        msg: "{{ ssid_response.json }}"

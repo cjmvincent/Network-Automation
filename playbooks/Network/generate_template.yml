@@ -1,0 +1,38 @@
+---
+
+  - name: Generate network device configs from Jinja2 templates
+    hosts: network
+    gather_facts: no
+
+    tasks:
+      - name: Merge sw_vlans and site_vlans
+        set_fact:
+          vlans: "{{ site_vlans | combine(sw_vlans) }}"
+
+      - name: Generate Aruba router config
+        template:
+          src: "{{ template_path }}/network/aruba_oss_router.j2"
+          dest: "{{ config_path }}/{{ inventory_hostname }}.cfg"
+        delegate_to: localhost
+        when: "ansible_network_os == 'aruba' and inventory_hostname in groups['routers']"
+
+      - name: Generate Aruba switch config
+        template:
+          src: "{{ template_path }}/network/aruba_oss_switch.j2"
+          dest: "{{ config_path }}/{{ inventory_hostname }}.cfg"
+        delegate_to: localhost
+        when: "ansible_network_os == 'aruba' and inventory_hostname in groups['switches']"
+
+      - name: Generate Cisco router config
+        template:
+          src: "{{ template_path }}/network/cisco_ios_router.j2"
+          dest: "{{ config_path }}/{{ inventory_hostname }}.cfg"
+        delegate_to: localhost
+        when: "ansible_network_os == 'ios' and inventory_hostname in groups['routers']"
+
+      - name: Generate Cisco switch config
+        template:
+          src: "{{ template_path }}/network/cisco_ios_switch.j2"
+          dest: "{{ config_path }}/{{ inventory_hostname }}.cfg"
+        delegate_to: localhost
+        when: "ansible_network_os == 'ios' and inventory_hostname in groups['switches']"

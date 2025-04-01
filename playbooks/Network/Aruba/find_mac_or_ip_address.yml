@@ -1,0 +1,70 @@
+---
+
+- name: Find mac address in switches
+  hosts: bchms
+  gather_facts: false
+  connection: local
+
+  vars_prompt:
+     - name: answer
+       prompt: Is this going to be a MAC or IP address? 1) MAC 2) IP
+       private: no
+
+     - name: address
+       prompt: What is the applicable address?
+       private: no
+
+
+  tasks:
+
+    - name: This block searches for a MAC address
+      block:
+        - name: remove extraneous characters, and place a dash in the necessary position
+          set_fact:
+            mac: "{{ address | regex_replace('[^A-Fa-f0-9]','') | regex_replace('(.{6})', '\\1-') | regex_replace('-$', '') | lower }}"
+
+        - name: search
+          aruba_command:
+            commands:
+              - "show mac-address | include {{ mac }}"
+          register: printout
+
+        - set_fact:
+            intf: |
+              {{printout.stdout_lines[0] |
+                map('regex_replace','^(?:[^ ]*\ ){6}([^ ]*) | (\w+$)') |
+                list }}
+          when: printout.stdout != ['']
+
+        - name: View output
+          debug:
+            msg:
+              - "Host: {{ inventory_hostname}} MAC: {{ mac }} Port: {{ intf[0].strip() }} "
+          when: printout.stdout != ['']
+      when: answer == "1"
+
+    - name: This block searches for an IP address
+      block:
+        - name: remove extraneous characters, and place a dash in the necessary position
+          set_fact:
+            IP: "{{ address | regex_replace('[^A-Fa-f0-9]','') | regex_replace('(.{6})', '\\1-') | regex_replace('-$', '') | lower }}"
+
+        - name: search
+          aruba_command:
+            commands:
+              - "show mac-address | include {{ IP }}"
+          register: printout
+
+        - set_fact:
+            intf: |
+              {{printout.stdout_lines[0] |
+                map('regex_replace','^(?:[^ ]*\ ){6}([^ ]*) | (\w+$)') |
+                list }}
+          when: printout.stdout != ['']
+
+        - name: View output
+          debug:
+            msg:
+              - "Host: {{ inventory_hostname}} MAC: {{ address }} Port: {{ intf[0].strip() }} "
+          when: printout.stdout != ['']
+      when: answer == "2"

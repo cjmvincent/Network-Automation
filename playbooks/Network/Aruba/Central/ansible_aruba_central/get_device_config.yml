@@ -9,7 +9,7 @@
   - name: Get device config
     arubanetworks.aruba_central.central_devices:
       action: get_running_config
-      device_serial: PHNMKD586R
+      device_serial: asdfjkl;
     register: device_config
 
   - debug:

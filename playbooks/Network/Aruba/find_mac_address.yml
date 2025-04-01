@@ -1,7 +1,7 @@
 ---
 
 - name: Find mac address in switches
-  hosts: arubaoss
+  hosts: 
   gather_facts: false
   connection: local
 
@@ -14,7 +14,7 @@
 
     - name: remove extraneous characters, and place a dash in the necessary position
       set_fact:
-        mac: "{{ mac | regex_replace('[^A-Fa-f0-9]','') | regex_replace('(.{6})', '\\1-') | regex_replace('-$', '') }}"
+        mac: "{{ mac | regex_replace('[^A-Fa-f0-9]','') | regex_replace('(.{6})', '\\1-') | regex_replace('-$', '') | lower }}"
 
     - name: search
       aruba_command:

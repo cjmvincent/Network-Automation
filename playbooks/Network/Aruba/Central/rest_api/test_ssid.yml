@@ -1,0 +1,33 @@
+---
+
+- name: Update Aruba Central WLAN SSID
+  hosts: localhost
+  vars:
+    aruba_central_api_url: "https://apigw-prod2.central.arubanetworks.com"  # Replace with your Aruba Central API URL
+    api_token: "sometoken"  # Replace with your API token
+    group_list:
+      - "some-aps"  # Replace with the Aruba Central group name
+    wlan:
+      type: "employee" # Needed to make the REST request
+      essid: "bcboe_secure" # Needed to make the REST request
+      ssid: "bcboe_secure"
+      vlan: "128"
+      wpa_passphrase: ""
+      wpa_passphrase_changed: false
+
+  tasks:
+
+    - name: Update SSID configuration
+      uri:
+        url: "{{ aruba_central_api_url }}/configuration/v2/wlan/{{ item }}/{{ wlan.ssid }}"
+        method: PATCH
+        timeout: 60
+        headers:
+          Authorization: "Bearer {{ api_token }}"
+          Content-Type: "application/json"
+        body_format: json
+        body:
+          wlan: "{{ wlan }}"
+        status_code: 200
+      register: update_response
+      loop: "{{ group_list }}"

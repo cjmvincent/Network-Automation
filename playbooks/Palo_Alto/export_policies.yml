@@ -16,3 +16,9 @@
   - debug:
       msg: "{{ policies }}"
 
+  - name: Save security policies to json gathered_file 
+    copy:
+      content: "{{ policies | to_nice_json }}"
+      dest: "{{ log_path }}/{{ inventory_hostname }}"
+    delegate_to: localhost
+

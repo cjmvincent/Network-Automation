@@ -1,0 +1,19 @@
+---
+
+- name: Get a list of security policies
+  hosts: PA-NORTH
+  connection: local
+
+  tasks:
+
+  - name: Fetch security policies from Palo Alto firewall
+    paloaltonetworks.panos.panos_op:
+      provider: '{{ provider }}'
+      cmd: "<show><running><security-policy></security-policy></running></show>"
+    register: security_policies
+
+  - name: Save security policies to JSON file
+    copy:
+      content: "{{ security_policies.stdout | to_nice_json }}"
+      dest: "{{ log_path}}/{{ inventory_hostname }}"
+    delegate_to: localhost

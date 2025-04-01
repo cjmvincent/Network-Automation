@@ -1,0 +1,38 @@
+---
+
+- name: Create directory for vlan export
+  hosts: localhost
+  gather_facts: false
+  vars:
+    date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
+
+  tasks:
+
+    - name: Create config directory using today's date
+      file:
+        path: "{{ config_path }}/{{ date }}"
+        state: directory
+
+
+- name: Export vlan 128 ArubaOS
+  hosts: 
+  gather_facts: false
+  vars:
+    date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
+
+  tasks:
+
+    - name: ArubaOS
+      aruba_command:
+        commands: sh run vlan 1616
+      when: ansible_network_os == "aruba"
+      register: results
+
+    - name: output
+      debug:
+        var: results
+
+    - name: Export vlan
+      copy:
+        content: "{{ results.stdout | replace('\\n', '\n') | replace('[', '') | replace(']', '') | replace(\"'\", \"\") | replace('Running configuration:', '')}}"
+        dest: "{{ config_path }}/{{ inventory_hostname }}.cfg"

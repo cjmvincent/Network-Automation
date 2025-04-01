@@ -1,0 +1,24 @@
+---
+
+- name: Get a list of security policies
+  hosts: PA-NORTH
+  connection: local
+
+  tasks:
+
+  - name: Get rules
+    paloaltonetworks.panos.panos_address_object:
+      provider: '{{ provider }}'
+      state: "gathered"
+      gathered_filter: "*"
+    register: addresses
+
+#  - debug:
+#      msg: "{{ addresses }}"
+
+  - name: Save security policies to json gathered_file 
+    copy:
+      content: "{{ addresses | to_nice_json }}"
+      dest: "{{ log_path }}/{{ inventory_hostname }}_addressess.json"
+    delegate_to: localhost
+
