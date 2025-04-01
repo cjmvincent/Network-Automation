@@ -14,173 +14,32 @@ ip dns server-address {{ dns_server }}
 {% endfor %}
 ip route 0.0.0.0 0.0.0.0 {{ default_gateway_ip }}
 ip routing
-interface A1
-   name "MDF-TRK1"
+{% for interface in interfaces %}
+interface "{{ interfaces[interface].int }}"
+   name "{{ interfaces[interface].name}}"
    exit
-interface A2
-   name "IDF2-TRK2"
-   exit
-interface A3
-   name "IDF3-TRK3"
-   exit
-interface A4
-   name "IDF4-TRK4"
-   exit
-interface A5
-   name "IDF5-TRK5"
-   exit
-interface A6
-   name "IDF6-TRK6"
-   exit
-interface C1
-   name "MDF-TRK1"
-   exit
-interface C2
-   name "IDF2-TRK2"
-   exit
-interface C3
-   disable
-   name "IDF3-TRK3"
-   exit
-interface C4
-   name "IDF4-TRK4"
-   exit
-interface C5
-   name "IDF5-TRK5"
-   exit
-interface C6
-   name "IDF6-TRK6"
-   exit
+{% endfor %}
 snmp-server community "public" unrestricted
-snmpv3 engineid "00:00:00:0b:00:00:44:5b:ed:8d:47:00"
-oobm
-   ip address dhcp-bootp
-   ipv6 enable
-   ipv6 address dhcp full
+{% for vlan in vlans %}
+vlan {{ vlans[vlan].id }}
+   name "{{ vlans[vlan].name }}"
+{% if 'ip_addr' in vlans[vlan] %}
+   ip address {{ vlans[vlan].ip_addr }} {{ vlans[vlan].subnet_mask }}
+   ip address-helper {{ dhcp_server }}
+{% else %}
+   no ip address
+{% endif %}
+{% if 'tagged' in vlans[vlan] %}
+   tagged {{ vlans[vlan].tagged }}
+{% else %}
+{% endif %}
+{% if 'untagged' in vlans[vlan] %}
+   untagged {{ vlans[vlan].untagged }}
+{% else %}
+{% endif %}
    exit
-vlan 1
-   name "DEFAULT_VLAN"
-   no untagged A7-A8,B8,C8,D8
-   untagged B7,C1-C7,D1-D7,E1-E2,Trk1-Trk6
-   ip address dhcp-bootp
-   ipv6 enable
-   ipv6 address dhcp full
-   exit
-vlan 128
-   name "BCES_Secure"
-   tagged Trk1-Trk6
-   ip address 10.7.128.1 255.255.192.0
-   ip helper-address 10.8.0.31
-   exit
-vlan 192
-   name "BCES_Guest"
-   tagged Trk1-Trk6
-   ip address 10.7.192.1 255.255.192.0
-   ip helper-address 10.8.0.31
-   exit
-vlan 700
-   name "P2P to NorthDC"
-   untagged A8,B8,C8,D8
-   ip address 10.1.100.10 255.255.255.252
-   exit
-vlan 702
-   name "SW_MGMT"
-   untagged A7
-   tagged Trk1-Trk6
-   ip address 10.7.2.1 255.255.255.0
-   ip helper-address 10.8.0.31
-   exit
-vlan 703
-   name "AP_MGMT"
-   tagged Trk1-Trk6
-   ip address 10.7.3.1 255.255.255.0
-   ip helper-address 10.8.0.31
-   exit
-vlan 704
-   name "VOIP"
-   tagged Trk1-Trk6
-   ip address 10.7.4.1 255.255.255.0
-   ip helper-address 10.8.0.31
-   voice
-   exit
-vlan 705
-   name "Eternal_AP_MGMT"
-   tagged Trk1-Trk6
-   ip address 10.7.5.1 255.255.255.0
-   ip helper-address 10.8.0.31
-   voice
-   exit
-vlan 706
-   name "BCES_Security"
-   tagged Trk1-Trk6
-   ip address 10.7.6.1 255.255.255.0
-   ip helper-address 10.8.0.31
-   ip helper-address 10.8.0.110
-   exit
-vlan 707
-   name "BCES_IOT"
-   tagged Trk1-Trk6
-   ip address 10.7.7.1 255.255.255.0
-   ip helper-address 10.8.0.31
-   ip helper-address 10.8.0.110
-   exit
-vlan 712
-   name "BCES_VIDEO"
-   tagged Trk1-Trk6
-   ip address 10.7.12.1 255.255.255.0
-   ip helper-address 10.8.0.31
-   ip helper-address 10.8.0.110
-   exit
-vlan 730
-   name "MDF_DATA"
-   tagged Trk1
-   ip address 10.7.30.1 255.255.255.0
-   ip helper-address 10.8.0.31
-   ip helper-address 10.8.0.110
-   exit
-vlan 732
-   name "IDF2_DATA"
-   tagged Trk2
-   ip address 10.7.32.1 255.255.255.0
-   ip helper-address 10.8.0.31
-   ip helper-address 10.8.0.110
-   exit
-vlan 733
-   name "IDF3_DATA"
-   tagged Trk3
-   ip address 10.7.33.1 255.255.255.0
-   ip helper-address 10.8.0.31
-   ip helper-address 10.8.0.110
-   exit
-vlan 734
-   name "IDF4_DATA"
-   tagged Trk4
-   ip address 10.7.34.1 255.255.255.0
-   ip helper-address 10.8.0.31
-   ip helper-address 10.8.0.110
-   exit
-vlan 735
-   name "IDF5_DATA"
-   tagged Trk5
-   ip address 10.7.35.1 255.255.255.0
-   ip helper-address 10.8.0.31
-   ip helper-address 10.8.0.110
-   exit
-vlan 736
-   name "VLAN736"
-   tagged Trk6
-   ip address 10.7.36.1 255.255.255.0
-   ip helper-address 10.8.0.31
-   ip helper-address 10.8.0.110
-   exit
-spanning-tree Trk1 priority 4
-spanning-tree Trk2 priority 4
-spanning-tree Trk3 priority 4
-spanning-tree Trk4 priority 4
-spanning-tree Trk5 priority 4
-spanning-tree Trk6 priority 4
-spanning-tree priority 1 force-version rstp-operation
-no tftp server
+{% endfor %}
+tftp server {{ tftp_server }}
 no autorun
 no dhcp config-file-update
 no dhcp image-file-update
