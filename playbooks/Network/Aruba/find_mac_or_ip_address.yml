@@ -1,6 +1,6 @@
 ---
 
-- name: Find mac address in switches
+- name: Find MAC or IP address in the network
   hosts: bchms
   gather_facts: false
   connection: local
@@ -17,13 +17,34 @@
 
   tasks:
 
+
     - name: This block searches for a MAC address
       block:
         - name: remove extraneous characters, and place a dash in the necessary position
           set_fact:
             mac: "{{ address | regex_replace('[^A-Fa-f0-9]','') | regex_replace('(.{6})', '\\1-') | regex_replace('-$', '') | lower }}"
 
-        - name: search
+        - name: Search for IP address
+          aruba_command:
+            commands:
+              - "show arp | include {{ mac }}"
+          register: rawip
+
+        - set_fact:
+            ip_address: "{{ rawip.stdout[0] | regex_replace('.*?(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}).*', '\\1') }}"
+          when: rawip.stdout != ['']
+          delegate_to: localhost
+          delegate_facts: true
+      when: answer == "1" and inventory_hostname in groups['routers']
+
+
+    - name: This block searches for a MAC address
+      block:
+        - name: remove extraneous characters, and place a dash in the necessary position
+          set_fact:
+            mac: "{{ address | regex_replace('[^A-Fa-f0-9]','') | regex_replace('(.{6})', '\\1-') | regex_replace('-$', '') | lower }}"
+
+        - name: Search for MAC address
           aruba_command:
             commands:
               - "show mac-address | include {{ mac }}"
@@ -36,35 +57,52 @@
                 list }}
           when: printout.stdout != ['']
 
-        - name: View output
+        - name: View device information
           debug:
             msg:
-              - "Host: {{ inventory_hostname}} MAC: {{ mac }} Port: {{ intf[0].strip() }} "
+              - "Host: {{ inventory_hostname}} MAC: {{ mac }} Port: {{ intf[0].strip() }} IP: {{ hostvars['localhost']['ip_address'] }}"
           when: printout.stdout != ['']
       when: answer == "1"
 
+
+
     - name: This block searches for an IP address
       block:
-        - name: remove extraneous characters, and place a dash in the necessary position
-          set_fact:
-            IP: "{{ address | regex_replace('[^A-Fa-f0-9]','') | regex_replace('(.{6})', '\\1-') | regex_replace('-$', '') | lower }}"
-
-        - name: search
+        - name: Search for IP address
           aruba_command:
             commands:
-              - "show mac-address | include {{ IP }}"
+              - "show arp | include {{ address }}"
+          register: printout
+
+        - set_fact:
+            mac: |
+              {{ printout.stdout[0] | regex_replace('.*([0-9a-f]{6}-[0-9a-f]{6}).*', '\1') | lower }}
+          when: printout.stdout != ['']
+          delegate_facts: true
+          delegate_to: localhost
+      when: answer == "2" and inventory_hostname in groups['routers']
+
+
+
+    - name: This block searches for an IP address
+      block:
+
+        - name: Search for MAC address
+          aruba_command:
+            commands:
+              - "show mac-address | include {{ hostvars['localhost']['mac'] | trim }}"
           register: printout
 
         - set_fact:
             intf: |
-              {{printout.stdout_lines[0] |
+              {{ printout.stdout_lines[0] |
                 map('regex_replace','^(?:[^ ]*\ ){6}([^ ]*) | (\w+$)') |
                 list }}
           when: printout.stdout != ['']
 
-        - name: View output
+        - name: View device information
           debug:
             msg:
-              - "Host: {{ inventory_hostname}} MAC: {{ address }} Port: {{ intf[0].strip() }} "
+              - "Host: {{ inventory_hostname }} IP: {{ address }} MAC: {{ hostvars['localhost']['mac'] | trim }} Port: {{ intf[0].strip() }}"
           when: printout.stdout != ['']
       when: answer == "2"
