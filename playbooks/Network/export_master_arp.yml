@@ -1,0 +1,5 @@
+# project/master/master_arp_export.yml
+
+- import_playbook: ./Aruba/get_arp.yml
+- import_playbook: ./Cisco/get_arp.yml
+- import_playbook: ./merge_arp_exports.yml

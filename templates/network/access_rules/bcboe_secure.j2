@@ -1,0 +1,31 @@
+{
+  "value": "{{ {
+    'access_rule': {
+      'name': wlan.ssid,
+      'action': 'allow',
+      'app_rf_mv_info': '',
+      'blacklist': false,
+      'classify_media': false,
+      'disable_scanning': false,
+      'dot1p_priority': '',
+      'eport': 'any',
+      'ipaddr': 'any',
+      'log': false,
+      'match': 'match',
+      'nat_ip': '',
+      'nat_port': 0,
+      'netmask': 'any',
+      'protocol': 'any',
+      'protocol_id': '',
+      'service_name': '',
+      'service_type': 'network',
+      'source': 'default',
+      'sport': 'any',
+      'throttle_downstream': '',
+      'throttle_upstream': '',
+      'time_range': '',
+      'tos': '',
+      'vlan': 0
+    }
+  } | to_json | replace('"', '\\"') }}"
+}

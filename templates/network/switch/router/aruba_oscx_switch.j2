@@ -1,0 +1,66 @@
+hostname {{ inventory_hostname }}
+domain-name {{ domain_name }}
+{# user me group administrators password plaintext password123 #}
+!
+clock timezone EST
+{% for ntp_server in ntp_servers %}
+ntp server {{ ntp_server }} iburst
+{% endfor %}
+ntp enable
+!
+!
+!
+{% for dns_server in dns_servers %}
+ip dns server-address {{ dns_server }}
+{% endfor %}
+!
+!
+!
+logging {{ logging_server }} {{ logging_protocol }} {{ logging_port }} severity warning
+!
+{% for vlan in vlans %}
+vlan {{ vlans[vlan].id }}
+    name {{ vlans[vlan].name }}
+    exit
+{% endfor %}
+{% for vlan in vlans %}
+interface vlan {{ vlans[vlan].id }}
+{# {% if ('ip_addr' in vlans[vlan]) and (vlan == 'sw_mgmt' or vlan == 'idf_data') %} #}
+{% if ('ip_addr' in vlans[vlan]) and (vlan == 'sw_mgmt') %}
+    ip address {{ vlans[vlan].ip_addr }} {{ vlans[vlan].subnet_mask }}
+    ip address-helper {{ dhcp_server }}
+{% endif %}
+    exit
+{% endfor %}
+!
+ip route 0.0.0.0/0 {{ sw_gateway_ip }}
+!
+port-access lldp-group Aruba-AP
+   match sys-desc ArubaOS
+   exit
+port-access role Aruba-AP
+   description Wireless AP
+   vlan trunk native {{ vlans.ap_mgmt.id }}
+   vlan trunk allowed {{ vlans.e911.id }},{{ vlans.secure.id }},{{ vlans.guest.id }}
+   exit
+port-access device-profile aruba-ap-profile
+   enable
+   associate role Aruba-AP
+   associate lldp-group Aruba-AP
+   exit
+port-access lldp-group Polycom
+   match sys-desc Polycom
+   exit
+port-access role Polycom
+   description Polycom Phones
+   vlan trunk native {{ vlans.voip.id }}
+   vlan trunk allowed {{ vlans.idf_data.id }}
+   exit
+port-access device-profile voip-profile
+   enable
+   associate role Polycom
+   associate lldp-group Polycom
+   exit
+!
+!
+!

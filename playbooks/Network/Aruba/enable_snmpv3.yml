@@ -1,0 +1,27 @@
+---
+
+# not working bc ansible does a non-interactive ssh session
+
+- name: Enable SNMPv3
+  hosts: someswitch
+  gather_facts: false
+
+  tasks:
+
+    - name: Enable SNMPv3
+      aruba_config:
+        lines:
+          - snmpv3 enable
+          - Password123
+          - Secret123
+          - n
+          - y
+          - snmpv3 user monitoring auth md5 monitoringauth priv monitoringpriv
+          - snmpv3 group managerauth user monitoring sec-model ver3
+          - snmpv3 only
+          - end
+          - wr mem
+        save_when: always
+
+
+

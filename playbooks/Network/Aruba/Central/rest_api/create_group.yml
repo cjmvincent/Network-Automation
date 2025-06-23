@@ -1,0 +1,49 @@
+---
+
+# I know this one works!
+
+- name: Create Aruba Central Access Point Group
+  hosts: CENTRAL
+  vars:
+    group_list:
+      - "CO_APs"
+
+  tasks:
+
+    - name: Create Group
+      uri:
+        url: "https://{{ ansible_host }}/configuration/v3/groups"
+        method: POST
+        timeout: 60
+        headers:
+          Authorization: "Bearer {{ ansible_httpapi_central_access_token }}"
+          Content-Type: "application/json"
+        body_format: json
+        body: >
+          {
+            "group_attributes": {
+              "template_info": {
+                "Wired": false,
+                "Wireless": false
+              },
+              "group_properties": {
+                "AllowedDevTypes": ["AccessPoints"],
+                "Architecture": "AOS10",
+                "ApNetworkRole": "Standard"
+              }
+            },
+            "group": "{{ item }}"
+          }
+        status_code: 201
+      loop: "{{ group_list }}"
+      loop_control:
+        label: "{{ item }}"
+      register: update_response
+
+    - name: Output update status
+      debug:
+        msg: "Group {{ item.item }} created successfully."
+      loop: "{{ update_response.results }}" 
+      when: item.status == 201
+
+

@@ -1,0 +1,506 @@
+{
+  "value": "{{ {
+    "access_rule": {
+        "access_list_route": {
+            "enable": false,
+            "fromtoVersion": "10.2.0-10.7.2",
+            "value": "",
+            "version": "10.2.0.0-10.2.0",
+            "warn_on_change": 1
+        },
+        "bandwidth_limit_down": {
+            "enable": true,
+            "fromtoVersion": "4.0.0-8.13.0",
+            "value": "",
+            "version": "6.3.1.2-4.0.0",
+            "warn_on_change": 0
+        },
+        "bandwidth_limit_peruser_down": {
+            "enable": true,
+            "fromtoVersion": "4.0.0-8.13.0",
+            "value": "",
+            "version": "6.3.1.2-4.0.0",
+            "warn_on_change": 0
+        },
+        "bandwidth_limit_peruser_up": {
+            "enable": true,
+            "fromtoVersion": "4.0.0-8.13.0",
+            "value": "",
+            "version": "6.3.1.2-4.0.0",
+            "warn_on_change": 0
+        },
+        "bandwidth_limit_up": {
+            "enable": true,
+            "fromtoVersion": "4.0.0-8.13.0",
+            "value": "",
+            "version": "6.3.1.2-4.0.0",
+            "warn_on_change": 0
+        },
+        "calea": {
+            "enable": true,
+            "fromtoVersion": "3.4.0-8.13.0",
+            "value": false,
+            "version": "6.2.1.0-3.4.0",
+            "warn_on_change": 0
+        },
+        "captive": "",
+        "captive_portal_profile": {
+            "enable": true,
+            "value": "",
+            "version": "6.3.1.2-4.0.0",
+            "warn_on_change": 0
+        },
+        "custom_url": {
+            "index": {
+                "enable": true,
+                "fromtoVersion": "4.2.0-8.13.0",
+                "value": "",
+                "version": "6.4.3.1-4.2.0",
+                "warn_on_change": 0
+            },
+            "url": {
+                "enable": true,
+                "fromtoVersion": "4.2.0-8.13.0",
+                "value": "",
+                "version": "6.4.3.1-4.2.0",
+                "warn_on_change": 0
+            }
+        },
+        "name": "BCS_BYOD",
+        "overlay": {
+            "enable": false,
+            "fromtoVersion": "10.0.0-10.7.2",
+            "value": false,
+            "version": "10.0.0.0-10.0.0",
+            "warn_on_change": 1
+        },
+        "platform_app_warning": false,
+        "redirect_blocked_http_url": {
+            "enable": true,
+            "fromtoVersion": "4.3.0-8.13.0",
+            "value": false,
+            "version": "6.5.0.0-4.3.0",
+            "warn_on_change": 0
+        },
+        "rules": [
+            {
+                "action": "allow",
+                "app_rf_mv_info": {
+                    "enable": true,
+                    "fromtoVersion": "4.1.0-8.13.0",
+                    "version": "6.4.0.2-4.1.0",
+                    "warn_on_change": 0
+                },
+                "blacklist": false,
+                "classify_media": false,
+                "disable_scanning": false,
+                "dot1p_priority": "",
+                "eport": "443",
+                "ipaddr": "10.8.0.0",
+                "log": false,
+                "match": "match",
+                "nat_ip": "",
+                "nat_port": 0,
+                "netmask": "255.255.0.0",
+                "protocol": "https",
+                "protocol_id": "",
+                "service_name": "",
+                "service_type": "network",
+                "source": {
+                    "enable": true,
+                    "value": "default",
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                },
+                "sport": "443",
+                "throttle_downstream": "",
+                "throttle_upstream": "",
+                "time_range": "",
+                "tos": "",
+                "vlan": {
+                    "enable": true,
+                    "value": 0,
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                }
+            },
+            {
+                "action": "allow",
+                "app_rf_mv_info": {
+                    "enable": true,
+                    "fromtoVersion": "4.1.0-8.13.0",
+                    "version": "6.4.0.2-4.1.0",
+                    "warn_on_change": 0
+                },
+                "blacklist": false,
+                "classify_media": false,
+                "disable_scanning": false,
+                "dot1p_priority": "",
+                "eport": "123",
+                "ipaddr": "10.8.0.0",
+                "log": false,
+                "match": "match",
+                "nat_ip": "",
+                "nat_port": 0,
+                "netmask": "255.255.0.0",
+                "protocol": "ntp",
+                "protocol_id": "",
+                "service_name": "",
+                "service_type": "network",
+                "source": {
+                    "enable": true,
+                    "value": "default",
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                },
+                "sport": "123",
+                "throttle_downstream": "",
+                "throttle_upstream": "",
+                "time_range": "",
+                "tos": "",
+                "vlan": {
+                    "enable": true,
+                    "value": 0,
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                }
+            },
+            {
+                "action": "allow",
+                "app_rf_mv_info": {
+                    "enable": true,
+                    "fromtoVersion": "4.1.0-8.13.0",
+                    "version": "6.4.0.2-4.1.0",
+                    "warn_on_change": 0
+                },
+                "blacklist": false,
+                "classify_media": false,
+                "disable_scanning": false,
+                "dot1p_priority": "",
+                "eport": "123",
+                "ipaddr": "10.101.0.0",
+                "log": false,
+                "match": "match",
+                "nat_ip": "",
+                "nat_port": 0,
+                "netmask": "255.255.0.0",
+                "protocol": "ntp",
+                "protocol_id": "",
+                "service_name": "",
+                "service_type": "network",
+                "source": {
+                    "enable": true,
+                    "value": "default",
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                },
+                "sport": "123",
+                "throttle_downstream": "",
+                "throttle_upstream": "",
+                "time_range": "",
+                "tos": "",
+                "vlan": {
+                    "enable": true,
+                    "value": 0,
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                }
+            },
+            {
+                "action": "allow",
+                "app_rf_mv_info": {
+                    "enable": true,
+                    "fromtoVersion": "4.1.0-8.13.0",
+                    "version": "6.4.0.2-4.1.0",
+                    "warn_on_change": 0
+                },
+                "blacklist": false,
+                "classify_media": false,
+                "disable_scanning": false,
+                "dot1p_priority": "",
+                "eport": "53",
+                "ipaddr": "10.8.0.0",
+                "log": false,
+                "match": "match",
+                "nat_ip": "",
+                "nat_port": 0,
+                "netmask": "255.255.0.0",
+                "protocol": "dns",
+                "protocol_id": "",
+                "service_name": "",
+                "service_type": "network",
+                "source": {
+                    "enable": true,
+                    "value": "default",
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                },
+                "sport": "53",
+                "throttle_downstream": "",
+                "throttle_upstream": "",
+                "time_range": "",
+                "tos": "",
+                "vlan": {
+                    "enable": true,
+                    "value": 0,
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                }
+            },
+            {
+                "action": "allow",
+                "app_rf_mv_info": {
+                    "enable": true,
+                    "fromtoVersion": "4.1.0-8.13.0",
+                    "version": "6.4.0.2-4.1.0",
+                    "warn_on_change": 0
+                },
+                "blacklist": false,
+                "classify_media": false,
+                "disable_scanning": false,
+                "dot1p_priority": "",
+                "eport": "53",
+                "ipaddr": "10.101.0.0",
+                "log": false,
+                "match": "match",
+                "nat_ip": "",
+                "nat_port": 0,
+                "netmask": "255.255.0.0",
+                "protocol": "dns",
+                "protocol_id": "",
+                "service_name": "",
+                "service_type": "network",
+                "source": {
+                    "enable": true,
+                    "value": "default",
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                },
+                "sport": "53",
+                "throttle_downstream": "",
+                "throttle_upstream": "",
+                "time_range": "",
+                "tos": "",
+                "vlan": {
+                    "enable": true,
+                    "value": 0,
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                }
+            },
+            {
+                "action": "allow",
+                "app_rf_mv_info": {
+                    "enable": true,
+                    "fromtoVersion": "4.1.0-8.13.0",
+                    "version": "6.4.0.2-4.1.0",
+                    "warn_on_change": 0
+                },
+                "blacklist": false,
+                "classify_media": false,
+                "disable_scanning": false,
+                "dot1p_priority": "",
+                "eport": "68",
+                "ipaddr": "10.8.0.0",
+                "log": false,
+                "match": "match",
+                "nat_ip": "",
+                "nat_port": 0,
+                "netmask": "255.255.0.0",
+                "protocol": "dhcp",
+                "protocol_id": "",
+                "service_name": "",
+                "service_type": "network",
+                "source": {
+                    "enable": true,
+                    "value": "default",
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                },
+                "sport": "67",
+                "throttle_downstream": "",
+                "throttle_upstream": "",
+                "time_range": "",
+                "tos": "",
+                "vlan": {
+                    "enable": true,
+                    "value": 0,
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                }
+            },
+            {
+                "action": "allow",
+                "app_rf_mv_info": {
+                    "enable": true,
+                    "fromtoVersion": "4.1.0-8.13.0",
+                    "version": "6.4.0.2-4.1.0",
+                    "warn_on_change": 0
+                },
+                "blacklist": false,
+                "classify_media": false,
+                "disable_scanning": false,
+                "dot1p_priority": "",
+                "eport": "68",
+                "ipaddr": "10.101.0.0",
+                "log": false,
+                "match": "match",
+                "nat_ip": "",
+                "nat_port": 0,
+                "netmask": "255.255.0.0",
+                "protocol": "dhcp",
+                "protocol_id": "",
+                "service_name": "",
+                "service_type": "network",
+                "source": {
+                    "enable": true,
+                    "value": "default",
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                },
+                "sport": "67",
+                "throttle_downstream": "",
+                "throttle_upstream": "",
+                "time_range": "",
+                "tos": "",
+                "vlan": {
+                    "enable": true,
+                    "value": 0,
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                }
+            },
+            {
+                "action": "deny",
+                "app_rf_mv_info": {
+                    "enable": true,
+                    "fromtoVersion": "4.1.0-8.13.0",
+                    "version": "6.4.0.2-4.1.0",
+                    "warn_on_change": 0
+                },
+                "blacklist": false,
+                "classify_media": false,
+                "disable_scanning": false,
+                "dot1p_priority": "",
+                "eport": "any",
+                "ipaddr": "10.8.0.0",
+                "log": false,
+                "match": "match",
+                "nat_ip": "",
+                "nat_port": 0,
+                "netmask": "255.255.0.0",
+                "protocol": "any",
+                "protocol_id": "",
+                "service_name": "",
+                "service_type": "network",
+                "source": {
+                    "enable": true,
+                    "value": "default",
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                },
+                "sport": "any",
+                "throttle_downstream": "",
+                "throttle_upstream": "",
+                "time_range": "",
+                "tos": "",
+                "vlan": {
+                    "enable": true,
+                    "value": 0,
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                }
+            },
+            {
+                "action": "deny",
+                "app_rf_mv_info": {
+                    "enable": true,
+                    "fromtoVersion": "4.1.0-8.13.0",
+                    "version": "6.4.0.2-4.1.0",
+                    "warn_on_change": 0
+                },
+                "blacklist": false,
+                "classify_media": false,
+                "disable_scanning": false,
+                "dot1p_priority": "",
+                "eport": "any",
+                "ipaddr": "10.101.0.0",
+                "log": false,
+                "match": "match",
+                "nat_ip": "",
+                "nat_port": 0,
+                "netmask": "255.255.0.0",
+                "protocol": "any",
+                "protocol_id": "",
+                "service_name": "",
+                "service_type": "network",
+                "source": {
+                    "enable": true,
+                    "value": "default",
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                },
+                "sport": "any",
+                "throttle_downstream": "",
+                "throttle_upstream": "",
+                "time_range": "",
+                "tos": "",
+                "vlan": {
+                    "enable": true,
+                    "value": 0,
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                }
+            },
+            {
+                "action": "allow",
+                "app_rf_mv_info": {
+                    "enable": true,
+                    "fromtoVersion": "4.1.0-8.13.0",
+                    "version": "6.4.0.2-4.1.0",
+                    "warn_on_change": 0
+                },
+                "blacklist": false,
+                "classify_media": false,
+                "disable_scanning": false,
+                "dot1p_priority": "",
+                "eport": "any",
+                "ipaddr": "any",
+                "log": false,
+                "match": "match",
+                "nat_ip": "",
+                "nat_port": 0,
+                "netmask": "any",
+                "protocol": "any",
+                "protocol_id": "",
+                "service_name": "",
+                "service_type": "network",
+                "source": {
+                    "enable": true,
+                    "value": "default",
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                },
+                "sport": "any",
+                "throttle_downstream": "",
+                "throttle_upstream": "",
+                "time_range": "",
+                "tos": "",
+                "vlan": {
+                    "enable": true,
+                    "value": 0,
+                    "version": "6.4.4.4-4.2.3",
+                    "warn_on_change": 0
+                }
+            }
+        ],
+        "used_in_networks": [
+            {
+                "name": "BCS_BYOD",
+                "type": "wlan"
+            }
+        ],
+        "vlan": ""
+    }
+  } | to_json | replace('"', '\\"') }}"
+}

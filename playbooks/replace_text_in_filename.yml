@@ -1,0 +1,26 @@
+---
+
+- name: Replace a string in file names
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    target_directory: "~/ansible/configs/rhhs"
+    search_string: "Neo"
+    replace_string: ""
+
+  tasks:
+    - name: Find files that contain the search string in their name
+      find:
+        paths: "{{ target_directory }}"
+        patterns: "*{{ search_string }}*"
+        file_type: file
+      register: found_files
+
+    - name: Rename files by replacing the search string with the replacement
+      command: >
+        mv "{{ item.path }}"
+        "{{ item.path | regex_replace(search_string, replace_string) }}"
+      loop: "{{ found_files.files }}"
+      when: "'{{ search_string }}' in item.path"
+      changed_when: true

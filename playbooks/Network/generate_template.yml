@@ -1,7 +1,7 @@
 ---
 
   - name: Generate network device configs from Jinja2 templates
-    hosts: network
+    hosts: neorhhs
     gather_facts: no
 
     tasks:
@@ -9,19 +9,33 @@
         set_fact:
           vlans: "{{ site_vlans | combine(sw_vlans) }}"
 
-      - name: Generate Aruba router config
+      - name: Generate ArubaOS Switch router config
         template:
           src: "{{ template_path }}/network/aruba_oss_router.j2"
           dest: "{{ config_path }}/{{ inventory_hostname }}.cfg"
         delegate_to: localhost
-        when: "ansible_network_os == 'aruba' and inventory_hostname in groups['routers']"
+        when: "inventory_hostname in groups['arubaoss'] and inventory_hostname in groups['routers']"
 
-      - name: Generate Aruba switch config
+      - name: Generate ArubaOS Switch switch config
         template:
           src: "{{ template_path }}/network/aruba_oss_switch.j2"
           dest: "{{ config_path }}/{{ inventory_hostname }}.cfg"
         delegate_to: localhost
-        when: "ansible_network_os == 'aruba' and inventory_hostname in groups['switches']"
+        when: "inventory_hostname in groups['arubaoss'] and inventory_hostname in groups['switches']"
+
+      - name: Generate Aruba CX router config
+        template:
+          src: "{{ template_path }}/network/aruba_oscx_router.j2"
+          dest: "{{ config_path }}/{{ inventory_hostname }}.cfg"
+        delegate_to: localhost
+        when: "inventory_hostname in groups['arubaoscx'] and inventory_hostname in groups['routers']"
+
+      - name: Generate Aruba CX switch config
+        template:
+          src: "{{ template_path }}/network/aruba_oscx_switch.j2"
+          dest: "{{ config_path }}/{{ inventory_hostname }}.cfg"
+        delegate_to: localhost
+        when: "inventory_hostname in groups['arubaoscx'] and inventory_hostname in groups['switches']"
 
       - name: Generate Cisco router config
         template:

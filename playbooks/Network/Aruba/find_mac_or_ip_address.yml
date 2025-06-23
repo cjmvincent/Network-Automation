@@ -1,7 +1,7 @@
 ---
 
 - name: Find MAC or IP address in the network
-  hosts: bchms
+  hosts: aruba
   gather_facts: false
   connection: local
 

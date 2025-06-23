@@ -1,0 +1,35 @@
+---
+
+- name: Create Aruba Central WLAN SSID
+  hosts: CENTRAL
+  vars:
+    group_names: 
+      - "Home_APs"
+    wlan:
+      auth_server: "InternalServer"
+      ssid: "Guest"
+      vlan: "192"
+      psk: ""
+
+  tasks:
+
+    - name: Render JSON payload from template
+      set_fact:
+        json_payload: "{{ lookup('template', '../../../../../templates/network/central/wlan/{{ wlan.ssid }}.j2') }}"
+
+    - name: Update SSID configuration
+      uri:
+        url: "https://{{ ansible_host }}/configuration/full_wlan/{{ item }}/{{ wlan.ssid }}"
+        method: POST
+        timeout: 60
+        headers:
+          Authorization: "Bearer {{ ansible_httpapi_central_access_token }}"
+          Content-Type: "application/json"
+        body_format: json
+        body: "{{ json_payload }}"
+        status_code: 200
+      register: update_response
+      loop: "{{ group_names }}" 
+      loop_control:
+        label: "{{ item }}"
+

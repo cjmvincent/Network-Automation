@@ -1,0 +1,36 @@
+---
+
+# I know this one works!
+
+- name: Get WLAN information from Aruba Central
+  hosts: CENTRAL
+  vars:
+    group_name: "HOME_AP"  # Replace with the Aruba Central group name
+    ssid_name: "Guest"  # Replace with the SSID name to be updated
+    date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
+    
+  tasks:
+
+    - name: Fetch SSID details
+      uri:
+        url: "https://{{ ansible_host }}/configuration/full_wlan/{{ group_name }}/{{ ssid_name }}"
+        method: GET
+        timeout: 60
+        headers:
+          Content-Type: "application/json"
+          Authorization: "Bearer {{ ansible_httpapi_central_access_token }}"
+        return_content: yes
+      register: ssid_response
+
+    - debug:
+        msg: "{{ ssid_response.json }}"
+
+    - name: Create backup directory using today's date
+      file:
+        path: "{{ backup_path }}/{{ date }}"
+        state: directory
+
+    - name: Export errors to logs
+      copy:
+        content: "{{ ssid_response.json | from_json | to_nice_json }}"
+        dest: "{{ backup_path }}/{{ date }}/{{ ssid_name }}_backup.json.j2"

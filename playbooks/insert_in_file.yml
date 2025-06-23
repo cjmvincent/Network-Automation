@@ -1,0 +1,21 @@
+---
+
+- name: Replace a word in all files in a folder
+  hosts: localhost
+
+  tasks:
+
+    - name: Find all files in the target folder
+      ansible.builtin.find:
+        paths: "$HOME/ansible/configs"
+        file_type: file
+      register: found_files
+
+    - name: Replace vlan in each file
+      ansible.builtin.lineinfile:
+        path: "{{ item.path }}"
+        line: "{{ insert_string }}"
+        insertafter: "BOF"
+      loop: "{{ found_files.files }}"
+      vars:
+        line: "vlan 127"

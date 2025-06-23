@@ -1,0 +1,38 @@
+hostname {{ inventory_hostname }}
+domain-name {{ domain_name }}
+{# user me group administrators password plaintext password123 #}
+!
+clock timezone EST
+{% for ntp_server in ntp_servers %}
+ntp server {{ ntp_server }} iburst
+{% endfor %}
+ntp enable
+!
+!
+!
+{% for dns_server in dns_servers %}
+ip dns server-address {{ dns_server }}
+{% endfor %}
+!
+!
+!
+logging {{ logging_server }} {{ logging_protocol }} {{ logging_port }} severity warning
+!
+{% for vlan in vlans %}
+vlan {{ vlans[vlan].id }}
+    name {{ vlans[vlan].name }}
+    exit
+{% endfor %}
+{% for vlan in vlans %}
+interface vlan {{ vlans[vlan].id }}
+{# {% if ('ip_addr' in vlans[vlan]) and (vlan == 'sw_mgmt' or vlan == 'idf_data') %} #}
+{# {% if ('ip_addr' in vlans[vlan]) and (vlan == 'sw_mgmt') %} #}
+    ip address {{ vlans[vlan].ip_addr }} {{ vlans[vlan].subnet_mask }}
+    ip address-helper {{ dhcp_server }}
+{# {% endif %} #}
+    exit
+{% endfor %}
+!
+!
+!
+!

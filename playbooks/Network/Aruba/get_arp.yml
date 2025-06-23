@@ -15,7 +15,7 @@
 
 
 - name: Export ARP table for ArubaOS
-  hosts: 
+  hosts: routers:&arubaoss
   gather_facts: false
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
@@ -34,5 +34,14 @@
 
     - name: Export ARP table
       copy:
-        content: "{{ results.stdout | replace('\\n', '\n') }}"
+        content: |
+          IP Address,MAC Address
+          {% for line in results.stdout[0].split('\n')[4:] %}
+          {% set parts = line.split() %}
+          {% if parts | length >= 2 %}
+          {% set raw_mac = parts[1].replace(':', '').replace('-', '') %}
+          {% set norm_mac = raw_mac[0:2] ~ ':' ~ raw_mac[2:4] ~ ':' ~ raw_mac[4:6] ~ ':' ~ raw_mac[6:8] ~ ':' ~ raw_mac[8:10] ~ ':' ~ raw_mac[10:12] %}
+          {{ parts[0] }},{{ norm_mac | lower }}
+          {% endif %}
+          {% endfor %}
         dest: "{{ log_path }}/{{ date }}/{{ inventory_hostname }}_arp.csv"

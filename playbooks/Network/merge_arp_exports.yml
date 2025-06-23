@@ -1,0 +1,32 @@
+---
+
+- name: Combine all ARP CSVs into one master file
+  hosts: localhost
+  gather_facts: false
+  vars:
+    date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
+    log_dir: "/etc/ansible/logs/{{ date }}"
+    combined_file: "{{ log_dir }}/combined_arp.csv"
+
+  tasks:
+
+    - name: Find all individual ARP CSVs
+      find:
+        paths: "{{ log_dir }}"
+        patterns: "*_arp.csv"
+        use_regex: false
+      register: arp_files
+
+    - name: Read all CSV file contents (excluding headers)
+      command: "tail -n +2 {{ item.path }}"
+      loop: "{{ arp_files.files }}"
+      register: file_bodies
+
+    - name: Combine into single master file with header
+      copy:
+        dest: "{{ combined_file }}"
+        content: |
+          IP Address,MAC Address
+          {% for f in file_bodies.results %}
+          {{ f.stdout }}
+          {% endfor %}
