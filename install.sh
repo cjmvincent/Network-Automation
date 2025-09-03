@@ -87,31 +87,6 @@ sudo service tftpd-hpa restart
 
 
 ###############################################################################
-# Terminal                                                                    #
-###############################################################################
-
-echo "Configuring terminal..."
-echo ""
-
-chsh -s $(which zsh)
-
-# install ohmyzsh
-if test ! $(which omz); then
-  /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)"
-fi
-
-# install powerlevel10k
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
-
-# install a couple of zsh plugins
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-
-# change ohmyzsh theme to powerlevel10k
-#sudo sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
-
-
-###############################################################################
 # Firewall                                                                    #
 ###############################################################################
 
@@ -130,11 +105,3 @@ sudo ufw allow 69/tcp
 # allow rundeck port in firewall
 sudo ufw allow 4440/tcp
 
-
-###############################################################################
-# Dotbot                                                                      #
-###############################################################################
-
-git clone https://github.com/cjmvincent/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-./install
