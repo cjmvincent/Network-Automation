@@ -137,4 +137,4 @@ sudo ufw allow 4440/tcp
 
 git clone https://github.com/cjmvincent/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-sh ./install
+./install
