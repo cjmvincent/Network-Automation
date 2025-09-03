@@ -9,6 +9,29 @@ To get going with the files on an Ubuntu machine run the following command in yo
 
 ` bash -c "$(wget -qO - https://raw.githubusercontent.com/cjmvincent/Network-Automation/main/install.sh)" `
 
+# 1) Download the ZIP
+`curl -L -o Network-Automation.zip \
+  https://github.com/cjmvincent/Network-Automation/archive/refs/heads/main.zip
+  `
+
+# 2) Unzip it (creates Network-Automation-main/)
+`unzip Network-Automation.zip
+`
+
+# 3) Go to the repo folder
+`cd Network-Automation-main
+`
+
+# 4) Run the installer
+# (either make it executable or run with bash directly)
+`chmod +x install.sh
+./install.sh
+`
+# or: 
+`bash install.sh
+`
+
+
 Setup includes:
 * Installing Ansible, and cloning my repo into it's directory
 * Installing a few of my personally desired Ansible collections
