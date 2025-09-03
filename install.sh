@@ -15,7 +15,7 @@ echo "Installing a handful of packages needed for my particular set up..."
 echo ""
 
 # install libs, dependencies, and apps
-cat ./requirements/linux/requirements.txt | xargs sudo apt install -y
+xargs sudo apt install -y < ./requirements/linux/requirements.txt
 
 pipx ensurepath
 
@@ -35,8 +35,8 @@ pipx install -r ./requirements/python/requirements.txt
 echo "Configuring python virtual enviroment for Ansible"
 echo 
 
-mkdir $HOME/.venv
-python3 -m venv $HOME/.venv
+mkdir ~/.venv
+python3 -m venv ~/.venv
 source ~/.venv/bin/activate
 
 python3 -m pip install --upgrade pip
@@ -52,7 +52,7 @@ if [ -d "etc/ansible" ]; then
     sudo rm -rf /etc/ansible
 fi
 
-git clone https://github.com/cjmvincent/Network-Automation.git $HOME/ansible
+git clone https://github.com/cjmvincent/Network-Automation.git ~/ansible
 sudo ln -s ~/ansible /etc/ansible
 
 sudo rm /etc/hosts
@@ -101,14 +101,14 @@ if test ! $(which omz); then
 fi
 
 # install powerlevel10k
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
 
 # install a couple of zsh plugins
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 # change ohmyzsh theme to powerlevel10k
-#sudo sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' $HOME/.zshrc
+#sudo sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
 
 
 ###############################################################################
@@ -135,6 +135,6 @@ sudo ufw allow 4440/tcp
 # Dotbot                                                                      #
 ###############################################################################
 
-git clone https://github.com/cjmvincent/dotfiles.git $HOME/.dotfiles
+git clone https://github.com/cjmvincent/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 ./install

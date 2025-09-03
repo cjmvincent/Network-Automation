@@ -1,13 +1,9 @@
-# Install with 
-# cat requirements.txt | xargs apt install -y
-
 bat
 build-essential
 curl
 gh
 git
 ipcalc
-ipinfo
 net-tools
 lsd
 openjdk-11-jre-headless
