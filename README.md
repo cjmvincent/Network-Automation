@@ -5,29 +5,28 @@ Here is a complilation of playbooks, scripts, docker compose files, etc that I h
 ## Setup
 Note: this is a setup I have running on an Ubuntu box primarily, but also cloned onto my Macbook. 
 
-To get going with the files on an Ubuntu machine run the following command in your terminal of choice:
+To get started with this repo on an Ubuntu machine run the following commands in your terminal of choice:
 
-` bash -c "$(wget -qO - https://raw.githubusercontent.com/cjmvincent/Network-Automation/main/install.sh)" `
 
-# 1) Download the ZIP
+### 1) Download the ZIP
 `curl -L -o Network-Automation.zip \
   https://github.com/cjmvincent/Network-Automation/archive/refs/heads/main.zip
   `
 
-# 2) Unzip it (creates Network-Automation-main/)
+### 2) Unzip it (creates Network-Automation-main/)
 `unzip Network-Automation.zip
 `
 
-# 3) Go to the repo folder
+### 3) Go to the repo folder
 `cd Network-Automation-main
 `
 
-# 4) Run the installer
-# (either make it executable or run with bash directly)
+### 4) Run the installer
+### (either make it executable or run with bash directly)
 `chmod +x install.sh
 ./install.sh
 `
-# or: 
+### or: 
 `bash install.sh
 `
 
