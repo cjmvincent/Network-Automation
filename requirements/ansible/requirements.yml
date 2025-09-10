@@ -27,15 +27,18 @@
 #   version: <commit hash>
 
 # Install a role from the Ansible Galaxy
-- src: ansible.netcommon
-- src: ansible.windows
-- src: arubanetworks.aos_switch
-- src: arubanetworks.aoscx
-- src: cisco.ios
-- src: community.general
-- src: community.vmware
-- src: community.windows
-- src: microsoft.ad
-- src: paloaltonetworks.panos
-- src: vmware.vmware
-- src: vmware.vmware_rest
+
+# Install collections from the Ansible Galaxy
+Collections:
+- ansible.netcommon
+- ansible.windows
+- arubanetworks.aos_switch
+- arubanetworks.aoscx
+- cisco.ios
+- community.general
+- community.vmware
+- community.windows
+- microsoft.ad
+- paloaltonetworks.panos
+- vmware.vmware
+- vmware.vmware_rest

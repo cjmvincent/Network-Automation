@@ -33,14 +33,13 @@ sudo snap install postman
 ###############################################################################
 
 echo "Configuring python virtual enviroment for Ansible"
-echo 
+echo ""
 
-# mkdir ~/.venv
-# python3 -m venv ~/.venv
-# source ~/.venv/bin/activate
+mkdir ~/.venv
+python3 -m venv ~/.venv
+source ~/.venv/bin/activate
 
 python3 -m pip install --upgrade pip
-#python3 -m pip install --upgrade virtualenv
 
 python3 -m pip install -r ./requirements/python/requirements.txt
 
@@ -59,7 +58,7 @@ sudo rm /etc/hosts
 sudo ls -s ~/ansible/dns_hosts /etc/hosts
 
 # install desired ansible collections
-ansible-galaxy install -r ./requirements/ansible/requirements.yml
+ansible-galaxy install -r ./requirements/ansible/requirements.yml --ignore-errors
 
 #echo "Installing RunDeck..."
 
