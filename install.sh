@@ -17,7 +17,7 @@ echo ""
 # install libs, dependencies, and apps
 xargs sudo apt install -y < ./requirements/linux/requirements.txt
 
-pipx ensurepath
+# pipx ensurepath
 
 sudo apt update && sudo apt upgrade --yes
 
@@ -25,7 +25,7 @@ sudo apt update && sudo apt upgrade --yes
 sudo snap install code --classic
 sudo snap install postman
 
-pipx install -r ./requirements/python/requirements.txt
+# pipx install -r ./requirements/python/requirements.txt
 
 
 ###############################################################################
@@ -35,12 +35,12 @@ pipx install -r ./requirements/python/requirements.txt
 echo "Configuring python virtual enviroment for Ansible"
 echo 
 
-mkdir ~/.venv
-python3 -m venv ~/.venv
-source ~/.venv/bin/activate
+# mkdir ~/.venv
+# python3 -m venv ~/.venv
+# source ~/.venv/bin/activate
 
 python3 -m pip install --upgrade pip
-python3 -m pip install --upgrade virtualenv
+#python3 -m pip install --upgrade virtualenv
 
 python3 -m pip install -r ./requirements/python/requirements.txt
 

@@ -7,6 +7,8 @@ ipcalc
 net-tools
 lsd
 openjdk-11-jre-headless
+python3-pip
+pip
 pipx
 software-properties-common
 speedtest-cli
