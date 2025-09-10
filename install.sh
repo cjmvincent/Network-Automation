@@ -53,7 +53,7 @@ git clone https://github.com/cjmvincent/Network-Automation.git ~/ansible
 sudo ln -s ~/ansible /etc/ansible
 
 sudo rm /etc/hosts
-sudo ls -s ~/ansible/dns_hosts /etc/hosts
+sudo cp ~/ansible/dns_hosts /etc/hosts
 
 # install desired ansible collections
 ansible-galaxy install -r ./requirements/ansible/requirements.yml --ignore-errors
