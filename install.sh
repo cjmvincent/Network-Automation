@@ -1,5 +1,3 @@
-# to get started simply run:
-# bash -c "$(wget -qO - https://raw.githubusercontent.com/cjmvincent/Network-Automation/main/install.sh)"
 
 ###############################################################################
 # Packages                                                                    #
