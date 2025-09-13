@@ -27,7 +27,7 @@ To get started with this repo on an Ubuntu machine run the following commands in
 ./install.sh
 `
 ### or: 
-`bash install.sh
+`source install.sh
 `
 
 
