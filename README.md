@@ -1,34 +1,27 @@
 # Network Automation
-Here is a complilation of playbooks, scripts, docker compose files, etc that I have amassed as I have been studying for the CCNP ENAUTO. These are also things I have begun putting into production as first year Network Engineer.
+This repository is a compilation of playbooks, scripts, Docker Compose files, and other tooling that I have amassed while studying for the **CCNP ENAUTO** exam. Many of these items have already been put into my personal production enviorment as part of my work as a first-year network engineer.
+
+⚠️ **Important:**
+This repository contains automation that can modify system configuration and install services. Always review scripts and playbooks before executing them in your environment.
 
 
 ## Setup
-Note: this is a setup I have running on an Ubuntu box primarily, but also cloned onto my Macbook. 
+This is a setup I have primarily been running inside of an Ubuntu Docker container, but it should also work on bare metal or a virtual machine.
 
-To get started with this repo on an Ubuntu machine run the following commands in your terminal of choice:
+To get started run the following in your terminal of choice:
 
 
 ### 1) Download the ZIP
-`curl -L -o Network-Automation.zip \
-  https://github.com/cjmvincent/Network-Automation/archive/refs/heads/main.zip
-  `
+`curl -L -o Network-Automation.zip https://github.com/cjmvincent/Network-Automation/archive/refs/heads/main.zip`
 
 ### 2) Unzip it (creates Network-Automation-main/)
-`unzip Network-Automation.zip
-`
+`unzip Network-Automation.zip`
 
 ### 3) Go to the repo folder
-`cd Network-Automation-main
-`
+`cd Network-Automation-main`
 
 ### 4) Run the installer
-### (either make it executable or run with bash directly)
-`chmod +x install.sh
-./install.sh
-`
-### or: 
-`source install.sh
-`
+`bash -x -e ./install.sh`
 
 
 Setup includes:
@@ -36,3 +29,5 @@ Setup includes:
 * Installing a few of my personally desired Ansible collections
 * Installing tools such Python, Git, Netmiko, Paramiko, Napalm, Net-Tools
 * Installing Check_MK so I can monitor network devices
+* Installing an instance of Rundeck as a GUI to compliment my Ansible Enviroment
+* Installing a TFTP server for hosting firmware and images for my nodes
