@@ -1,5 +1,9 @@
 #!/bin/bash
 
+set -x
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+
 ###############################################################################
 # Packages                                                                    #
 ###############################################################################
@@ -14,17 +18,13 @@ echo "Installing a handful of packages needed for my particular set up..."
 echo ""
 
 # install libs, dependencies, and apps
-xargs sudo apt install -y < ./requirements/linux/requirements.txt
-
-# pipx ensurepath
+xargs sudo apt install -y < "$SCRIPT_DIR/requirements/linux/requirements.txt"
 
 sudo apt update && sudo apt upgrade --yes
 
 # install vscode
 sudo snap install code --classic
 sudo snap install postman
-
-# pipx install -r ./requirements/python/requirements.txt
 
 
 ###############################################################################
@@ -34,19 +34,18 @@ sudo snap install postman
 echo "Configuring python virtual enviroment for Ansible"
 echo ""
 
-mkdir ~/.venv
 python3 -m venv ~/.venv
 source ~/.venv/bin/activate
 
 python3 -m pip install --upgrade pip
 
-python3 -m pip install -r ./requirements/python/requirements.txt
+python3 -m pip install -r "$SCRIPT_DIR/requirements/python/requirements.txt"
 
 echo "Cloning my network automation repo into my desired path..."
 echo ""
 
 # clone ansible repo to ansible directory
-if [ -d "etc/ansible" ]; then
+if [ -d "/etc/ansible" ]; then
     sudo rm -rf /etc/ansible
 fi
 
@@ -57,7 +56,7 @@ sudo rm /etc/hosts
 sudo cp ~/ansible/dns_hosts /etc/hosts
 
 # install desired ansible collections
-ansible-galaxy install -r ./requirements/ansible/requirements.yml --ignore-errors
+ansible-galaxy install -r "$SCRIPT_DIR/requirements/ansible/requirements.yml" --ignore-errors
 
 #echo "Installing RunDeck..."
 
@@ -91,9 +90,6 @@ sudo service tftpd-hpa restart
 echo "Configuring firewall to allow some ports for the services this node will run..."
 echo ""
 
-# configure firewall
-sudo ufw enable
-
 # allow ssh
 sudo ufw allow ssh
 
@@ -103,3 +99,5 @@ sudo ufw allow 69/tcp
 # allow rundeck port in firewall
 sudo ufw allow 4440/tcp
 
+# enable firewall
+sudo ufw enable
