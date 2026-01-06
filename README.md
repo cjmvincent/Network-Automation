@@ -11,7 +11,7 @@ This is a setup I have primarily been running inside of an Ubuntu Docker contain
 To get started run the following in your terminal of choice:
 
 
-### 1) Download the ZIP
+### 1) Download the ZIP (assuming you do not already have git installed already)
 `curl -L -o Network-Automation.zip https://github.com/cjmvincent/Network-Automation/archive/refs/heads/main.zip`
 
 ### 2) Unzip it (creates Network-Automation-main/)
