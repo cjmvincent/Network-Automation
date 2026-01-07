@@ -1,0 +1,26 @@
+# start container by executing 'docker-compose up -d'
+# if using an additional volume like below to move files between host and container you must execute the following in the container 'sudo -S mount_9p shared'; making sure to change the location approriately based on your docker compose file
+
+services:
+  macos:
+    image: dockurr/macos
+    container_name: macos
+    environment:
+      VERSION: "15"
+      RAM_SIZE: "8G"
+      CPU_CORES: "4"
+      DISK_SIZE: "100G"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8006:8006
+      - 5900:5900/tcp
+      - 5900:5900/udp
+    volumes:
+      - ./macos:/storage
+      - ./macos:/shared
+    restart: always
+    stop_grace_period: 2m
