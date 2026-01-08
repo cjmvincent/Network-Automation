@@ -1,0 +1,20 @@
+
+services:
+  ubuntu:
+    image: ubuntu:latest
+    container_name: ansible
+    stdin_open: true
+    tty: true
+    environment:
+      - USERNAME=admin
+      - PASSWORD=test
+      - DEBIAN_FRONTEND=noninteractive
+      - TZ=America/New_York
+    volumes:
+      - ./scripts:/scripts
+      - ./data:/data
+    ports:
+      - "8080:80"
+      - "8443:443"
+      - "2222:22"
+    command: sleep infinity
