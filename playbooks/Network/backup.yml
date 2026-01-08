@@ -14,7 +14,7 @@
         state: directory
 
 - name: Backup running config of network devices
-  hosts: network
+  hosts: rhelc
   gather_facts: false
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"

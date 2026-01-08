@@ -1,7 +1,7 @@
 ---
 
-- name: Fix DNS settings from doofus
-  hosts: arubaoss
+- name: Replace DNS servers
+  hosts: SWITCH-1
   gather_facts: false
 
   tasks:
@@ -16,31 +16,18 @@
 
 
 - name: Correct NTP servers
-  hosts: north
+  hosts: SWITCH-1
   gather_facts: false
 
   tasks:
 
-    - name: Add appropriate NTP servers depending on side of district
+    - name: Add appropriate NTP servers
       aruba_config:
         lines:
           - ip dns server-address {{ dns_servers[0] }}
           - ip dns server-address {{ dns_servers[1] }}
         save_when: always
 
-
-- name: Correct NTP servers
-  hosts: south
-  gather_facts: false
-
-  tasks:
-
-    - name: Add appropriate NTP servers depending on side of district
-      aruba_config:
-        lines:
-          - ip dns server-address {{ dns_servers[0] }}
-          - ip dns server-address {{ dns_servers[1] }}
-        save_when: always
 
 
 

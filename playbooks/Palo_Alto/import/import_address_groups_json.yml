@@ -1,0 +1,28 @@
+---
+
+- name: Populating address group
+  hosts: FIREWALL-1
+  connection: local
+
+  tasks:
+
+  - name: Load address groups from JSON
+    set_fact:
+      address_groups: "{{ lookup('file', source_files ~ '/PA-SOUTH_address_groups_sanitized.json') | from_json }}"
+    delegate_to: localhost
+
+  - name: Create address groups
+    paloaltonetworks.panos.panos_address_group:
+      provider: "{{ provider }}"
+      name: "{{ item.name }}"
+      static_value: "{{ item.static_value }}"
+      description: "{{ item.description }}"
+      #tag: "{{ item.tag }}"
+      state: "present"
+    loop: "{{ address_groups }}"
+
+  - name: Commit changes
+    paloaltonetworks.panos.panos_commit_firewall:
+      provider: '{{ provider }}'
+      admins: ['cvincent']
+      description: 'imported address groups from JSON -cv'

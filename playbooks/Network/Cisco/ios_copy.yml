@@ -1,7 +1,7 @@
 ---
 
 - name: Upgrade IOS image
-  hosts: RHCEC-IDF6
+  hosts: SWITCH-1
   gather_facts: false
 
   tasks:

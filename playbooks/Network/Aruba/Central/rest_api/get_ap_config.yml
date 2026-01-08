@@ -1,0 +1,53 @@
+---
+
+- name: Get configuration of individual AP
+  hosts: CENTRAL
+  gather_facts: no
+
+  vars:
+    serial: "abcdefg"
+
+  tasks:
+      
+    - name: Get config of dot11a
+      uri:
+        url: "https://{{ ansible_host }}/configuration/v1/dot11a_radio_profiles/{{ serial }}"
+        method: GET
+        timeout: 60
+        headers:
+          Authorization: "Bearer {{ ansible_httpapi_central_access_token }}"
+          Content-Type: "application/json"
+        body_format: json
+        body:
+        status_code: 200
+        validate_certs: yes
+      # loop: "{{ ap_list.list }}"
+      # loop_control:
+      #   label: "{{ item.serial }}"
+      register: ap_a
+
+      
+    - name: Get config of dot11g
+      uri:
+        url: "https://{{ ansible_host }}/configuration/v1/dot11g_radio_profiles/{{ serial }}"
+        method: GET
+        timeout: 60
+        headers:
+          Authorization: "Bearer {{ ansible_httpapi_central_access_token }}"
+          Content-Type: "application/json"
+        body_format: json
+        body:
+        status_code: 200
+        validate_certs: yes
+      # loop: "{{ ap_list.list }}"
+      # loop_control:
+      #   label: "{{ item.serial }}"
+      register: ap_g
+
+    - name: Show rename results
+      debug:
+        var: ap_a
+
+    - name: Show rename results
+      debug:
+        var: ap_g

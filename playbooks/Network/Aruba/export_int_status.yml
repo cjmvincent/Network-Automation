@@ -1,7 +1,7 @@
 ---
 
-- name: Retrieve port errors on device
-  hosts: SWITCH-1
+- name: Retrieve port status
+  hosts: network
   gather_facts: false
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
@@ -16,11 +16,11 @@
     - name: ArubaOSS
       aruba_command:
         commands:
-          - sh int
+          - sh int status
       when: ansible_network_os == "aruba"
-      register: errors
+      register: status
 
-    - name: Export errors to logs
+    - name: Export status to log files
       copy:
-        content: "{{ errors.stdout[0] }}"
-        dest: "{{ log_path }}/{{ date }}/{{ inventory_hostname }}_errors.txt"
+        content: "{{ status.stdout[0] }}"
+        dest: "{{ log_path }}/{{ date }}/{{ inventory_hostname }}_int_status.csv"

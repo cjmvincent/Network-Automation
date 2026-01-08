@@ -1,12 +1,12 @@
 ---
 
-- name: Remove incorrect NTP servers
+- name: Replace stale NTP servers
   hosts: arubaoss
   gather_facts: false
 
   tasks:
 
-    - name: Remove the trash from Josh
+    - name: Remove the old entries
       aruba_config:
         lines:
           - no ntp server 216.239.35.4
@@ -15,26 +15,12 @@
 
 
 - name: Correct NTP servers
-  hosts: north
+  hosts: SWITCH-1
   gather_facts: false
 
   tasks:
 
-    - name: Add appropriate NTP servers depending on side of district
-      aruba_config:
-        lines:
-          - ntp server {{ dns_servers[0] }}
-          - ntp server {{ dns_servers[1] }}
-        save_when: always
-
-
-- name: Correct NTP servers
-  hosts: south
-  gather_facts: false
-
-  tasks:
-
-    - name: Add appropriate NTP servers depending on side of district
+    - name: Add appropriate NTP
       aruba_config:
         lines:
           - ntp server {{ dns_servers[0] }}

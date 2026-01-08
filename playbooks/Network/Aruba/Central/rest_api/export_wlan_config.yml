@@ -1,12 +1,10 @@
 ---
 
-# I know this one works!
-
 - name: Get WLAN information from Aruba Central
   hosts: CENTRAL
   vars:
-    group_name: "HOME_AP"  # Replace with the Aruba Central group name
-    ssid_name: "Guest"  # Replace with the SSID name to be updated
+    group_name: "SITE-1"
+    ssid_name: "Guest"
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
     
   tasks:
@@ -30,7 +28,7 @@
         path: "{{ backup_path }}/{{ date }}"
         state: directory
 
-    - name: Export errors to logs
+    - name: Export
       copy:
         content: "{{ ssid_response.json | from_json | to_nice_json }}"
         dest: "{{ backup_path }}/{{ date }}/{{ ssid_name }}_backup.json.j2"

@@ -1,0 +1,30 @@
+---
+
+- name: Check Active DHCP Lease on All Scopes
+  hosts: DHCP
+  vars:
+    address: "10.57.3.10"
+  tasks:
+
+    - name: Get all DHCP Scopes
+      win_shell: |
+        Get-DhcpServerv4Scope | Select-Object -ExpandProperty ScopeId
+      register: dhcp_scopes_raw
+
+    - name: Parse DHCP Scopes
+      set_fact:
+        dhcp_scopes: "{{ dhcp_scopes_raw.stdout_lines }}"
+
+    - name: Check for Active DHCP Lease in all Scopes
+      community.windows.win_dhcp_lease:
+        state: present
+        scope: "{{ item.scope_id }}"
+        address: "{{ address }}"
+      loop: "{{ dhcp_scopes.scopes }}"
+      register: dhcp_lease_status
+      ignore_errors: yes
+
+    - name: Display DHCP Lease Status
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ dhcp_lease_status.results }}"

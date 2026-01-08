@@ -34,6 +34,24 @@
 
     - name: Export ARP table
       copy:
+        # content: "{{ results.stdout | replace('\\n', '\n') }}"
+        # content: "{{ results.stdout[0].split('\n')[3:] | join('\n') }}"
+        # content: |
+        #   IP Address,MAC Address,Type,Port
+        #   {% for line in results.stdout[0].split('\n')[4:] %}
+        #   {% set parts = line.split() %}
+        #   {% if parts | length >= 4 %}
+        #   {{ parts[0] }},{{ parts[1] }},{{ parts[2] }},{{ parts[3] }}
+        #   {% endif %}
+        #   {% endfor %}
+        # content: |
+        #   IP Address,MAC Address
+        #   {% for line in results.stdout[0].split('\n')[4:] %}
+        #   {% set parts = line.split() %}
+        #   {% if parts | length >= 2 %}
+        #   {{ parts[0] }},{{ parts[1] }}
+        #   {% endif %}
+        #   {% endfor %}
         content: |
           IP Address,MAC Address
           {% for line in results.stdout[0].split('\n')[4:] %}

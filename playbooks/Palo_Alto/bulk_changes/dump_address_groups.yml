@@ -1,24 +1,24 @@
 ---
 
 - name: Get a list of security policies
-  hosts: PA-NORTH
+  hosts: FIREWALL-1
   connection: local
 
   tasks:
 
   - name: Get rules
-    paloaltonetworks.panos.panos_nat_rule:
+    paloaltonetworks.panos.panos_address_group:
       provider: '{{ provider }}'
       state: "gathered"
       gathered_filter: "*"
-    register: nat
+    register: addresses
 
 #  - debug:
-#      msg: "{{ nat }}"
+#      msg: "{{ addresses }}"
 
   - name: Save security policies to json gathered_file 
     copy:
-      content: "{{ nat | to_nice_json }}"
-      dest: "{{ log_path }}/{{ inventory_hostname }}_nat_rules.json"
+      content: "{{ addresses | to_nice_json }}"
+      dest: "{{ log_path }}/{{ inventory_hostname }}_address_groups.json"
     delegate_to: localhost
 

@@ -1,12 +1,11 @@
 ---
 
-# I know this one works!
-
 - name: Create Aruba Central Access Point Group
   hosts: CENTRAL
   vars:
     group_list:
-      - "CO_APs"
+      - "SITE-1"
+      - "SITE-2"
 
   tasks:
 

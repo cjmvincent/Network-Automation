@@ -1,7 +1,7 @@
 ---
 
 - name: Find mac address in switches
-  hosts: 
+  hosts: network
   gather_facts: false
   connection: local
 
@@ -12,7 +12,7 @@
 
   tasks:
 
-    - name: remove extraneous characters, and place a dash in the necessary position
+    - name: Normalize mac address
       set_fact:
         mac: "{{ mac | regex_replace('[^A-Fa-f0-9]','') | regex_replace('(.{6})', '\\1-') | regex_replace('-$', '') | lower }}"
 

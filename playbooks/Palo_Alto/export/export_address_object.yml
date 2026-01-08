@@ -1,0 +1,33 @@
+---
+
+- name: Export address objects
+  hosts: FIREWALL-1
+  connection: local
+  vars:
+    target_objects:
+      - "Admin Main Office"
+      - "Learning Commons"
+
+
+  tasks:
+
+  - name: Get all address objects
+    paloaltonetworks.panos.panos_address_object:
+      provider: '{{ provider }}'
+      state: "gathered"
+      gathered_filter: "*"
+    register: addresses
+
+  - name: Filter for specific objects
+    set_fact:
+      filtered_addresses: "{{ addresses.gathered | selectattr('name', 'in', target_objects) | list }}"
+
+  - name: Sanitize address objects for import
+    set_fact:
+      sanitized_objects: "{{ filtered_addresses }}"
+
+  - name: Save sanitized objects to file
+    copy:
+      content: "{{ sanitized_objects | to_nice_json }}"
+      dest: "{{ log_path }}/{{ inventory_hostname }}_addresses_sanitized.json"
+    delegate_to: localhost

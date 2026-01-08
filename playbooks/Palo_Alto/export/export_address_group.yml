@@ -1,0 +1,31 @@
+---
+
+- name: Export address groups
+  hosts: FIREWALL-1
+  connection: local
+  vars:
+    target_groups:
+      - "Performance Matters FTP Scanners"
+
+  tasks:
+
+  - name: Get all groups
+    paloaltonetworks.panos.panos_address_group:
+      provider: '{{ provider }}'
+      state: "gathered"
+      gathered_filter: "*"
+    register: addresses
+
+  - name: Filter for specific groups
+    set_fact:
+      filtered_addresses: "{{ addresses.gathered | selectattr('name', 'in', target_groups) | list }}"
+
+  - name: Sanitize address groups for import
+    set_fact:
+      sanitized_groups: "{{ filtered_addresses | map('dict2items') | map('rejectattr', 'key', 'in', ['dynamic_value']) | map('items2dict') | list }}"
+
+  - name: Save sanitized groups to file
+    copy:
+      content: "{{ sanitized_groups | to_nice_json }}"
+      dest: "{{ log_path }}/{{ inventory_hostname }}_address_groups_sanitized.json"
+    delegate_to: localhost

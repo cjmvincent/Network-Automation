@@ -1,7 +1,7 @@
 ---
 
 - name: Apply generated config file to device
-  hosts: 
+  hosts: DEVICE-1
 
   tasks:
 

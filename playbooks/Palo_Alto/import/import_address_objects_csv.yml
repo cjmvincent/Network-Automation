@@ -1,7 +1,7 @@
 ---
 
 - name: Create address objects
-  hosts: FIREWALL
+  hosts: FIREWALL-1
   connection: local
 
   tasks:
@@ -14,10 +14,10 @@
 
   - name: Create address objects
     paloaltonetworks.panos.panos_address_object:
-      provider: '{{ provider }}'
-      name: '{{ item.name }}'
+      provider: "{{ provider }}"
+      name: "{{ item.name }}"
       address_type: "{{ item.type }}"
-      value: '{{ item.ip_address }}'
+      value: "{{ item.ip_address }}"
       state: "{{ item.state }}"
     loop: "{{ address_list.list }}"
 
@@ -25,4 +25,4 @@
     paloaltonetworks.panos.panos_commit_firewall:
       provider: '{{ provider }}'
       admins: ['cvincent']
-      description: 'ansible test -cv'
+      description: 'new centegix address objects -cv'

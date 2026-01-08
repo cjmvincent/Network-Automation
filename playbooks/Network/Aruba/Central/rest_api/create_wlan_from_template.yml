@@ -4,10 +4,10 @@
   hosts: CENTRAL
   vars:
     group_names: 
-      - "Home_APs"
+      - "SITE-1"
     wlan:
-      auth_server: "InternalServer"
-      ssid: "Guest"
+      auth_server: "byod"
+      ssid: "BYOD"
       vlan: "192"
       psk: ""
 

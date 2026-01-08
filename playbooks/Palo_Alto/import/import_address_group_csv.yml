@@ -1,7 +1,7 @@
 ---
 
 - name: Populating address group
-  hosts: FIREWALL
+  hosts: FIREWALL-1
   connection: local
 
   tasks:
@@ -11,15 +11,6 @@
       path: "{{ source_files }}/address_list.csv"
     register: address_list
     delegate_to: localhost
-
-  - name: Create address objects
-    paloaltonetworks.panos.panos_address_object:
-      provider: '{{ provider }}'
-      name: '{{ item.name }}'
-      address_type: "{{ item.type }}"
-      value: '{{ item.ip_address }}'
-      state: "{{ item.state }}"
-    loop: "{{ address_list.list }}"
 
   - name: Create address group from objects
     paloaltonetworks.panos.panos_address_group:
@@ -33,4 +24,4 @@
     paloaltonetworks.panos.panos_commit_firewall:
       provider: '{{ provider }}'
       admins: ['cvincent']
-      description: 'ansible test -cv'
+      description: 'add centegix address objects to groups -cv'

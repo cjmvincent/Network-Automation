@@ -1,7 +1,7 @@
 ---
 
 - name: Find MAC or IP address in the network
-  hosts: aruba
+  hosts: network
   gather_facts: false
   connection: local
 
@@ -14,9 +14,7 @@
        prompt: What is the applicable address?
        private: no
 
-
   tasks:
-
 
     - name: This block searches for a MAC address
       block:
@@ -64,8 +62,6 @@
           when: printout.stdout != ['']
       when: answer == "1"
 
-
-
     - name: This block searches for an IP address
       block:
         - name: Search for IP address
@@ -81,8 +77,6 @@
           delegate_facts: true
           delegate_to: localhost
       when: answer == "2" and inventory_hostname in groups['routers']
-
-
 
     - name: This block searches for an IP address
       block:

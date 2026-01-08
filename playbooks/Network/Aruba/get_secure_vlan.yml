@@ -14,17 +14,18 @@
         state: directory
 
 
-- name: Export vlan 128 ArubaOS
-  hosts: 
+- name: Export running config of vlan
+  hosts: fmes
   gather_facts: false
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
+    vlan: "128"
 
   tasks:
 
     - name: ArubaOS
       aruba_command:
-        commands: sh run vlan 1616
+        commands: sh run vlan {{ vlan }}
       when: ansible_network_os == "aruba"
       register: results
 

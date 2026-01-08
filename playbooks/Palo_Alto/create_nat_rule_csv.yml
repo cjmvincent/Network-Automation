@@ -1,0 +1,38 @@
+---
+
+- name: Creating NAT Rules
+  hosts: FIREWALL-1
+  connection: local
+
+  tasks:
+
+  - name: Import list
+    read_csv:
+      path: "{{ source_files }}/nat_rules.csv"
+    register: nat_list
+    delegate_to: localhost
+
+  - name: Create NAT Rule
+    paloaltonetworks.panos.panos_nat_rule:
+      provider: "{{ provider }}"
+      name: "{{ item.name }}"
+      nat_type: "{{ item.nat_type }}"
+      from_zones: "{{ item.from_zone }}"
+      to_zones: "{{ item.to_zone }}"
+      to_interface: '{{ item.to_int }}'
+      service: "{{ item.service }}"
+      source_addresses: "{{ item.source_addresses }}"
+      destination_addresses: "{{ item.dest_addresses }}"
+      source_translation_type: "{{ item.s_trans_type }}"
+      #source_translation_address_type: '{{ item.s_trans_address_type }}'
+      source_translation_static_translated_address: "{{ item.s_trans_static_address }}"
+      source_translation_static_bi_directional: "{{ item.s_trans_bidirectional }}"
+      #source_translation_interface: "{{ item.source_trans_int }}"
+      state: "{{ item.nat_state }}"
+    loop: "{{ nat_list.list }}"
+
+  - name: Commit changes
+    paloaltonetworks.panos.panos_commit_firewall:
+      provider: '{{ provider }}'
+      admins: ['cvincent']
+      description: 'create nat rules for nintendo switches and playstations -cv'

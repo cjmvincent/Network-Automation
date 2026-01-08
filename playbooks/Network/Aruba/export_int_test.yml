@@ -1,0 +1,84 @@
+---
+
+- name: Retrieve port status
+  hosts: network:!routers
+  gather_facts: false
+  vars:
+    date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
+
+  tasks:
+
+    - name: Create backup directory using today's date
+      ansible.builtin.file:
+        path: "{{ log_path }}/{{ date }}"
+        state: directory
+
+    - name: Run show interface status
+      aruba_command:
+        commands:
+          - sh int status
+      when: ansible_network_os == "aruba"
+      register: status
+
+    - name: Clean and export interface status (Port,Status only)
+      block:
+        - name: Get raw text from aruba_command
+          set_fact:
+            _raw: >-
+              {{
+                status.stdout[0]
+                  if (status.stdout is defined and status.stdout|length > 0)
+                  else (status.stdout_lines | join('\n'))
+              }}
+
+    - name: Split and trim lines
+      set_fact:
+        _lines: >-
+          {{
+            _raw.splitlines()
+            | map('regex_replace', '^\\s+|\\s+$', '')
+            | list
+          }}
+
+    - name: Replace 2+ spaces with commas
+      set_fact:
+        _comma_lines: "{{ _lines | map('regex_replace', ' {2,}', ',') | list }}"
+
+    - name: Strip leading commas
+      set_fact:
+        _comma_lines: "{{ _comma_lines | map('regex_replace', '^,', '') | list }}"
+
+    - name: Filter out banners, headers, dashes, blanks
+      set_fact:
+        _data_rows: >-
+          {{
+            _comma_lines
+            | reject('search', '^sh int status(,|$)')
+            | reject('search', '(^|,)Port, *Name, *Status')
+            | reject('search', '^-')
+            | reject('equalto', '')
+            | list
+          }}
+
+    - name: Reduce each row to Port,Status (split + join)
+      set_fact:
+        _rows_ps: []
+    - set_fact:
+        _rows_ps: "{{ _rows_ps + [ (item.split(',')[:2] | join(',')) ] }}"
+      loop: "{{ _data_rows }}"
+    - set_fact:
+        _data_rows: "{{ _rows_ps }}"
+
+    - name: Set final header
+      set_fact:
+        _header: "Port,Status"
+
+    - name: Write final CSV
+      copy:
+        dest: "{{ log_path }}/{{ date }}/{{ inventory_hostname }}_int_status.csv"
+        mode: '0644'
+        content: |-
+          {{ _header }}
+          {% for r in _data_rows -%}
+          {{ r }}
+          {% endfor %}

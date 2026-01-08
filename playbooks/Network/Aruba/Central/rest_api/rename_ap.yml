@@ -1,0 +1,43 @@
+---
+
+- name: Bulk Rename Aruba Central APs from CSV
+  hosts: CENTRAL
+  gather_facts: no
+
+  vars:
+    ap_csv_path: "../../../../../source_files/ap_names.csv"
+
+  tasks:
+
+    - name: Import list
+      read_csv:
+        path: "{{ ap_csv_path }}"
+      register: ap_list
+      delegate_to: localhost
+      
+    - name: Rename AP using Aruba Central POST API
+      uri:
+        url: "https://{{ ansible_host }}/configuration/v1/ap_settings_cli/{{ item.serial }}"
+        method: POST
+        timeout: 60
+        headers:
+          Authorization: "Bearer {{ ansible_httpapi_central_access_token }}"
+          Content-Type: "application/json"
+        body_format: json
+        body: >
+          {
+            "clis":[
+              "per-ap-settings {{ item.mac }}",
+              "hostname {{ item.name }}"
+              ]
+            }
+        status_code: 200
+        validate_certs: yes
+      loop: "{{ ap_list.list }}"
+      loop_control:
+        label: "{{ item.serial }}"
+      register: rename_results
+
+    - name: Show rename results
+      debug:
+        var: rename_results.results

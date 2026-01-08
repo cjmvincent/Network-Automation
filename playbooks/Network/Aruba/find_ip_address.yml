@@ -1,7 +1,7 @@
 ---
 
 - name: Find mac address in switches
-  hosts: 
+  hosts: network
   gather_facts: false
   connection: local
 
@@ -12,7 +12,7 @@
 
   tasks:
 
-    - name: search
+    - name: Search for address
       aruba_command:
         commands:
           - "show arp | include {{ ip }}"
@@ -23,7 +23,7 @@
           {{printout.stdout_lines[0] | regex_replace('.*([0-9a-f]{6}-[0-9a-f]{6}).*', '\1') | replace('\n', '') | trim }}
       when: printout.stdout != ['']
 
-    - name: View output
+    - name: Print output
       debug:
         msg:
           - "IP: {{ ip }} MAC: {{ mac }} "

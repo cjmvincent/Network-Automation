@@ -11,7 +11,7 @@
       aruba_config:
         save_when: always
 
-    - name: Set boot file
+    - name: Copy image to device
       aruba_config:
         lines:
           - "copy tftp flash {{ tftp_server }} {{ system_image_filename }}"

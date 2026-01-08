@@ -1,0 +1,68 @@
+---
+
+- name: Import Security Rule to Palo Alto Firewall
+  hosts: FIREWALL-1
+  connection: local
+  vars:
+    policy_name: "Performance Matters FTP"
+    json_file_path: "{{ log_path }}/{{ policy_name }}.json"
+
+  tasks:
+    - name: Read exported security rule JSON
+      ansible.builtin.slurp:
+        src: "{{ json_file_path }}"
+      register: json_content
+      delegate_to: localhost
+
+    - name: Parse JSON content
+      ansible.builtin.set_fact:
+        rule_data: "{{ json_content.content | b64decode | from_json }}"
+
+    - name: Display rule to be imported
+      ansible.builtin.debug:
+        var: rule_data
+
+    - name: Import security rule to destination firewall
+      paloaltonetworks.panos.panos_security_rule:
+        provider: '{{ provider }}'
+        rule_name: "{{ rule_data.rule_name }}"
+        source_zone: "{{ rule_data.source_zone }}"
+        destination_zone: "{{ rule_data.destination_zone }}"
+        source_ip: "{{ rule_data.source_ip }}"
+        source_user: "{{ rule_data.source_user }}"
+        destination_ip: "{{ rule_data.destination_ip }}"
+        application: "{{ rule_data.application }}"
+        service: "{{ rule_data.service }}"
+        category: "{{ rule_data.category }}"
+        action: "{{ rule_data.action }}"
+        description: "{{ rule_data.description if rule_data.description else omit }}"
+        #disabled: "{{ rule_data.disabled }}"
+        log_start: "{{ rule_data.log_start if rule_data.log_start is not none and rule_data.log_start != '' else omit }}"
+        log_end: "{{ rule_data.log_end if rule_data.log_end is not none and rule_data.log_end != '' else omit }}"
+        log_setting: "{{ rule_data.log_setting if rule_data.log_setting else omit }}"
+        group_profile: "{{ rule_data.group_profile if rule_data.group_profile else omit }}"
+        antivirus: "{{ rule_data.antivirus if rule_data.antivirus else omit }}"
+        spyware: "{{ rule_data.spyware if rule_data.spyware else omit }}"
+        vulnerability: "{{ rule_data.vulnerability if rule_data.vulnerability else omit }}"
+        url_filtering: "{{ rule_data.url_filtering if rule_data.url_filtering else omit }}"
+        file_blocking: "{{ rule_data.file_blocking if rule_data.file_blocking else omit }}"
+        data_filtering: "{{ rule_data.data_filtering if rule_data.data_filtering else omit }}"
+        wildfire_analysis: "{{ rule_data.wildfire_analysis if rule_data.wildfire_analysis else omit }}"
+        state: present
+      register: import_result
+
+    - name: Display import result
+      ansible.builtin.debug:
+        msg: "Security rule '{{ rule_data.rule_name }}' imported successfully"
+      when: import_result is changed
+
+    # - name: Commit changes to firewall
+    #   paloaltonetworks.panos.panos_commit_firewall:
+    #     provider: '{{ provider }}'
+    #   register: commit_result
+    #   when: import_result is changed
+
+    # - name: Display commit result
+    #   ansible.builtin.debug:
+    #     var: commit_result.stdout_lines
+    #   when: commit_result is changed

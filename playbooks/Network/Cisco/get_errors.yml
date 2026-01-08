@@ -1,7 +1,7 @@
 ---
 
 - name: Retrieve port errors on device
-  hosts: bchms
+  hosts: cisco
   gather_facts: false
   vars:
     date: "{{ lookup('pipe','date +%Y-%m-%d') }}"

@@ -1,0 +1,25 @@
+---
+
+- name: Export security policy from Palo Alto firewall
+  hosts: FIREWALL-1
+  connection: local
+  vars:
+    policy_name: "Performance Matters FTP"
+
+  tasks:
+    - name: Fetch security policy from Palo Alto firewall
+      paloaltonetworks.panos.panos_security_rule:
+        provider: '{{ provider }}'
+        state: "gathered"
+        rule_name: "{{ policy_name }}"
+      register: security_policy
+
+    - name: Save security policy to JSON file
+      ansible.builtin.copy:
+        content: "{{ security_policy.gathered | to_nice_json }}"
+        dest: "{{ log_path }}/{{ policy_name }}.json"
+      delegate_to: localhost
+
+    - name: Display exported rule data
+      ansible.builtin.debug:
+        msg: "Rule '{{ policy_name }}' exported to {{ log_path }}/{{ policy_name }}.json"

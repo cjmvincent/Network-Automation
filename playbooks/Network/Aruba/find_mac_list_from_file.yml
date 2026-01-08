@@ -1,0 +1,79 @@
+---
+
+- name: Find MAC addresses on ArubaOS-Switches and export ports
+  hosts: network
+  gather_facts: false
+
+  vars:
+    macs_csv_path: "../../../source_files/macs.csv"
+    export_csv_path: "./mac_interfaces.csv"
+
+  tasks:
+
+    - name: Load CSV of MAC addresses (once, locally)
+      run_once: true
+      delegate_to: localhost
+      read_csv:
+        path: "{{ macs_csv_path }}"
+      register: mac_csv
+
+    - name: Build raw MAC list (once)
+      run_once: true
+      set_fact:
+        mac_raw_list: "{{ mac_csv.list | map(attribute='mac') | list }}"
+
+    - name: Normalize MACs to xxxxxx-xxxxxx (once)
+      run_once: true
+      delegate_to: localhost
+      set_fact:
+        mac_normalized_list: >-
+          {{
+            mac_raw_list
+            | map('regex_replace', '[^A-Fa-f0-9]', '')
+            | map('lower')
+            | map('regex_replace', '^([0-9a-f]{6})([0-9a-f]{6})$', '\1-\2')
+            | list
+          }}
+
+    - name: Lookup each MAC on this switch
+      aruba_command:
+        commands:
+          - "show mac-address | include {{ item }}"
+      register: mac_lookups
+      loop: "{{ mac_normalized_list }}"
+      loop_control:
+        label: "{{ item }}"
+
+    - name: Build MAC → interface dict (port-shaped token finder)
+      vars:
+        _line: "{{ (item.stdout | default(['']))[0] | trim }}"
+        _port: >-
+          {{
+            (_line | map('regex_replace','^(?:[^ ]*\ ){6}([^ ]*) | (\w+$)') )
+            | default('')
+          }}
+      set_fact:
+        mac_to_interface: "{{ (mac_to_interface | default({})) | combine({ item.item: _port }) }}"
+      loop: "{{ mac_lookups.results | default([]) }}"
+      loop_control:
+        label: "{{ item.item }}"
+
+    - name: Show MAC → interface mapping for this host
+      debug:
+        var: mac_to_interface
+
+    - name: Export MAC → interface to CSV (optional)
+      tags: [export]
+      delegate_to: localhost
+      copy:
+        dest: "{{ export_csv_path }}"
+        content: |-
+          mac,interface
+          {% for k, v in (mac_to_interface|default({})).items() if v|length > 0 -%}
+          {{ k }},{{ v }}
+          {% endfor -%}
+
+
+
+
+
